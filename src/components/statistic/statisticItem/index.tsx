@@ -1,26 +1,25 @@
-import { Box, Button, Image, Text } from '@chakra-ui/react';
+import { HStack, Image, Text } from '@chakra-ui/react';
 
 type Props = {
     img: string;
     value: number;
 };
 
-export default function StatisticButton({ img, value }: Props) {
+export default function StatisticItem({ img, value }: Props) {
     return (
-        <Button
-            variant='none'
+        <HStack
             h={[6, null, null, 10]}
             w='fit-content'
             px={[2, null, null, 4]}
             py={[1, null, null, 2]}
+            gap={1.5}
         >
             <Image
                 w={[3, null, null, 4]}
                 h={[3, null, null, 4]}
-                src={`/${img}.svg`}
+                src={`/src/assets/${img}.svg`}
                 alt={`${img}`}
             />
-            <Box w={[1.5, null, null, 2]} />
             <Text
                 color='#2db100'
                 fontSize={[12, null, null, 16]}
@@ -29,6 +28,6 @@ export default function StatisticButton({ img, value }: Props) {
             >
                 {value}
             </Text>
-        </Button>
+        </HStack>
     );
 }

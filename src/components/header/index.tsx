@@ -32,7 +32,7 @@ export default function Header() {
                     <Show above='lg'>
                         <Breadcrumb
                             spacing={0}
-                            separator={<Image src='/breadcrumbArrow.svg' />}
+                            separator={<Image src='/src/assets/breadcrumbArrow.svg' />}
                             flexGrow={1}
                         >
                             <BreadcrumbItem>
