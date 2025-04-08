@@ -2,7 +2,9 @@ import './App.css';
 
 import { Box, ChakraProvider, extendTheme } from '@chakra-ui/react';
 
+import PageTitle from '~/common/pageTitle';
 import RecipeCard from '~/common/recipeCard';
+import Search from '~/common/search';
 import Header from '~/components/header';
 import Statistic from '~/components/statistic';
 import { useGetPostsQuery } from '~/query/services/posts.ts';
@@ -93,6 +95,11 @@ function App() {
         <ChakraProvider theme={theme}>
             <Box minH='100%' overflow='hidden'>
                 <Header />
+                <PageTitle
+                    title='Приятного аппетита!'
+                    subTitle='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
+                />
+                <Search />
                 <Box p={4}>
                     App
                     {/* <HStack spacing={{ base: 4, xl: 6 }}> */}
