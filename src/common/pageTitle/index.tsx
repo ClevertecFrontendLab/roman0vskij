@@ -15,6 +15,7 @@ export default function PageTitle({ title, subTitle = '' }: TProps) {
             mr={{ base: 4, lg: 5, xl: 23 }}
         >
             <Heading
+                as='h1'
                 fontSize={{ base: 24, lg: 48 }}
                 fontWeight={700}
                 lineHeight={{ base: '133%', lg: '100%' }}

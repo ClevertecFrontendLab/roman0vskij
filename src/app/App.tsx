@@ -1,10 +1,12 @@
 import './App.css';
 
-import { Box, ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { Box, ChakraProvider, extendTheme, Show, VStack } from '@chakra-ui/react';
 
+import Filter from '~/common/filter';
 import PageTitle from '~/common/pageTitle';
 import RecipeCard from '~/common/recipeCard';
 import Search from '~/common/search';
+import Title from '~/common/title';
 import Header from '~/components/header';
 import Statistic from '~/components/statistic';
 import { useGetPostsQuery } from '~/query/services/posts.ts';
@@ -90,7 +92,18 @@ function App() {
             smiles: 1,
         },
     ];
-
+    //TODO  Кнопки (Подбрка, Загрузить еще, Записать рецепт)
+    //TODO  Табы на веганской кухне
+    //TODO  Маленькая карточка с зеленой кнопкой "готовить"
+    //TODO  Футер для пк
+    //TODO  Футер для мобилки
+    //TODO  Урезанная карточка рецепта
+    //TODO  Карточка блога
+    //TODO  Карточка рецепта
+    //TODO  Аккордеон
+    //TODO  Ховера, эффекты и т.д.
+    //TODO  Настроить хлебные крошки
+    //TODO  Настроить базовый роутинг
     return (
         <ChakraProvider theme={theme}>
             <Box minH='100%' overflow='hidden'>
@@ -99,7 +112,14 @@ function App() {
                     title='Приятного аппетита!'
                     subTitle='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
                 />
-                <Search />
+                <VStack mb={8} spacing={4}>
+                    <Search />
+                    <Show above='lg'>
+                        <Filter />
+                    </Show>
+                </VStack>
+                <Title title='Новые рецепты' />
+                <Title title='Кулинарные блоги' isForBlog />
                 <Box p={4}>
                     App
                     {/* <HStack spacing={{ base: 4, xl: 6 }}> */}
