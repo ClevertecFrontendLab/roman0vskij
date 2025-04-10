@@ -25,6 +25,10 @@ export default function Header() {
             bg='#ffffd3'
             h={[16, null, null, 20]}
             alignContent='center'
+            position='fixed'
+            w='100%'
+            top={0}
+            zIndex={10}
         >
             <Container maxW='100%' pr={[4, null, 5, 14]} pl={[4, null, 5, 4]}>
                 <HStack justify='space-between'>

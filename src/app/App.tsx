@@ -3,6 +3,8 @@ import './App.css';
 import { Box, ChakraProvider, extendTheme, Show, VStack } from '@chakra-ui/react';
 
 import Filter from '~/common/filter';
+import Footer from '~/common/footer';
+import GreenButton from '~/common/greenButton';
 import PageTitle from '~/common/pageTitle';
 import RecipeCard from '~/common/recipeCard';
 import Search from '~/common/search';
@@ -16,7 +18,7 @@ function App() {
         base: '0px',
         sm: '360px',
         md: '768px',
-        lg: '1440px',
+        lg: '1200px',
         xl: '1920px',
         '2xl': '2000px',
     };
@@ -32,7 +34,7 @@ function App() {
 
     const mockRecipes = [
         {
-            img: '/src/assets/recipe1.jpg',
+            img: '/src/assets/mockData/recipe1.jpg',
             title: 'Солянка с грибами',
             text: 'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
             hasTag: true,
@@ -42,7 +44,7 @@ function App() {
             smiles: 0,
         },
         {
-            img: '/src/assets/recipe2.jpg',
+            img: '/src/assets/mockData/recipe2.jpg',
             title: 'Капустные котлеты',
             text: 'Капустные котлеты по этому рецепту получаются необычайно пышными и  невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных  блюд.',
             hasTag: true,
@@ -52,7 +54,7 @@ function App() {
             smiles: 1,
         },
         {
-            img: '/src/assets/recipe3.jpg',
+            img: '/src/assets/mockData/recipe3.jpg',
             title: 'Оладьи на кефире "Пышные"',
             text: 'Очень вкусные и нежные оладьи на кефире. Настоятельно рекомендую пышные кефирные оладьи на завтрак.',
             hasTag: true,
@@ -62,7 +64,7 @@ function App() {
             smiles: 1,
         },
         {
-            img: '/src/assets/recipe4.jpg',
+            img: '/src/assets/mockData/recipe4.jpg',
             title: 'Салат "Здоровье"',
             text: 'Сельдерей очень полезен для здоровья, пора набираться витаминов. Не  салат, а сплошное удовольствие:) Вкусный, необычный, а главное быстрый.',
             hasTag: true,
@@ -72,7 +74,7 @@ function App() {
             smiles: 0,
         },
         {
-            img: '/src/assets/recipe1.jpg',
+            img: '/src/assets/mockData/recipe1.jpg',
             title: 'Солянка с грибами',
             text: 'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
             hasTag: true,
@@ -82,7 +84,7 @@ function App() {
             smiles: 0,
         },
         {
-            img: '/src/assets/recipe2.jpg',
+            img: '/src/assets/mockData/recipe2.jpg',
             title: 'Капустные котлеты',
             text: 'Капустные котлеты по этому рецепту получаются необычайно пышными и  невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных  блюд.',
             hasTag: false,
@@ -92,11 +94,10 @@ function App() {
             smiles: 1,
         },
     ];
-    //TODO  Кнопки (Подбрка, Загрузить еще, Записать рецепт)
-    //TODO  Табы на веганской кухне
+    //TODO  Кнопка Записать рецепт
+    //TODO  Табы на веганской кухне (в зависимости от выбранной категории разные табы)
     //TODO  Маленькая карточка с зеленой кнопкой "готовить"
     //TODO  Футер для пк
-    //TODO  Футер для мобилки
     //TODO  Урезанная карточка рецепта
     //TODO  Карточка блога
     //TODO  Карточка рецепта
@@ -118,6 +119,11 @@ function App() {
                         <Filter />
                     </Show>
                 </VStack>
+                <VStack>
+                    <GreenButton text='Вся подборка' hasArrow />
+                    <GreenButton text='Загрузить еще' />
+                </VStack>
+                <Footer />
                 <Title title='Новые рецепты' />
                 <Title title='Кулинарные блоги' isForBlog />
                 <Box p={4}>

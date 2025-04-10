@@ -1,5 +1,7 @@
 import { HStack, IconButton, Image, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 
+import { SearchIcon } from '~/assets/icons';
+
 export default function Search() {
     return (
         <HStack
@@ -45,12 +47,7 @@ export default function Search() {
                     w='100%'
                 />
                 <InputRightElement h={{ base: 8, lg: 12 }} w={{ base: 8, lg: 12 }}>
-                    <Image
-                        src='/src/assets/search.svg'
-                        alt='search'
-                        h={{ base: 3.5, lg: 18 }}
-                        w={{ base: 3.5, lg: 18 }}
-                    />
+                    <SearchIcon h={{ base: 3.5, lg: 18 }} w={{ base: 3.5, lg: 18 }} />
                 </InputRightElement>
             </InputGroup>
         </HStack>
