@@ -11,38 +11,33 @@ import {
     Text,
 } from '@chakra-ui/react';
 
+import { TRecipe } from '~/shared/mock/mockRecipes';
+
 import CardStatistic from '../cardStatistic';
 import Tag from '../tag';
-
-type TRecipe = {
-    img: string;
-    title: string;
-    text: string;
-    hasTag: boolean;
-    tag: string;
-    tagSvg: string;
-    saves: number;
-    smiles: number;
-};
 
 export default function RecipeCard({
     img,
     title,
     text,
     hasTag,
-    tag,
-    tagSvg,
+    tag = '',
+    tagImg = '',
     saves,
     smiles,
 }: TRecipe) {
-    // const [isLargerThan1440] = useMediaQuery('(min-width: 1440px)');
     return (
         <Card
             w={[158, null, null, 277, 322]}
             h={[220, null, null, 402, 414]}
             borderRadius={8}
             bgColor='#fff'
-            overflow='hidden'
+            border='1px solid rgba(0, 0, 0, 0.08)'
+            variant='none'
+            _hover={{
+                boxShadow:
+                    '0 2px 4px -1px rgba(32, 126, 0, 0.06), 0 4px 6px -1px rgba(32, 126, 0, 0.1)',
+            }}
         >
             <Image
                 position='relative'
@@ -94,11 +89,11 @@ export default function RecipeCard({
                 justify='space-between'
             >
                 <Show above='lg'>
-                    {hasTag ? <Tag bgClr='#d7ff94' tagName={tag} img={tagSvg} /> : <Box />}
+                    {hasTag ? <Tag bgClr='#d7ff94' tagName={tag} img={tagImg} /> : <Box />}
                 </Show>
                 <Hide above='lg'>
                     <Box position='absolute' top={2} left={2} w='100%'>
-                        {hasTag ? <Tag bgClr='#d7ff94' tagName={tag} img={tagSvg} /> : <Box />}
+                        {hasTag ? <Tag bgClr='#d7ff94' tagName={tag} img={tagImg} /> : <Box />}
                     </Box>
                 </Hide>
                 <CardStatistic saves={saves} smiles={smiles} />

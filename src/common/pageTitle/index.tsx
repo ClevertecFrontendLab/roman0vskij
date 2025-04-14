@@ -31,6 +31,7 @@ export default function PageTitle({ title, subTitle = '' }: TProps) {
                     lineHeight={{ base: '143%', lg: '150%' }}
                     textAlign='center'
                     color='rgba(0, 0, 0, 0.48)'
+                    maxW={{ base: 727, lg: 696 }}
                 >
                     {subTitle}
                 </Text>

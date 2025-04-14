@@ -1,4 +1,6 @@
-import { HStack, Image, Text } from '@chakra-ui/react';
+import { HStack, Text } from '@chakra-ui/react';
+
+import { SaveIcon, SmileIcon } from '~/assets/icons';
 
 type TProps = {
     saves: number;
@@ -10,7 +12,7 @@ export default function CardStatistic({ saves, smiles }: TProps) {
         <HStack h={6} gap={2}>
             {saves > 0 && (
                 <HStack gap={1.5} p={1}>
-                    <Image src='/src/assets/save.svg' alt='save' />
+                    <SaveIcon />
                     <Text fontSize={12} fontWeight={600} lineHeight='133%' color='#2db100'>
                         {saves}
                     </Text>
@@ -18,7 +20,7 @@ export default function CardStatistic({ saves, smiles }: TProps) {
             )}
             {smiles > 0 && (
                 <HStack gap={1.5} p={1}>
-                    <Image src='/src/assets/smile.svg' alt='smile' />
+                    <SmileIcon />
                     <Text fontSize={12} fontWeight={600} lineHeight='133%' color='#2db100'>
                         {smiles}
                     </Text>

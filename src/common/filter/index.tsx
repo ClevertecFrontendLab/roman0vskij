@@ -18,7 +18,7 @@ export default function Filter() {
                 <Switch id='allergens' />
             </FormControl>
             <Select
-                variant='outline'
+                variant='none'
                 placeholder='Выберите из списка...'
                 w={234}
                 border='1px solid rgba(0, 0, 0, 0.08)'
@@ -27,7 +27,7 @@ export default function Filter() {
                 fontSize={16}
                 lineHeight='150%'
                 color='rgba(0, 0, 0, 0.64)'
-                _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
+                _hover={{ borderColor: '#c4ff61', color: '#2d3748' }}
             />
         </HStack>
     );

@@ -11,13 +11,24 @@ import {
     Image,
     Show,
 } from '@chakra-ui/react';
+import { useLocation } from 'react-router';
 
 import HeaderProfile from '~/common/headerProfile';
+import { mockCategories } from '~/shared/mock/mockCategories';
 
 import Logo from '../logo';
 import Statistic from '../statistic';
 
 export default function Header() {
+    const location = useLocation();
+    const [_, category, subCategory] = location.pathname.split('/');
+    const categoryName =
+        category === 'juiciest'
+            ? 'Самое сочное'
+            : mockCategories.find((categ) => categ.id === category)?.name;
+    const subCategoryName = mockCategories
+        .find((categ) => categ.id === category)
+        ?.subCategories.find((subCateg) => subCateg.id === subCategory)?.name;
     return (
         <Box
             as='header'
@@ -31,9 +42,9 @@ export default function Header() {
             zIndex={10}
         >
             <Container maxW='100%' pr={[4, null, 5, 14]} pl={[4, null, 5, 4]}>
-                <HStack justify='space-between'>
+                <HStack justify='space-between' gap={0}>
                     <Logo />
-                    <Show above='lg'>
+                    <Show breakpoint='(min-width: 1000px)'>
                         <Breadcrumb
                             spacing={0}
                             separator={<Image src='/src/assets/breadcrumbArrow.svg' />}
@@ -44,18 +55,30 @@ export default function Header() {
                                     Главная
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href='/' color='rgba(0, 0, 0, 0.64)'>
-                                    Веганская кухня
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href='/'>Вторые блюда</BreadcrumbLink>
-                            </BreadcrumbItem>
+                            {categoryName && (
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink
+                                        href={`/${category}`}
+                                        color='rgba(0, 0, 0, 0.64)'
+                                    >
+                                        {categoryName}
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                            )}
+                            {subCategoryName && (
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink
+                                        href={`/${category}/${subCategory}`}
+                                        color='rgba(0, 0, 0, 0.64)'
+                                    >
+                                        {subCategoryName}
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                            )}
                         </Breadcrumb>
                         <HeaderProfile />
                     </Show>
-                    <Hide above='lg'>
+                    <Hide breakpoint='(min-width: 1000px)'>
                         <HStack spacing={0}>
                             <Statistic />
                             <IconButton

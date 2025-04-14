@@ -12,7 +12,7 @@ export default function StatisticItem({ img, value }: Props) {
             w='fit-content'
             px={[2, null, null, 4]}
             py={[1, null, null, 2]}
-            gap={1.5}
+            gap={{ base: 1.5, lg: 2 }}
         >
             <Image
                 w={[3, null, null, 4]}
