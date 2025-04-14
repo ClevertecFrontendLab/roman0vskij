@@ -1,34 +1,35 @@
-import './App.css';
+import { Box, ChakraProvider } from '@chakra-ui/react';
+import { Route, Routes } from 'react-router';
 
-import { useState } from 'react';
-
-import reactLogo from '~/assets/react.svg';
+import Footer from '~/common/footer';
+import Header from '~/components/header';
+import Sidebar from '~/components/sidebar';
+import Statbar from '~/components/statbar';
+import MainPage from '~/pages/main';
+import TheJuiciestPage from '~/pages/theJuiciest';
+import VeganPage from '~/pages/vegan';
 import { useGetPostsQuery } from '~/query/services/posts.ts';
+import theme from '~/shared/config/theme';
 
-function App() {
-    const [count, setCount] = useState(0);
+export default function App() {
     const { data: _data, isLoading: _isLoading } = useGetPostsQuery();
 
+    //TODO  Ховера, эффекты и т.д.
     return (
-        <>
-            <div>
-                <a href='https://vite.dev' target='_blank'>
-                    <img src='/vite.svg' className='logo' alt='Vite logo' />
-                </a>
-                <a href='https://react.dev' target='_blank'>
-                    <img src={reactLogo} className='logo react' alt='React logo' />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className='card'>
-                <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-        </>
+        <ChakraProvider theme={theme}>
+            <Box minH='100%' overflow='hidden'>
+                <Header />
+                <Sidebar />
+                <Statbar />
+
+                <Routes>
+                    <Route path='/' element={<MainPage />} />
+                    <Route path='/juiciest' element={<TheJuiciestPage />} />
+                    <Route path='*' element={<VeganPage />} />
+                </Routes>
+
+                <Footer />
+            </Box>
+        </ChakraProvider>
     );
 }
-
-export default App;
