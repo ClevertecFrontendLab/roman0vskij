@@ -108,7 +108,7 @@ export default function VeganPage() {
                     ))}
 
                     <GridItem rowSpan={1} colSpan={{ base: 1, xl: 2 }}>
-                        <VStack>
+                        <VStack gap={3}>
                             {mockCookCards.map((card, i) => (
                                 <CookCard key={`cook${i}`} {...card} />
                             ))}

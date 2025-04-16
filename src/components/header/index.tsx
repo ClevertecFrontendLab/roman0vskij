@@ -51,7 +51,10 @@ export default function Header() {
                             flexGrow={1}
                         >
                             <BreadcrumbItem>
-                                <BreadcrumbLink href='/' color='rgba(0, 0, 0, 0.64)'>
+                                <BreadcrumbLink
+                                    href='/'
+                                    color={categoryName ? 'rgba(0, 0, 0, 0.64)' : '#000'}
+                                >
                                     Главная
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
@@ -59,7 +62,7 @@ export default function Header() {
                                 <BreadcrumbItem>
                                     <BreadcrumbLink
                                         href={`/${category}`}
-                                        color='rgba(0, 0, 0, 0.64)'
+                                        color={subCategoryName ? 'rgba(0, 0, 0, 0.64)' : '#000'}
                                     >
                                         {categoryName}
                                     </BreadcrumbLink>
@@ -69,7 +72,7 @@ export default function Header() {
                                 <BreadcrumbItem>
                                     <BreadcrumbLink
                                         href={`/${category}/${subCategory}`}
-                                        color='rgba(0, 0, 0, 0.64)'
+                                        color='#000'
                                     >
                                         {subCategoryName}
                                     </BreadcrumbLink>

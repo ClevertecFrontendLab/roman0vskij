@@ -14,7 +14,7 @@ import theme from '~/shared/config/theme';
 export default function App() {
     const { data: _data, isLoading: _isLoading } = useGetPostsQuery();
 
-    //TODO  Ховера, эффекты и т.д.
+    //TODO  Подключить хранилку и везде, где использую useLocation, использовать данные из хранилки
     return (
         <ChakraProvider theme={theme}>
             <Box minH='100%' overflow='hidden'>

@@ -22,10 +22,10 @@ export default function GreenButton({
         <Button
             display={
                 showOnLg
-                    ? { base: 'none', lg: 'block' }
+                    ? { base: 'none', lg: 'flex' }
                     : hideOnLg
-                      ? { base: 'block', lg: 'none' }
-                      : { base: 'block' }
+                      ? { base: 'flex', lg: 'none' }
+                      : { base: 'flex' }
             }
             onClick={onClick}
             rightIcon={hasArrow ? <Image src='/src/assets/arrowRight.svg' /> : undefined}

@@ -9,10 +9,10 @@ export default function CookCard({ text, img }: TCookCard) {
             borderRadius={8}
             align='center'
             px={{ base: 3, xl: 6 }}
-            py={{ base: 2.5, xl: 3 }}
+            py={{ base: 3, lg: 2.5, xl: 3 }}
             w='100%'
             h='100%'
-            maxH={{ base: '52px', xl: '56px' }}
+            maxH={{ base: '48px', lg: '52px', xl: '56px' }}
             justify='space-between'
             _hover={{
                 boxShadow:
@@ -35,7 +35,7 @@ export default function CookCard({ text, img }: TCookCard) {
             <Button
                 variant='none'
                 w={{ base: 70, xl: 87 }}
-                h={8}
+                h={{ base: 6, lg: 8 }}
                 border='1px solid #2db100'
                 borderRadius={6}
                 p={{ base: 2, xl: '6px 12px' }}

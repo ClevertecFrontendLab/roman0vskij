@@ -7,12 +7,13 @@ import {
     Image,
     Link,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import { CloseArrowIcon, OpenArrowIcon } from '~/assets/icons';
 import { mockCategories } from '~/shared/mock/mockCategories';
 
 export default function Accordion() {
+    const location = useLocation();
     const [_, selectedCategory, selectedSubCategory] = location.pathname.split('/');
 
     const navigate = useNavigate();
