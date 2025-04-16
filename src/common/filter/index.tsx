@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, HStack, Select, Switch } from '@chakra-ui/react';
 
-export default function Filter() {
+export function Filter() {
     return (
         <HStack justify='center'>
             <FormControl display='flex' alignItems='center' py={1.5} w='fit-content'>

@@ -2,7 +2,7 @@ import { Box, IconButton, Image, SimpleGrid, Text, useMediaQuery, VStack } from 
 
 import { AvatarIcon, HomeIcon, NoteIcon, SearchIcon } from '~/assets/icons';
 
-export default function Footer() {
+export function Footer() {
     const vStackStyles = {
         justify: 'flex-start',
         flex: '1 1 auto',

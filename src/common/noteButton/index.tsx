@@ -2,7 +2,7 @@ import { IconButton, Text, VStack } from '@chakra-ui/react';
 
 import { NoteIcon } from '~/assets/icons';
 
-export default function NoteButton() {
+export function NoteButton() {
     return (
         <VStack
             w='100%'

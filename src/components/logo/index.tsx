@@ -1,6 +1,6 @@
 import { Box, HStack, Image, Show } from '@chakra-ui/react';
 
-export default function Logo() {
+export function Logo() {
     return (
         <Box h={8} mr={[3, null, null, 32]}>
             <HStack spacing='6.97px' align='flex-end'>

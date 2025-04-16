@@ -15,23 +15,23 @@ import {
 import { useNavigate } from 'react-router';
 
 import { LeftArrowIcon, RightArrowIcon } from '~/assets/icons';
-import BlogCard from '~/common/blogCard';
-import CookCard from '~/common/cookCard';
-import Filter from '~/common/filter';
-import GreenButton from '~/common/greenButton';
-import MainCard from '~/common/mainCard';
-import PageTitle from '~/common/pageTitle';
-import RecipeCard from '~/common/recipeCard';
-import RelevantRecipeCard from '~/common/relevantRecipeCard';
-import Search from '~/common/search';
-import Title from '~/common/title';
+import { BlogCard } from '~/common/blogCard';
+import { CookCard } from '~/common/cookCard';
+import { Filter } from '~/common/filter';
+import { GreenButton } from '~/common/greenButton';
+import { MainCard } from '~/common/mainCard';
+import { PageTitle } from '~/common/pageTitle';
+import { RecipeCard } from '~/common/recipeCard';
+import { RelevantRecipeCard } from '~/common/relevantRecipeCard';
+import { Search } from '~/common/search';
+import { Title } from '~/common/title';
 import { mockBlogCards } from '~/shared/mock/mockBlogCards';
 import { mockCookCards } from '~/shared/mock/mockCookCards';
 import { mockMainCards } from '~/shared/mock/mockMainCards';
 import { mockRecipes } from '~/shared/mock/mockRecipes';
 import { mockRelevantRecipes } from '~/shared/mock/mockRelevantRecipes';
 
-export default function MainPage() {
+export function MainPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
     const navigate = useNavigate();
 

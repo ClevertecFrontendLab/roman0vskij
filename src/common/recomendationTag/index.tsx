@@ -5,11 +5,11 @@ type TProps = {
     userName: string;
     bgClr: string;
 };
-export default function RecomendationTag({ userImg, userName, bgClr }: TProps) {
+export function RecomendationTag({ userImg, userName, bgClr }: TProps) {
     return (
         <Box bgColor={bgClr} w='fit-content' px={2} py={1} borderRadius={4} h={7}>
             <HStack spacing={2}>
-                <Avatar h={4} w={4} src={userImg ? userImg : '/src/assets/defaultAvatar.jpg'} />
+                <Avatar h={4} w={4} src={userImg ? userImg : '/src/assets/Avatar.jpg'} />
                 <Text fontSize={14} fontWeight={400} lineHeight='143%' color='#000'>
                     {userName + ' рекомендует'}
                 </Text>

@@ -5,7 +5,7 @@ type TProps = {
     subTitle?: string;
 };
 
-export default function PageTitle({ title, subTitle = '' }: TProps) {
+export function PageTitle({ title, subTitle = '' }: TProps) {
     return (
         <VStack
             justify='center'

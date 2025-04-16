@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router';
 
 import { mockCategories, TCategory } from '~/shared/mock/mockCategories';
 
-export default function Tabs() {
+export function Tabs() {
     const location = useLocation();
     const [_, selectedCategory, selectedSubCategory] = location.pathname.split('/');
 

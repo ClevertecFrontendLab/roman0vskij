@@ -1,8 +1,8 @@
 import { Box, Flex } from '@chakra-ui/react';
 
-import StatisticItem from './statisticItem';
+import { StatisticItem } from './statisticItem';
 
-export default function Statistic() {
+export function Statistic() {
     const mockData = [
         { value: 185, img: 'save' },
         { value: 589, img: 'people' },

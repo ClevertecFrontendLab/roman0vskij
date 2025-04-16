@@ -6,7 +6,7 @@ type TProps = {
     isForBlog?: boolean;
 };
 
-export default function Title({ title, isForBlog = false, text = '' }: TProps) {
+export function Title({ title, isForBlog = false, text = '' }: TProps) {
     return (
         <Stack justify='space-between' direction={{ base: 'column', lg: 'row' }}>
             <Heading

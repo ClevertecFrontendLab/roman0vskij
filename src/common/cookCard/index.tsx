@@ -2,7 +2,7 @@ import { Button, Flex, HStack, Image, Text } from '@chakra-ui/react';
 
 import { TCookCard } from '~/shared/mock/mockCookCards';
 
-export default function CookCard({ text, img }: TCookCard) {
+export function CookCard({ text, img }: TCookCard) {
     return (
         <HStack
             border='1px solid rgba(0, 0, 0, 0.08)'

@@ -18,11 +18,11 @@ import {
 import { SaveIcon } from '~/assets/icons';
 import { TMainCard } from '~/shared/mock/mockMainCards';
 
-import CardStatistic from '../cardStatistic';
-import RecomendationTag from '../recomendationTag';
-import Tag from '../tag';
+import { CardStatistic } from '../cardStatistic';
+import { RecomendationTag } from '../recomendationTag';
+import { Tag } from '../tag';
 
-export default function MainCard({
+export function MainCard({
     img,
     title,
     text,

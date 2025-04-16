@@ -5,7 +5,7 @@ type Props = {
     value: number;
 };
 
-export default function StatisticItem({ img, value }: Props) {
+export function StatisticItem({ img, value }: Props) {
     return (
         <HStack
             h={[6, null, null, 10]}

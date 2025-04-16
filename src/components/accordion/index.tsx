@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { CloseArrowIcon, OpenArrowIcon } from '~/assets/icons';
 import { mockCategories } from '~/shared/mock/mockCategories';
 
-export default function Accordion() {
+export function Accordion() {
     const location = useLocation();
     const [_, selectedCategory, selectedSubCategory] = location.pathname.split('/');
 

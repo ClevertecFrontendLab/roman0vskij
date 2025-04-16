@@ -32,6 +32,4 @@ const colorfulVariant = definePartsStyle(() => ({
 const variants = {
     colorful: colorfulVariant,
 };
-const accordionTheme = defineMultiStyleConfig({ variants });
-
-export default accordionTheme;
+export const accordionTheme = defineMultiStyleConfig({ variants });

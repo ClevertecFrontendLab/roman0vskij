@@ -2,10 +2,10 @@ import { Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-u
 
 import { TRelevantRecipe } from '~/shared/mock/mockRelevantRecipes';
 
-import CardStatistic from '../cardStatistic';
-import Tag from '../tag';
+import { CardStatistic } from '../cardStatistic';
+import { Tag } from '../tag';
 
-export default function RelevantRecipeCard({
+export function RelevantRecipeCard({
     title,
     text,
     hasTag,

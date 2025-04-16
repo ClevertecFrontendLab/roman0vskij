@@ -11,19 +11,19 @@ import {
     VStack,
 } from '@chakra-ui/react';
 
-import CookCard from '~/common/cookCard';
-import Filter from '~/common/filter';
-import GreenButton from '~/common/greenButton';
-import MainCard from '~/common/mainCard';
-import PageTitle from '~/common/pageTitle';
-import RelevantRecipeCard from '~/common/relevantRecipeCard';
-import Search from '~/common/search';
-import Title from '~/common/title';
+import { CookCard } from '~/common/cookCard';
+import { Filter } from '~/common/filter';
+import { GreenButton } from '~/common/greenButton';
+import { MainCard } from '~/common/mainCard';
+import { PageTitle } from '~/common/pageTitle';
+import { RelevantRecipeCard } from '~/common/relevantRecipeCard';
+import { Search } from '~/common/search';
+import { Title } from '~/common/title';
 import { mockCookCards } from '~/shared/mock/mockCookCards';
 import { mockMainCards } from '~/shared/mock/mockMainCards';
 import { mockRelevantRecipes } from '~/shared/mock/mockRelevantRecipes';
 
-export default function TheJuiciestPage() {
+export function TheJuiciestPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
 
     return (

@@ -2,7 +2,7 @@ import { Avatar, Card, CardBody, CardHeader, Heading, Text, VStack } from '@chak
 
 import { TBlogCard } from '~/shared/mock/mockBlogCards';
 
-export default function BlogCard({ text, userName, userLogin, userImg }: TBlogCard) {
+export function BlogCard({ text, userName, userLogin, userImg }: TBlogCard) {
     return (
         <Card
             w='100%'

@@ -7,7 +7,7 @@ type TProps = {
     smiles: number;
 };
 
-export default function CardStatistic({ saves, smiles }: TProps) {
+export function CardStatistic({ saves, smiles }: TProps) {
     return (
         <HStack h={6} gap={2}>
             {saves > 0 && (

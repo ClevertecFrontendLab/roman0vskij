@@ -2,7 +2,7 @@ import { HStack, IconButton, Image, Input, InputGroup, InputRightElement } from 
 
 import { SearchIcon } from '~/assets/icons';
 
-export default function Search() {
+export function Search() {
     return (
         <HStack
             maxW={{ base: 480, lg: 550 }}

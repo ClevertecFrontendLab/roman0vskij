@@ -13,10 +13,10 @@ import {
 
 import { TRecipe } from '~/shared/mock/mockRecipes';
 
-import CardStatistic from '../cardStatistic';
-import Tag from '../tag';
+import { CardStatistic } from '../cardStatistic';
+import { Tag } from '../tag';
 
-export default function RecipeCard({
+export function RecipeCard({
     img,
     title,
     text,

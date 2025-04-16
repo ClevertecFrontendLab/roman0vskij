@@ -7,7 +7,7 @@ type TProps = {
     isRelevant?: boolean;
 };
 
-export default function Tag({ img, tagName, bgClr, isRelevant = false }: TProps) {
+export function Tag({ img, tagName, bgClr, isRelevant = false }: TProps) {
     return (
         <Box
             bgColor={bgClr}

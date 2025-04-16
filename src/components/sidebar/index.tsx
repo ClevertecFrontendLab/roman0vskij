@@ -2,9 +2,9 @@ import { Box, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 
 import { SignOutIcon } from '~/assets/icons';
 
-import Accordion from '../accordion';
+import { Accordion } from '../accordion';
 
-export default function Sidebar() {
+export function Sidebar() {
     return (
         <VStack
             display={{ base: 'none', lg: 'block' }}

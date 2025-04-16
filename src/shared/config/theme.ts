@@ -1,7 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 
-import accordionTheme from './accordionTheme';
-import tabsTheme from './tabsTheme';
+import { accordionTheme } from './accordionTheme';
+import { tabsTheme } from './tabsTheme';
 
 const breakpoints = {
     base: '0px',
@@ -16,7 +16,7 @@ const fonts = {
     heading: 'Inter, sans-serif',
 };
 
-const theme = extendTheme({
+export const theme = extendTheme({
     breakpoints,
     fonts,
     components: {
@@ -48,5 +48,3 @@ const theme = extendTheme({
         },
     },
 });
-
-export default theme;

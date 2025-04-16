@@ -13,13 +13,13 @@ import {
 } from '@chakra-ui/react';
 import { useLocation } from 'react-router';
 
-import HeaderProfile from '~/common/headerProfile';
+import { HeaderProfile } from '~/common/headerProfile';
 import { mockCategories } from '~/shared/mock/mockCategories';
 
-import Logo from '../logo';
-import Statistic from '../statistic';
+import { Logo } from '../logo';
+import { Statistic } from '../statistic';
 
-export default function Header() {
+export function Header() {
     const location = useLocation();
     const [_, category, subCategory] = location.pathname.split('/');
     const categoryName =

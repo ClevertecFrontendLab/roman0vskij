@@ -20,6 +20,4 @@ const colorfulVariant = definePartsStyle(() => ({
 const variants = {
     colorful: colorfulVariant,
 };
-const tabsTheme = defineMultiStyleConfig({ variants });
-
-export default tabsTheme;
+export const tabsTheme = defineMultiStyleConfig({ variants });

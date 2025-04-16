@@ -9,7 +9,7 @@ type TProps = {
     hideOnLg?: boolean;
 };
 
-export default function GreenButton({
+export function GreenButton({
     onClick,
     text,
     hasArrow = false,

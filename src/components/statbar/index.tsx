@@ -1,10 +1,10 @@
 import { Flex, VStack } from '@chakra-ui/react';
 
-import NoteButton from '~/common/noteButton';
+import { NoteButton } from '~/common/noteButton';
 
-import Statistic from '../statistic';
+import { Statistic } from '../statistic';
 
-export default function Statbar() {
+export function Statbar() {
     return (
         <VStack
             display={{ base: 'none', lg: 'block' }}

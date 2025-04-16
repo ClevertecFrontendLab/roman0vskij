@@ -1,17 +1,13 @@
 import { Avatar, Box, Flex, Text, VStack } from '@chakra-ui/react';
 
-export default function HeaderProfile() {
+export function HeaderProfile() {
     const avatar = '/src/assets/mockData/avatar.png';
     const name = 'Екатерина Константинопольская';
     const login = '@bake_and_pie';
     return (
         <Box pr={6}>
             <Flex gap={3}>
-                <Avatar
-                    size='md'
-                    src={avatar ? avatar : '/src/assets/defaultAvatar.jpg'}
-                    name='avatar'
-                />
+                <Avatar size='md' src={avatar ? avatar : '/src/assets/Avatar.jpg'} name='avatar' />
                 <VStack spacing={0} align='flex-start'>
                     <Text fontWeight={500} fontSize={18} lineHeight='156%' color='black'>
                         {name}
