@@ -14,22 +14,22 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
-import { LeftArrowIcon, RightArrowIcon } from '~/assets/icons';
-import { BlogCard } from '~/common/blogCard';
-import { CookCard } from '~/common/cookCard';
-import { Filter } from '~/common/filter';
-import { GreenButton } from '~/common/greenButton';
-import { MainCard } from '~/common/mainCard';
-import { PageTitle } from '~/common/pageTitle';
-import { RecipeCard } from '~/common/recipeCard';
-import { RelevantRecipeCard } from '~/common/relevantRecipeCard';
-import { Search } from '~/common/search';
-import { Title } from '~/common/title';
+import { BlogCard } from '~/entities/blogCard';
+import { CookCard } from '~/entities/cookCard';
+import { MainCard } from '~/entities/mainCard';
+import { RecipeCard } from '~/entities/recipeCard';
+import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
+import { Filter } from '~/features/filter';
+import { Search } from '~/features/search';
+import { LeftArrowIcon, RightArrowIcon } from '~/shared/assets/icons';
 import { mockBlogCards } from '~/shared/mock/mockBlogCards';
 import { mockCookCards } from '~/shared/mock/mockCookCards';
 import { mockMainCards } from '~/shared/mock/mockMainCards';
 import { mockRecipes } from '~/shared/mock/mockRecipes';
 import { mockRelevantRecipes } from '~/shared/mock/mockRelevantRecipes';
+import { GreenButton } from '~/shared/ui/greenButton';
+import { PageTitle } from '~/shared/ui/pageTitle';
+import { Title } from '~/shared/ui/title';
 
 export function MainPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');

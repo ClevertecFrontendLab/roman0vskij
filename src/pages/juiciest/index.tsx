@@ -16,7 +16,6 @@ import { MainCard } from '~/entities/mainCard';
 import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
 import { Filter } from '~/features/filter';
 import { Search } from '~/features/search';
-import { Tabs } from '~/features/tabs';
 import { mockCookCards } from '~/shared/mock/mockCookCards';
 import { mockMainCards } from '~/shared/mock/mockMainCards';
 import { mockRelevantRecipes } from '~/shared/mock/mockRelevantRecipes';
@@ -24,7 +23,7 @@ import { GreenButton } from '~/shared/ui/greenButton';
 import { PageTitle } from '~/shared/ui/pageTitle';
 import { Title } from '~/shared/ui/title';
 
-export function VeganPage() {
+export function JuiciestPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
 
     return (
@@ -36,22 +35,13 @@ export function VeganPage() {
             pt={{ base: '64px', lg: '80px' }}
             px={{ base: 4, md: 5, lg: '280px' }}
         >
-            <PageTitle
-                title='Веганская кухня'
-                subTitle='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-            />
+            <PageTitle title='Самое сочное' />
             <VStack mb={8} spacing={4}>
                 <Search />
                 <Show above='lg'>
                     <Filter />
                 </Show>
             </VStack>
-
-            <HStack pos='relative' justify='center' overflow='hidden' h={42}>
-                <Box pos='absolute' w='max-content' top={0}>
-                    <Tabs />
-                </Box>
-            </HStack>
 
             <SimpleGrid
                 mt={{ base: 3, lg: 4, xl: 6 }}
@@ -80,7 +70,7 @@ export function VeganPage() {
                     gap={{ base: 3, lg: 4 }}
                 >
                     <GridItem rowSpan={1} colSpan={1}>
-                        <Title title='Десерты, выпечка' />
+                        <Title title='Веганская кухня' />
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={{ base: 1, lg: 2, xl: 1 }}>
                         <Text
@@ -89,9 +79,9 @@ export function VeganPage() {
                             lineHeight={{ base: '143%', lg: '150%' }}
                             color=' rgba(0, 0, 0, 0.64)'
                         >
-                            Без них невозможно представить себе ни современную, ни традиционную
-                            кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб -
-                            рецепты изделий из теста многообразны и невероятно популярны.
+                            Интересны не только убеждённым вегетарианцам, но и тем, кто хочет
+                            попробовать вегетарианскую диету и готовить вкусные вегетарианские
+                            блюда.
                         </Text>
                     </GridItem>
                 </Grid>

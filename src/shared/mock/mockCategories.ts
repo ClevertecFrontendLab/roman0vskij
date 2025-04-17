@@ -1,20 +1,10 @@
-export type TSubCategory = {
-    id: string;
-    name: string;
-};
-
-export type TCategory = {
-    id: string;
-    name: string;
-    img: string;
-    subCategories: TSubCategory[];
-};
+import { TCategory } from '~/entities/category';
 
 export const mockCategories: TCategory[] = [
     {
         id: 'salads',
         name: 'Салаты',
-        img: '/src/assets/categories/salads.png',
+        img: '/src/shared/assets/categories/salads.png',
         subCategories: [
             { id: 'meat-salads', name: 'Мясные салаты' },
             { id: 'fish-salads', name: 'Рыбные салаты' },
@@ -25,7 +15,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'snacks',
         name: 'Закуски',
-        img: '/src/assets/categories/snacks.png',
+        img: '/src/shared/assets/categories/snacks.png',
         subCategories: [
             { id: 'meat-snacks', name: 'Мясные закуски' },
             { id: 'fish-snacks', name: 'Рыбные закуски' },
@@ -38,7 +28,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'firstDishes',
         name: 'Первые блюда',
-        img: '/src/assets/categories/firstDishes.png',
+        img: '/src/shared/assets/categories/firstDishes.png',
         subCategories: [
             { id: 'meat-soups', name: 'Мясные супы' },
             { id: 'vegetable-soups', name: 'Овощные супы' },
@@ -50,7 +40,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'secondDishes',
         name: 'Вторые блюда',
-        img: '/src/assets/categories/secondDishes.png',
+        img: '/src/shared/assets/categories/secondDishes.png',
         subCategories: [
             { id: 'meat', name: 'Мясные' },
             { id: 'fish', name: 'Рыбные' },
@@ -69,7 +59,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'desserts',
         name: 'Десерты, выпечка',
-        img: '/src/assets/categories/desserts.png',
+        img: '/src/shared/assets/categories/desserts.png',
         subCategories: [
             { id: 'pancakes', name: 'Блины и оладьи' },
             { id: 'pies', name: 'Пироги и пончики' },
@@ -89,7 +79,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'grilled',
         name: 'Блюда на гриле',
-        img: '/src/assets/categories/grilled.png',
+        img: '/src/shared/assets/categories/grilled.png',
         subCategories: [
             { id: 'grill-beef', name: 'Говядина' },
             { id: 'grill-pork', name: 'Свинина' },
@@ -102,7 +92,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'vegan',
         name: 'Веганская кухня',
-        img: '/src/assets/categories/vegan.png',
+        img: '/src/shared/assets/categories/vegan.png',
         subCategories: [
             { id: 'vegan-snacks', name: 'Закуски' },
             { id: 'vegan-first', name: 'Первые блюда' },
@@ -117,7 +107,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'childish',
         name: 'Детские блюда',
-        img: '/src/assets/categories/childish.png',
+        img: '/src/shared/assets/categories/childish.png',
         subCategories: [
             { id: 'kids-first', name: 'Первые блюда' },
             { id: 'kids-second', name: 'Вторые блюда' },
@@ -132,7 +122,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'medicinal',
         name: 'Лечебное питание',
-        img: '/src/assets/categories/medicinal.svg',
+        img: '/src/shared/assets/categories/medicinal.svg',
         subCategories: [
             { id: 'kids-diet', name: 'Детская диета' },
             { id: 'diet-1', name: 'Диета №1' },
@@ -155,7 +145,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'national',
         name: 'Национальные',
-        img: '/src/assets/categories/national.png',
+        img: '/src/shared/assets/categories/national.png',
         subCategories: [
             { id: 'american', name: 'Американская кухня' },
             { id: 'armenian', name: 'Армянская кухня' },
@@ -177,7 +167,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'sauces',
         name: 'Соусы',
-        img: '/src/assets/categories/sauces.png',
+        img: '/src/shared/assets/categories/sauces.png',
         subCategories: [
             { id: 'meat-sauces', name: 'Соусы мясные' },
             { id: 'cheese-sauces', name: 'Соусы сырные' },
@@ -196,7 +186,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'drinks',
         name: 'Напитки',
-        img: '/src/assets/categories/drinks.png',
+        img: '/src/shared/assets/categories/drinks.png',
         subCategories: [
             { id: 'juices', name: 'Соки и фреши' },
             { id: 'smoothies', name: 'Смузи' },
@@ -212,7 +202,7 @@ export const mockCategories: TCategory[] = [
     {
         id: 'preserves',
         name: 'Заготовки',
-        img: '/src/assets/categories/preserves.png',
+        img: '/src/shared/assets/categories/preserves.png',
         subCategories: [
             { id: 'meat-preserves', name: 'Мясные заготовки' },
             { id: 'fish-preserves', name: 'Рыбные заготовки' },

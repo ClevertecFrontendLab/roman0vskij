@@ -1,20 +1,12 @@
-export type TRelevantRecipe = {
-    title: string;
-    text: string;
-    hasTag: boolean;
-    tag?: string;
-    tagImg?: string;
-    saves: number;
-    smiles: number;
-};
+import { TRelevantRecipeCard } from '~/entities/relevantRecipeCard';
 
-export const mockRelevantRecipes: TRelevantRecipe[] = [
+export const mockRelevantRecipes: TRelevantRecipeCard[] = [
     {
         title: 'Картошка, тушенная с болгарским перцем и фасолью в томатном соусе',
         text: 'Картошка, тушенная с болгарским перцем, фасолью, морковью и луком, -  вариант сытного блюда на каждый день. Фасоль в данном случае заменяет мясо, делая рагу сытным и питательным. Чтобы сократить время  приготовления, возьмём консервированную фасоль. Блюдо хоть и простое, но в полной мере наполнено ароматами и имеет выразительный вкус за счёт  добавления томатной пасты.',
         hasTag: true,
         tag: 'Вторые блюда',
-        tagImg: '/src/assets/categories/secondDishes.png',
+        tagImg: '/src/shared/assets/categories/secondDishes.png',
         saves: 1,
         smiles: 1,
     },
@@ -23,7 +15,7 @@ export const mockRelevantRecipes: TRelevantRecipe[] = [
         text: 'Капустные котлеты по этому рецепту получаются необычайно пышными и  невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных  блюд.',
         hasTag: true,
         tag: 'Вторые блюда',
-        tagImg: '/src/assets/categories/secondDishes.png',
+        tagImg: '/src/shared/assets/categories/secondDishes.png',
         saves: 2,
         smiles: 1,
     },
