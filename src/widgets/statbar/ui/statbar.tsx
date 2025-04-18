@@ -6,7 +6,7 @@ import { Statistic } from '~/shared/ui/statistic';
 export function Statbar() {
     return (
         <VStack
-            display={{ base: 'none', lg: 'block' }}
+            display={{ base: 'none', lg: 'flex' }}
             as='aside'
             right={0}
             pos='fixed'
@@ -15,8 +15,9 @@ export function Statbar() {
             pt={20}
             justify='space-between'
             align='flex-end'
+            gap={0}
         >
-            <Flex w={208} h='100%' justify='flex-end' pr={14}>
+            <Flex w={208} justify='flex-end' pr={14}>
                 <Statistic />
             </Flex>
             <NoteButton />

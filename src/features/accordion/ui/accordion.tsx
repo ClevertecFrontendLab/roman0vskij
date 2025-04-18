@@ -7,6 +7,7 @@ import {
     Image,
     Link,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { CloseArrowIcon, OpenArrowIcon } from '~/shared/assets/icons';
@@ -22,8 +23,29 @@ export function Accordion() {
         navigate(`/${category}/${subCategory}`);
     }
 
+    const [expandedIndexes, setExpandedIndexes] = useState<number>(-1);
+
+    const isAnyOpen = expandedIndexes >= 0;
+
+    const handleAccordionChange = (indexes: number) => {
+        setExpandedIndexes(indexes);
+    };
+
     return (
-        <AccordionWrapper allowToggle w='100%' mt='34px' variant='colorful' overflowY='auto'>
+        <AccordionWrapper
+            allowToggle
+            w='100%'
+            mt='34px'
+            variant='colorful'
+            overflowY='auto'
+            onChange={handleAccordionChange}
+            boxShadow={
+                isAnyOpen
+                    ? '0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    : 'none'
+            }
+            borderRadius={isAnyOpen ? 12 : 0}
+        >
             {mockCategories.map((category) => (
                 <AccordionItem
                     key={category.id}
@@ -45,7 +67,7 @@ export function Accordion() {
                                     {isExpanded ? <CloseArrowIcon /> : <OpenArrowIcon />}
                                 </AccordionButton>
                             </h2>
-                            <AccordionPanel pb={4} display='flex' flexDirection='column'>
+                            <AccordionPanel display='flex' flexDirection='column'>
                                 {category.subCategories.map((subCategory) => (
                                     <Link
                                         onClick={() => onClickHandler(category.id, subCategory.id)}

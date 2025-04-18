@@ -6,7 +6,7 @@ import { SignOutIcon } from '~/shared/assets/icons';
 export function Sidebar() {
     return (
         <VStack
-            display={{ base: 'none', lg: 'block' }}
+            display={{ base: 'none', lg: 'flex' }}
             as='aside'
             pos='fixed'
             w={256}
@@ -14,6 +14,8 @@ export function Sidebar() {
             pt={20}
             boxShadow='0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)'
             justify='space-between'
+            overflow='auto'
+            gap={0}
         >
             <Accordion />
             <VStack
