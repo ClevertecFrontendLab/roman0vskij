@@ -7,14 +7,16 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 const colorfulVariant = definePartsStyle(() => ({
     tab: {
         color: '#134b00',
+        borderTop: '1px solid transparent',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
         _selected: {
             color: '#2db100',
+            borderTop: 'none',
+            borderBottom: '2px solid #2db100',
         },
     },
     indicator: {
-        mt: '-2px',
-        height: '2px',
-        bg: '#2db100',
+        display: 'none',
     },
 }));
 const variants = {

@@ -38,12 +38,19 @@ export const theme = extendTheme({
                 borderRadius: '4px',
             },
             '::-webkit-scrollbar-track': {
-                background: 'transparent',
+                background: 'rgba(0, 0, 0, 0.04)',
             },
             '::-webkit-scrollbar-button': {
                 display: 'none',
                 width: 0,
                 height: 0,
+            },
+            body: {
+                scrollbarWidth: 0,
+                '::-webkit-scrollbar': {
+                    width: 0,
+                    height: 0,
+                },
             },
         },
     },

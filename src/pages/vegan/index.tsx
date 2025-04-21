@@ -47,11 +47,7 @@ export function VeganPage() {
                 </Show>
             </VStack>
 
-            <HStack pos='relative' justify='center' overflow='hidden' h={42}>
-                <Box pos='absolute' w='max-content' top={0}>
-                    <Tabs />
-                </Box>
-            </HStack>
+            <Tabs />
 
             <SimpleGrid
                 mt={{ base: 3, lg: 4, xl: 6 }}

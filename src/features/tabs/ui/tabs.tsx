@@ -1,7 +1,8 @@
-import { Tab, TabIndicator, TabList, Tabs as TabsWrapper } from '@chakra-ui/react';
+import { Box, HStack, Tab, TabIndicator, TabList, Tabs as TabsWrapper } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router';
 
-import { mockCategories, TCategory } from '~/shared/mock/mockCategories';
+import { TCategory } from '~/entities/category';
+import { mockCategories } from '~/shared/mock/mockCategories';
 
 export function Tabs() {
     const location = useLocation();
@@ -20,18 +21,40 @@ export function Tabs() {
     );
 
     return (
-        <TabsWrapper variant='colorful' defaultIndex={subCategoryIndex}>
-            <TabList>
-                {category.subCategories.map((subCategory) => (
-                    <Tab
-                        key={subCategory.id}
-                        onClick={() => onClickHandler(category.id, subCategory.id)}
-                    >
-                        {subCategory.name}
-                    </Tab>
-                ))}
-            </TabList>
-            <TabIndicator />
-        </TabsWrapper>
+        <HStack pos='relative' justify='center' overflow='hidden' h={12} gap={0}>
+            <TabsWrapper
+                key={category.id}
+                variant='colorful'
+                defaultIndex={subCategoryIndex}
+                w='100%'
+            >
+                <Box
+                    overflowX='auto'
+                    whiteSpace='nowrap'
+                    display='flex'
+                    sx={{
+                        '&::-webkit-scrollbar': {
+                            display: { base: 'none', lg: 'initial' },
+                        },
+                        scrollbarWidth: {
+                            base: 'none',
+                            lg: 'auto',
+                        },
+                    }}
+                >
+                    <TabList minW='max-content' mx='auto'>
+                        {category.subCategories.map((subCategory) => (
+                            <Tab
+                                key={subCategory.id}
+                                onClick={() => onClickHandler(category.id, subCategory.id)}
+                            >
+                                {subCategory.name}
+                            </Tab>
+                        ))}
+                    </TabList>
+                </Box>
+                <TabIndicator />
+            </TabsWrapper>
+        </HStack>
     );
 }

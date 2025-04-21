@@ -4,7 +4,6 @@ import {
     GridItem,
     Hide,
     HStack,
-    IconButton,
     Show,
     SimpleGrid,
     Stack,
@@ -17,19 +16,17 @@ import { useNavigate } from 'react-router';
 import { BlogCard } from '~/entities/blogCard';
 import { CookCard } from '~/entities/cookCard';
 import { MainCard } from '~/entities/mainCard';
-import { RecipeCard } from '~/entities/recipeCard';
 import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
 import { Filter } from '~/features/filter';
 import { Search } from '~/features/search';
-import { LeftArrowIcon, RightArrowIcon } from '~/shared/assets/icons';
 import { mockBlogCards } from '~/shared/mock/mockBlogCards';
 import { mockCookCards } from '~/shared/mock/mockCookCards';
 import { mockMainCards } from '~/shared/mock/mockMainCards';
-import { mockRecipes } from '~/shared/mock/mockRecipes';
 import { mockRelevantRecipes } from '~/shared/mock/mockRelevantRecipes';
 import { GreenButton } from '~/shared/ui/greenButton';
 import { PageTitle } from '~/shared/ui/pageTitle';
 import { Title } from '~/shared/ui/title';
+import { Slider } from '~/widgets/slider';
 
 export function MainPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
@@ -56,56 +53,11 @@ export function MainPage() {
                 </Show>
             </VStack>
             <Title title='Новые рецепты' />
-            <Box position='relative'>
-                <Show above='lg'>
-                    <IconButton
-                        key='previous button'
-                        bgColor='#000'
-                        w={12}
-                        h={12}
-                        pos='absolute'
-                        top='171px'
-                        left={-2}
-                        zIndex={10}
-                        borderRadius={6}
-                        aria-label='previous button'
-                        icon={<LeftArrowIcon fill='#ffffd3' />}
-                        variant='none'
-                    />
-                    <IconButton
-                        key='next button'
-                        bgColor='#000'
-                        w={12}
-                        h={12}
-                        pos='absolute'
-                        top='171px'
-                        right={-2}
-                        zIndex={10}
-                        borderRadius={6}
-                        aria-label='next button'
-                        icon={<RightArrowIcon fill='#ffffd3' />}
-                        variant='none'
-                    />
-                </Show>
-                <Box overflowX='hidden' overflowY='visible'>
-                    <HStack
-                        mt={{ base: 3, lg: 6 }}
-                        pb={3}
-                        gap={{ base: 3, xl: 6 }}
-                        w='max-content'
-                        overflowX='auto'
-                        overflowY='visible'
-                    >
-                        {mockRecipes.map((recipe, i) => (
-                            <RecipeCard key={`recipe${i}`} {...recipe} />
-                        ))}
-                    </HStack>
-                </Box>
-            </Box>
+            <Slider />
             <HStack justify='space-between' mt={{ base: 5, lg: 7 }}>
                 <Title title='Самое сочное ' />
                 <GreenButton
-                    onClick={onClickHandler}
+                    onclick={onClickHandler}
                     data-test-id='juiciest-link'
                     text='Вся подборка'
                     hasArrow
