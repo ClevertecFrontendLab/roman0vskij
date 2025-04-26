@@ -5,7 +5,7 @@ export function HeaderProfile() {
     const name = 'Екатерина Константинопольская';
     const login = '@bake_and_pie';
     return (
-        <Box pr={6}>
+        <Box pr={6} flexShrink={0}>
             <Flex gap={3}>
                 <Avatar
                     size='md'

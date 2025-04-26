@@ -6,11 +6,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { RecipeCard } from '~/entities/recipeCard';
 import { LeftArrowIcon, RightArrowIcon } from '~/shared/assets/icons';
-import { mockRecipes } from '~/shared/mock/mockRecipes';
+import { mockData } from '~/shared/mock/mockData';
 
 export function Slider() {
     const [isLargerThan1920] = useMediaQuery('(min-width: 1920px)');
     const [isLargerThan1200] = useMediaQuery('(min-width: 1200px)');
+
+    const mock = mockData
+        .map((e) => ({ ...e, date: new Date(e.date) }))
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .map((e) => ({ ...e, date: e.date.toISOString() }))
+        .slice(0, 10);
 
     return (
         <Box pos='relative'>
@@ -28,7 +34,7 @@ export function Slider() {
                     paddingBottom: '12px',
                 }}
             >
-                {mockRecipes.map((recipe, i) => (
+                {mock.map((recipe, i) => (
                     <SwiperSlide key={`recipe${i}`} style={{ width: 'max-content' }}>
                         <RecipeCard {...recipe} />
                     </SwiperSlide>

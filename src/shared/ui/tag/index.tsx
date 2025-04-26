@@ -1,24 +1,43 @@
 import { Box, HStack, Image, Text } from '@chakra-ui/react';
 
-type TProps = {
-    img: string;
-    tagName: string;
-    bgClr: string;
+import { mockCategories } from '~/shared/mock/mockCategories';
+
+type TBaseProps = {
     isRelevant?: boolean;
+    bgClr: string;
+    category: string[];
 };
 
-export function Tag({ img, tagName, bgClr, isRelevant = false }: TProps) {
+type TCustomProps = {
+    type: 'custom';
+    isRelevant?: boolean;
+    bgClr: string;
+    name: string;
+    img: string;
+};
+
+type TProps = (TBaseProps & { type?: 'base' }) | TCustomProps;
+
+export function Tag(props: TProps) {
+    function isBaseProps(props: TProps): props is TBaseProps {
+        return !props.type || props.type === 'base';
+    }
+
+    const categor = isBaseProps(props)
+        ? mockCategories.find((e) => e.id === props.category[0])
+        : props;
+
     return (
         <Box
-            bgColor={bgClr}
+            bgColor={props.bgClr}
             w='fit-content'
-            px={isRelevant ? 2 : { base: 1, lg: 2 }}
+            px={props.isRelevant ? 2 : { base: 1, lg: 2 }}
             py={0.5}
             borderRadius={4}
             h={6}
         >
-            <HStack spacing={isRelevant ? 2 : { base: 0.5, lg: 2 }}>
-                <Image h={4} w={4} src={`${img}`} />
+            <HStack spacing={props.isRelevant ? 2 : { base: 0.5, lg: 2 }}>
+                <Image h={4} w={4} src={categor?.img} />
                 <Text
                     fontSize={14}
                     fontWeight={400}
@@ -27,7 +46,7 @@ export function Tag({ img, tagName, bgClr, isRelevant = false }: TProps) {
                     wordBreak='break-all'
                     noOfLines={1}
                 >
-                    {tagName}
+                    {categor?.name}
                 </Text>
             </HStack>
         </Box>

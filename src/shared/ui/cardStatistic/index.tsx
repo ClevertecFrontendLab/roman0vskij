@@ -1,28 +1,28 @@
 import { HStack, Text } from '@chakra-ui/react';
 
-import { SaveIcon, SmileIcon } from '~/shared/assets/icons';
+import { BookmarkIcon, LikeIcon } from '~/shared/assets/icons';
 
 type TProps = {
-    saves: number;
-    smiles: number;
+    bookmarks: number;
+    likes: number;
 };
 
-export function CardStatistic({ saves, smiles }: TProps) {
+export function CardStatistic({ bookmarks, likes }: TProps) {
     return (
         <HStack h={6} gap={2}>
-            {saves > 0 && (
+            {bookmarks > 0 && (
                 <HStack gap={1.5} p={1}>
-                    <SaveIcon />
+                    <BookmarkIcon />
                     <Text fontSize={12} fontWeight={600} lineHeight='133%' color='#2db100'>
-                        {saves}
+                        {bookmarks}
                     </Text>
                 </HStack>
             )}
-            {smiles > 0 && (
+            {likes > 0 && (
                 <HStack gap={1.5} p={1}>
-                    <SmileIcon />
+                    <LikeIcon />
                     <Text fontSize={12} fontWeight={600} lineHeight='133%' color='#2db100'>
-                        {smiles}
+                        {likes}
                     </Text>
                 </HStack>
             )}

@@ -1,6 +1,10 @@
 import { extendTheme } from '@chakra-ui/react';
 
 import { accordionTheme } from './accordionTheme';
+import { inputTheme } from './inputTheme';
+import { menuTheme } from './menuTheme';
+import { switchTheme } from './switchTheme';
+import { tableTheme } from './tableTheme';
 import { tabsTheme } from './tabsTheme';
 
 const breakpoints = {
@@ -22,6 +26,10 @@ export const theme = extendTheme({
     components: {
         Tabs: tabsTheme,
         Accordion: accordionTheme,
+        Table: tableTheme,
+        Switch: switchTheme,
+        Input: inputTheme,
+        Menu: menuTheme,
     },
     styles: {
         global: {

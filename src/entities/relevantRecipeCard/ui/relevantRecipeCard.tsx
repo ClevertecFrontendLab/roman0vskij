@@ -1,19 +1,10 @@
 import { Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react';
 
+import { TMock } from '~/shared/types';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
 import { Tag } from '~/shared/ui/tag';
 
-import { TRelevantRecipeCard } from '..';
-
-export function RelevantRecipeCard({
-    title,
-    text,
-    hasTag,
-    tag = '',
-    tagImg = '',
-    saves,
-    smiles,
-}: TRelevantRecipeCard) {
+export function RelevantRecipeCard(props: TMock) {
     return (
         <Card
             w='100%'
@@ -40,7 +31,7 @@ export function RelevantRecipeCard({
                     wordBreak='break-all'
                     noOfLines={1}
                 >
-                    {title}
+                    {props.title}
                 </Heading>
             </CardHeader>
             <CardBody p={0} mb={6} maxH={24} overflow='hidden'>
@@ -56,12 +47,12 @@ export function RelevantRecipeCard({
                         overflow: 'hidden',
                     }}
                 >
-                    {text}
+                    {props.description}
                 </Text>
             </CardBody>
             <CardFooter p={0} justify='space-between'>
-                {hasTag ? <Tag bgClr='#ffffd3' tagName={tag} img={tagImg} isRelevant /> : <></>}
-                <CardStatistic saves={saves} smiles={smiles} />
+                <Tag bgClr='#ffffd3' isRelevant {...props} />
+                <CardStatistic bookmarks={props.bookmarks} likes={props.likes} />
             </CardFooter>
         </Card>
     );

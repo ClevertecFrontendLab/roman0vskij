@@ -13,11 +13,15 @@ import { useLocation, useNavigate } from 'react-router';
 import { CloseArrowIcon, OpenArrowIcon } from '~/shared/assets/icons';
 import { mockCategories } from '~/shared/mock/mockCategories';
 
-export function Accordion() {
-    const location = useLocation();
-    const [_, selectedCategory, selectedSubCategory] = location.pathname.split('/');
+type TProps = {
+    isMobile?: boolean;
+};
 
+export function Accordion({ isMobile = false }: TProps) {
+    const location = useLocation();
     const navigate = useNavigate();
+
+    const [_, selectedCategory, selectedSubCategory] = location.pathname.split('/');
 
     function onClickHandler(category: string, subCategory: string) {
         navigate(`/${category}/${subCategory}`);
@@ -35,12 +39,11 @@ export function Accordion() {
         <AccordionWrapper
             allowToggle
             w='100%'
-            mt='34px'
             variant='colorful'
             overflowY='auto'
             onChange={handleAccordionChange}
             boxShadow={
-                isAnyOpen
+                !isMobile && isAnyOpen
                     ? '0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                     : 'none'
             }

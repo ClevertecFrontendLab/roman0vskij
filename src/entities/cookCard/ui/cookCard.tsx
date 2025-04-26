@@ -1,8 +1,9 @@
 import { Button, Flex, HStack, Image, Text } from '@chakra-ui/react';
 
-import { TCookCard } from '..';
+import { mockCategories } from '~/shared/mock/mockCategories';
+import { TMock } from '~/shared/types';
 
-export function CookCard({ text, img }: TCookCard) {
+export function CookCard({ title, category }: TMock) {
     return (
         <HStack
             border='1px solid rgba(0, 0, 0, 0.08)'
@@ -20,7 +21,7 @@ export function CookCard({ text, img }: TCookCard) {
             }}
         >
             <Flex gap={{ base: 2, xl: 3 }} wrap='nowrap'>
-                <Image src={img} alt='img' />
+                <Image src={mockCategories.find((e) => e.id === category[0])?.img} alt='img' />
                 <Text
                     wordBreak='break-all'
                     noOfLines={1}
@@ -29,7 +30,7 @@ export function CookCard({ text, img }: TCookCard) {
                     fontSize={{ base: 16, lg: 18, xl: 20 }}
                     lineHeight={{ base: '150%', lg: '156%', xl: '140%' }}
                 >
-                    {text}
+                    {title}
                 </Text>
             </Flex>
             <Button

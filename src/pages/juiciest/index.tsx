@@ -3,7 +3,6 @@ import {
     Grid,
     GridItem,
     HStack,
-    Show,
     SimpleGrid,
     Stack,
     Text,
@@ -14,14 +13,10 @@ import {
 import { CookCard } from '~/entities/cookCard';
 import { MainCard } from '~/entities/mainCard';
 import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
-import { Filter } from '~/features/filter';
-import { Search } from '~/features/search';
-import { mockCookCards } from '~/shared/mock/mockCookCards';
-import { mockMainCards } from '~/shared/mock/mockMainCards';
-import { mockRelevantRecipes } from '~/shared/mock/mockRelevantRecipes';
+import { mockData } from '~/shared/mock/mockData';
 import { GreenButton } from '~/shared/ui/greenButton';
-import { PageTitle } from '~/shared/ui/pageTitle';
 import { Title } from '~/shared/ui/title';
+import { SearchAndFilter } from '~/widgets/searchAndFilter';
 
 export function JuiciestPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
@@ -35,24 +30,15 @@ export function JuiciestPage() {
             pt={{ base: '64px', lg: '80px' }}
             px={{ base: 4, md: 5, lg: '280px' }}
         >
-            <PageTitle title='Самое сочное' />
-            <VStack mb={8} spacing={4}>
-                <Search />
-                <Show above='lg'>
-                    <Filter />
-                </Show>
-            </VStack>
+            <SearchAndFilter title='Самое сочное' />
 
             <SimpleGrid
                 mt={{ base: 3, lg: 4, xl: 6 }}
                 columns={{ base: 1, md: 2, lg: 1, xl: 2 }}
                 gap={{ base: 3, md: 4, xl: 6 }}
             >
-                {mockMainCards.map((recipe, i) => (
+                {mockData.map((recipe, i) => (
                     <MainCard key={`main${i}`} {...recipe} />
-                ))}
-                {mockMainCards.map((recipe, i) => (
-                    <MainCard key={`mainmain${i}`} {...recipe} />
                 ))}
             </SimpleGrid>
             <HStack justify='center' mt={4}>
@@ -91,7 +77,7 @@ export function JuiciestPage() {
                     mt={{ base: 4, lg: 6 }}
                     gap={{ base: 3, lg: 4 }}
                 >
-                    {mockRelevantRecipes.map((recipe, i) => (
+                    {mockData.slice(0, 2).map((recipe, i) => (
                         <GridItem key={`recipe${i}`} rowSpan={1} colSpan={1}>
                             <RelevantRecipeCard {...recipe} />
                         </GridItem>
@@ -99,7 +85,7 @@ export function JuiciestPage() {
 
                     <GridItem rowSpan={1} colSpan={{ base: 1, xl: 2 }}>
                         <VStack gap={3}>
-                            {mockCookCards.map((card, i) => (
+                            {mockData.slice(0, 3).map((card, i) => (
                                 <CookCard key={`cook${i}`} {...card} />
                             ))}
                         </VStack>

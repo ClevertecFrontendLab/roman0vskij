@@ -26,7 +26,7 @@ export const mockCategories: TCategory[] = [
         ],
     },
     {
-        id: 'firstDishes',
+        id: 'first-dish',
         name: 'Первые блюда',
         img: '/src/shared/assets/categories/firstDishes.png',
         subCategories: [
@@ -38,14 +38,14 @@ export const mockCategories: TCategory[] = [
         ],
     },
     {
-        id: 'secondDishes',
+        id: 'second-dish',
         name: 'Вторые блюда',
         img: '/src/shared/assets/categories/secondDishes.png',
         subCategories: [
             { id: 'meat', name: 'Мясные' },
             { id: 'fish', name: 'Рыбные' },
             { id: 'vegetable', name: 'Овощные' },
-            { id: 'poultry', name: 'Из птицы' },
+            { id: 'poultry-dish', name: 'Из птицы' },
             { id: 'mushrooms', name: 'Из грибов' },
             { id: 'offal', name: 'Из субпродуктов' },
             { id: 'steamed', name: 'На пару' },
@@ -94,10 +94,10 @@ export const mockCategories: TCategory[] = [
         name: 'Веганская кухня',
         img: '/src/shared/assets/categories/vegan.png',
         subCategories: [
-            { id: 'vegan-snacks', name: 'Закуски' },
+            { id: 'snacks', name: 'Закуски' },
             { id: 'vegan-first', name: 'Первые блюда' },
-            { id: 'vegan-second', name: 'Вторые блюда' },
-            { id: 'vegan-side', name: 'Гарниры' },
+            { id: 'second-dish', name: 'Вторые блюда' },
+            { id: 'side-dishes', name: 'Гарниры' },
             { id: 'vegan-desserts', name: 'Десерты' },
             { id: 'vegan-bakery', name: 'Выпечка' },
             { id: 'vegan-raw', name: 'Сыроедческие блюда' },

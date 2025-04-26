@@ -1,33 +1,28 @@
 import {
-    Box,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
     Heading,
-    Hide,
     Image,
     Show,
     Text,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
+import { TMock } from '~/shared/types';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
-import { Tag } from '~/shared/ui/tag';
 
-import { TRecipeCard } from '..';
+export function RecipeCard(props: TMock) {
+    const navigate = useNavigate();
 
-export function RecipeCard({
-    img,
-    title,
-    text,
-    hasTag,
-    tag = '',
-    tagImg = '',
-    saves,
-    smiles,
-}: TRecipeCard) {
+    function handleOnclick() {
+        navigate(`/${props.category[0]}/${props.subcategory[0]}/${props.id}`);
+    }
+
     return (
         <Card
+            onClick={handleOnclick}
             w={[158, null, null, 277, 322]}
             h={[220, null, null, 402, 414]}
             borderRadius={8}
@@ -43,7 +38,7 @@ export function RecipeCard({
                 position='relative'
                 h={{ base: 128, lg: 230 }}
                 objectFit='cover'
-                src={img}
+                src={props.image}
                 alt='recipe'
                 borderTopRadius={8}
             />
@@ -60,7 +55,7 @@ export function RecipeCard({
                         WebkitLineClamp: { base: 2, lg: 1 },
                     }}
                 >
-                    {title}
+                    {props.title}
                 </Heading>
             </CardHeader>
             <Show above='lg'>
@@ -77,7 +72,7 @@ export function RecipeCard({
                             overflow: 'hidden',
                         }}
                     >
-                        {text}
+                        {props.description}
                     </Text>
                 </CardBody>
             </Show>
@@ -88,15 +83,23 @@ export function RecipeCard({
                 pb={[1, null, null, 3, 5]}
                 justify='space-between'
             >
-                <Show above='lg'>
-                    {hasTag ? <Tag bgClr='#d7ff94' tagName={tag} img={tagImg} /> : <Box />}
+                {/* <Show above='lg'>
+                    {props?.hasTag ? (
+                        <Tag bgClr='#d7ff94' tagName={props?.tag} img={props?.tagImg} />
+                    ) : (
+                        <Box />
+                    )}
                 </Show>
                 <Hide above='lg'>
                     <Box position='absolute' top={2} left={2} w='100%'>
-                        {hasTag ? <Tag bgClr='#d7ff94' tagName={tag} img={tagImg} /> : <Box />}
+                        {props?.hasTag ? (
+                            <Tag bgClr='#d7ff94' tagName={props?.tag} img={props?.tagImg} />
+                        ) : (
+                            <Box />
+                        )}
                     </Box>
-                </Hide>
-                <CardStatistic saves={saves} smiles={smiles} />
+                </Hide> */}
+                <CardStatistic bookmarks={props.bookmarks} likes={props.likes} />
             </CardFooter>
         </Card>
     );

@@ -15,25 +15,15 @@ import {
     VStack,
 } from '@chakra-ui/react';
 
-import { SaveIcon } from '~/shared/assets/icons';
+import { BookmarkIcon } from '~/shared/assets/icons';
+import { TMock } from '~/shared/types';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
 import { RecomendationTag } from '~/shared/ui/recomendationTag';
 import { Tag } from '~/shared/ui/tag';
 
-import { TMainCard } from '..';
-
-export function MainCard({
-    img,
-    title,
-    text,
-    hasTag,
-    tag = '',
-    tagImg = '',
-    saves,
-    smiles,
-    userName = '',
-    userImg = '',
-}: TMainCard) {
+export function MainCard(props: TMock) {
+    const userName = 'Alex Cook';
+    const userImg = '/src/shared/assets/mockData/alex.jpg';
     return (
         <Card
             w='100%'
@@ -52,7 +42,7 @@ export function MainCard({
                 position='relative'
                 minW={{ base: 158, lg: 346 }}
                 objectFit='cover'
-                src={img}
+                src={props.image}
                 alt='recipe'
                 borderLeftRadius={8}
             />
@@ -73,14 +63,14 @@ export function MainCard({
             >
                 <Flex mb={{ base: 0, lg: 6 }} justify='space-between' w='100%'>
                     <Show above='lg'>
-                        {hasTag ? <Tag bgClr='#ffffd3' tagName={tag} img={tagImg} /> : <Box />}
+                        <Tag bgClr='#ffffd3' {...props} />
                     </Show>
                     <Hide above='lg'>
                         <Box position='absolute' top={2} left={2} w='100%'>
-                            {hasTag ? <Tag bgClr='#ffffd3' tagName={tag} img={tagImg} /> : <Box />}
+                            <Tag bgClr='#ffffd3' {...props} />
                         </Box>
                     </Hide>
-                    <CardStatistic saves={saves} smiles={smiles} />
+                    <CardStatistic bookmarks={props.bookmarks} likes={props.likes} />
                 </Flex>
                 <CardHeader mb={{ base: 5, lg: 2 }} p={0}>
                     <Heading
@@ -95,7 +85,7 @@ export function MainCard({
                             WebkitLineClamp: { base: 2, lg: 1 },
                         }}
                     >
-                        {title}
+                        {props.title}
                     </Heading>
                 </CardHeader>
                 <Show above='lg'>
@@ -112,7 +102,7 @@ export function MainCard({
                                 overflow: 'hidden',
                             }}
                         >
-                            {text}
+                            {props.description}
                         </Text>
                     </CardBody>
                 </Show>
@@ -128,7 +118,7 @@ export function MainCard({
                     <Show above='lg'>
                         <Button
                             variant='none'
-                            leftIcon={<SaveIcon w={3.5} h={3.5} />}
+                            leftIcon={<BookmarkIcon w={3.5} h={3.5} />}
                             border=' 1px solid rgba(0, 0, 0, 0.48)'
                             fontWeight={600}
                             fontSize={14}
@@ -145,7 +135,7 @@ export function MainCard({
                         <IconButton
                             variant='none'
                             aria-label='save button'
-                            icon={<SaveIcon />}
+                            icon={<BookmarkIcon />}
                             border='1px solid rgba(0, 0, 0, 0.48)'
                             minW={0}
                             w={6}
