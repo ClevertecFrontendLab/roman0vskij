@@ -30,8 +30,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Allergen } from '~/features/filter';
 import { CirclePlusIcon } from '~/shared/assets/icons';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
+import { mockData } from '~/shared/mock/mockData';
+import { TMock } from '~/shared/types';
 
 import {
+    setData,
     setSelectedAllergens,
     setSelectedAuthors,
     setSelectedCategories,
@@ -182,8 +185,11 @@ export function Drawer() {
         dispatch(setSelectedSide([]));
     }
 
-    function handleFindRecipe() {
+    function useHandleFindRecipe() {
         onClose();
+        const filtredData = filterBySide(filterByCategories(filterByAllergens(mockData)));
+        dispatch(setData(filtredData));
+        handleClear();
         navigate('/filters');
     }
 
@@ -198,6 +204,39 @@ export function Drawer() {
             ? setDisabled(false)
             : setDisabled(true);
     }, [selectedAllergens, selectedAuthors, selectedCategories, selectedMeat, selectedSide]);
+
+    function filterByAllergens(data: TMock[]) {
+        return selectedAllergens.length > 0
+            ? data.filter(
+                  (recipe) =>
+                      !recipe.ingredients.find((ingred) =>
+                          selectedAllergens.find((a) =>
+                              ingred.title.toLowerCase().includes(a.toLowerCase()),
+                          ),
+                      ),
+              )
+            : data;
+    }
+
+    function filterByCategories(data: TMock[]) {
+        return selectedCategories.length > 0
+            ? data.filter((recipe) =>
+                  recipe.category.find((ingred) =>
+                      selectedCategories.find(() =>
+                          ingred.toLowerCase().includes('vegan'.toLowerCase()),
+                      ),
+                  ),
+              )
+            : data;
+    }
+
+    function filterBySide(data: TMock[]) {
+        return selectedSide.length > 0
+            ? data.filter((recipe) =>
+                  selectedSide.find((s) => s.toLowerCase() == recipe.side?.toLowerCase()),
+              )
+            : data;
+    }
 
     return (
         <>
@@ -749,7 +788,7 @@ export function Drawer() {
                                 lineHeight='156%'
                                 px={6}
                                 h={12}
-                                onClick={handleFindRecipe}
+                                onClick={useHandleFindRecipe}
                             >
                                 Найти рецепт
                             </Button>

@@ -83,7 +83,7 @@ export const mockData = [
                 image: '',
             },
         ],
-        side: 'potatoes',
+        side: 'картошка',
     },
     {
         id: '2',
@@ -198,7 +198,7 @@ export const mockData = [
                 image: '',
             },
         ],
-        side: 'potatoes',
+        side: 'картошка',
     },
     {
         id: '5',

@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { TMock } from '~/shared/types';
+
 type initialState = {
+    data: TMock[];
     selectedCategories: string[];
     selectedAuthors: string[];
     selectedMeat: string[];
@@ -9,6 +12,7 @@ type initialState = {
 };
 
 const initialState: initialState = {
+    data: [],
     selectedCategories: [],
     selectedAuthors: [],
     selectedMeat: [],
@@ -20,6 +24,9 @@ export const drawerSlice = createSlice({
     name: 'drawer',
     initialState,
     reducers: {
+        setData: (state, action: PayloadAction<TMock[]>) => {
+            state.data = action.payload;
+        },
         setSelectedCategories: (state, action: PayloadAction<string[]>) => {
             state.selectedCategories = action.payload;
         },
@@ -39,6 +46,7 @@ export const drawerSlice = createSlice({
 });
 
 export const {
+    setData,
     setSelectedCategories,
     setSelectedAuthors,
     setSelectedMeat,

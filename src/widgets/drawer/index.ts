@@ -1,6 +1,7 @@
 export {
     default as drawerReducer,
     drawerSlice,
+    setData,
     setSelectedAllergens,
     setSelectedAuthors,
     setSelectedCategories,
@@ -8,6 +9,7 @@ export {
     setSelectedSide,
 } from './model/drawerSlice';
 export {
+    selectData,
     selectSelectedAllergens,
     selectSelectedAuthors,
     selectSelectedCategories,

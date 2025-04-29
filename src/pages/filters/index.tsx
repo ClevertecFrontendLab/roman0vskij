@@ -3,61 +3,20 @@ import { useSelector } from 'react-redux';
 
 import { MainCard } from '~/entities/mainCard';
 import { Filter } from '~/features/filter';
-import { useFilterByAllergens } from '~/features/filter/model/filterByAllergens';
 import { useSearch } from '~/features/search';
-import { mockData } from '~/shared/mock/mockData';
-import { TMock } from '~/shared/types';
 import { PageTitle } from '~/shared/ui/pageTitle';
 import { PageWrapper } from '~/shared/ui/pageWrapper';
 import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
-import { Drawer, selectSelectedCategories, selectSelectedSide } from '~/widgets/drawer';
+import { Drawer, selectData } from '~/widgets/drawer';
 
 export function FiltersPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
-    //const dispatch = useDispatch();
 
-    const filterByAllergens = useFilterByAllergens();
     const { SearchInput, filterBySearchQuery } = useSearch();
 
-    function useFilterByCategories(data: TMock[]) {
-        const categories = useSelector(selectSelectedCategories);
+    const data = useSelector(selectData);
 
-        //console.log(categories, data);
-
-        return categories.length > 0
-            ? data.filter((recipe) =>
-                  recipe.category.find((ingred) =>
-                      categories.find(() => ingred.toLowerCase().includes('vegan'.toLowerCase())),
-                  ),
-              )
-            : data;
-    }
-
-    function useFilterBySide(data: TMock[]) {
-        const side = useSelector(selectSelectedSide);
-
-        //console.log(side, data);
-
-        return side.length > 0
-            ? data.filter((recipe) =>
-                  side.find((s) => s.toLowerCase() == recipe.side?.toLowerCase()),
-              )
-            : data;
-    }
-
-    const filtredData = filterBySearchQuery(
-        useFilterBySide(useFilterByCategories(filterByAllergens(mockData))),
-    );
-
-    // function handleClear() {
-    //     dispatch(setSelectedCategories([]));
-    //     dispatch(setSelectedAuthors([]));
-    //     dispatch(setSelectedAllergens([]));
-    //     dispatch(setSelectedMeat([]));
-    //     dispatch(setSelectedSide([]));
-    // }
-
-    //handleClear();
+    const filtredData = filterBySearchQuery(data);
 
     return (
         <PageWrapper>

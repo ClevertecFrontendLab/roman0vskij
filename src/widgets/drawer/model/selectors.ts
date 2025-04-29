@@ -1,5 +1,6 @@
 import { ApplicationState } from '~/store/configure-store';
 
+export const selectData = (state: ApplicationState) => state.drawer.data;
 export const selectSelectedCategories = (state: ApplicationState) =>
     state.drawer.selectedCategories;
 export const selectSelectedAuthors = (state: ApplicationState) => state.drawer.selectedAuthors;

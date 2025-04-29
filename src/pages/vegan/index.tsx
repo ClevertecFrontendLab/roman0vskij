@@ -3,8 +3,6 @@ import {
     Grid,
     GridItem,
     HStack,
-    IconButton,
-    Image,
     Show,
     SimpleGrid,
     Stack,
@@ -27,6 +25,7 @@ import { PageTitle } from '~/shared/ui/pageTitle';
 import { PageWrapper } from '~/shared/ui/pageWrapper';
 import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
 import { Title } from '~/shared/ui/title';
+import { Drawer } from '~/widgets/drawer';
 import { Tabs } from '~/widgets/tabs';
 
 export function VeganPage() {
@@ -60,25 +59,7 @@ export function VeganPage() {
                         px={4}
                         justifySelf='center'
                     >
-                        <IconButton
-                            minW={{ base: 8, lg: 12 }}
-                            minH={{ base: 8, lg: 12 }}
-                            w={{ base: 8, lg: 12 }}
-                            h={{ base: 8, lg: 12 }}
-                            aria-label='button near search'
-                            icon={
-                                <Image
-                                    w={{ base: 3.5, lg: 6 }}
-                                    h={{ base: 3.5, lg: 6 }}
-                                    src='/src/shared/assets/buttonNearSearch.svg'
-                                    alt='near search icon'
-                                />
-                            }
-                            bg='none'
-                            border='1px solid rgba(0, 0, 0, 0.48)'
-                            borderRadius={6}
-                            p={0}
-                        />
+                        <Drawer />
 
                         <SearchInput />
                     </HStack>

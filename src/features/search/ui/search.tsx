@@ -19,7 +19,6 @@ export function Search({ onclick }: TProps) {
     const [isButtonDisabled, setButtonDisabled] = useState(searchQuery.trim().length < 3);
 
     function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e.currentTarget.value.trim().length < 3);
         setInputValue(e.currentTarget.value);
         setButtonDisabled(e.currentTarget.value.trim().length < 3);
         if (e.currentTarget.value.length === 0) dispatch(setSearchQuery(''));
@@ -28,6 +27,8 @@ export function Search({ onclick }: TProps) {
     return (
         <InputGroup _hover={{ border: 'none', boxShadow: 'none' }}>
             <Input
+                onTouchStart={(e) => e.currentTarget.focus()}
+                disabled={false}
                 value={inputValue}
                 ref={inputRef}
                 onChange={handleOnChange}
