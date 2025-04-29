@@ -1,6 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 
 import { accordionTheme } from './accordionTheme';
+import { checkboxTheme } from './checkboxTheme';
 import { inputTheme } from './inputTheme';
 import { menuTheme } from './menuTheme';
 import { switchTheme } from './switchTheme';
@@ -30,6 +31,7 @@ export const theme = extendTheme({
         Switch: switchTheme,
         Input: inputTheme,
         Menu: menuTheme,
+        Checkbox: checkboxTheme,
     },
     styles: {
         global: {

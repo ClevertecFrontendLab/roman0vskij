@@ -44,7 +44,7 @@ export const mockData = [
             },
         ],
         meat: '',
-        side: 'potatoes',
+        side: 'картошка',
     },
     {
         id: '1',

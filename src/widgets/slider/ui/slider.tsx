@@ -21,6 +21,7 @@ export function Slider() {
     return (
         <Box pos='relative'>
             <Swiper
+                data-test-id='carousel'
                 modules={[Navigation]}
                 navigation={{
                     prevEl: '.custom-prev',
@@ -35,12 +36,17 @@ export function Slider() {
                 }}
             >
                 {mock.map((recipe, i) => (
-                    <SwiperSlide key={`recipe${i}`} style={{ width: 'max-content' }}>
+                    <SwiperSlide
+                        data-test-id={`carousel-card-${i}`}
+                        key={`recipe${i}`}
+                        style={{ width: 'max-content' }}
+                    >
                         <RecipeCard {...recipe} />
                     </SwiperSlide>
                 ))}
             </Swiper>
             <IconButton
+                data-test-id='carousel-back'
                 display={{ base: 'none', lg: 'flex' }}
                 className='custom-prev'
                 key='previous button'
@@ -67,6 +73,7 @@ export function Slider() {
                 }}
             />
             <IconButton
+                data-test-id='carousel-forward'
                 display={{ base: 'none', lg: 'flex' }}
                 className='custom-next'
                 key='next button'

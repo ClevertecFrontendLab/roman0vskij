@@ -1,13 +1,14 @@
 import { Box, HStack, Tab, TabIndicator, TabList, Tabs as TabsWrapper } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 
 import { TCategory } from '~/entities/category';
+import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 import { mockCategories } from '~/shared/mock/mockCategories';
 
 export function Tabs() {
     const location = useLocation();
-    const navigate = useNavigate();
+    const navigate = useCustomNavigate();
 
     const [_, selectedCategory, selectedSubcategory] = location.pathname.split('/');
     let category = mockCategories.find((tab) => tab.id === selectedCategory) as TCategory;
@@ -49,12 +50,14 @@ export function Tabs() {
                         flexWrap={{ lg: 'wrap' }}
                         justifyContent={{ lg: 'center' }}
                     >
-                        {category.subCategories.map((subCategory) => (
+                        {category.subCategories.map((subcategory, i) => (
                             <Tab
-                                key={subCategory.id}
-                                onClick={() => onClickHandler(category.id, subCategory.id)}
+                                aria-selected={subcategoryIndex === i ? true : false}
+                                data-test-id={`tab-${subcategory.id}-${i}`}
+                                key={subcategory.id}
+                                onClick={() => onClickHandler(category.id, subcategory.id)}
                             >
-                                {subCategory.name}
+                                {subcategory.name}
                             </Tab>
                         ))}
                     </TabList>

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type FilterState = {
+type initialState = {
     selectedAllergens: string[];
 };
 
-const initialState: FilterState = {
+const initialState: initialState = {
     selectedAllergens: [],
 };
 
@@ -15,11 +15,8 @@ export const filterSlice = createSlice({
         setSelectedAllergens: (state, action: PayloadAction<string[]>) => {
             state.selectedAllergens = action.payload;
         },
-        resetSelectedAllergens: (state) => {
-            state.selectedAllergens = [];
-        },
     },
 });
 
-export const { setSelectedAllergens, resetSelectedAllergens } = filterSlice.actions;
+export const { setSelectedAllergens } = filterSlice.actions;
 export default filterSlice.reducer;

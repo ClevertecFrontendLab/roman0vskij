@@ -1,16 +1,11 @@
-import { Show, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { Filter } from '~/features/filter';
-import { Search } from '~/features/search';
-import { PageTitle } from '~/shared/ui/pageTitle';
-
 type TProps = {
-    title: string;
-    subTitle?: string;
+    children: React.ReactNode;
 };
 
-export function SearchAndFilter(props: TProps) {
+export function SearchAndFilter({ children }: TProps) {
     const [isActive, setIsActive] = useState(false);
 
     function handleObFocus() {
@@ -40,13 +35,7 @@ export function SearchAndFilter(props: TProps) {
             mb={{ base: 4, lg: 6 }}
             pb={{ base: 4, lg: 8 }}
         >
-            <PageTitle {...props} />
-            <VStack spacing={4} w='100%'>
-                <Search />
-                <Show above='lg'>
-                    <Filter />
-                </Show>
-            </VStack>
+            {children}
         </VStack>
     );
 }

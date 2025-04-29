@@ -2,6 +2,8 @@ import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import {
     Box,
     Button,
+    Checkbox,
+    CheckboxGroup,
     FormControl,
     FormLabel,
     HStack,
@@ -9,9 +11,8 @@ import {
     Input,
     Menu,
     MenuButton,
-    MenuItemOption,
     MenuList,
-    MenuOptionGroup,
+    Stack,
     Switch,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
@@ -35,13 +36,13 @@ export function Filter() {
         'Рыба',
         'Моллюски',
         'Орехи',
-        'Томат (помидор)',
+        'Томат',
         'Цитрусовые',
         'Клубника (ягоды)',
         'Шоколад',
     ];
 
-    function handleOnchange(values: string | string[]) {
+    function handleOnchange(values: Array<string | number>) {
         if (values.length === 0) {
             setIsActive(false);
         } else {
@@ -85,12 +86,27 @@ export function Filter() {
                 >
                     Исключить мои аллергены
                 </FormLabel>
-                <Switch isChecked={isActive} onChange={toggleIsActive} id='allergens' />
+                <Switch
+                    data-test-id='allergens-switcher'
+                    isChecked={isActive}
+                    onChange={toggleIsActive}
+                    id='allergens'
+                />
             </FormControl>
             <Menu closeOnSelect={false}>
                 {({ isOpen }) => (
                     <>
                         <MenuButton
+                            isDisabled={!isActive}
+                            _disabled={{
+                                opacity: 1,
+                                cursor: 'not-allowed',
+                                _hover: {
+                                    borderColor: 'rgba(0, 0, 0, 0.08)',
+                                    color: 'rgba(0, 0, 0, 0.64)',
+                                },
+                            }}
+                            data-test-id='allergens-menu-button'
                             as={Button}
                             borderRadius={6}
                             fontWeight={400}
@@ -124,61 +140,88 @@ export function Filter() {
                             )}
                         </MenuButton>
                         <MenuList
+                            data-test-id='allergens-menu'
                             w={234}
                             borderRadius={4}
                             boxShadow='0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 3px 0 rgba(0, 0, 0, 0.1)'
                             p='4px 0'
                             zIndex={10}
                         >
-                            <MenuOptionGroup
-                                type='checkbox'
-                                onChange={handleOnchange}
-                                value={selectedAllergens}
-                            >
-                                {allergens.map((a) => (
-                                    <MenuItemOption
-                                        key={`option${a}`}
-                                        icon={<CheckIcon />}
-                                        iconSpacing={2}
-                                        value={a}
-                                        p='6px 16px'
+                            <CheckboxGroup value={selectedAllergens} onChange={handleOnchange}>
+                                <Stack
+                                    sx={{
+                                        '& > *:nth-of-type(odd)': {
+                                            background: 'rgba(0, 0, 0, 0.06)',
+                                        },
+                                        '& > *:last-child': {
+                                            background: '#fff',
+                                        },
+                                    }}
+                                    spacing={0}
+                                >
+                                    {allergens.map((a, i) => (
+                                        <Checkbox
+                                            data-test-id={`allergen-${i}`}
+                                            key={`option${i}`}
+                                            value={a}
+                                            p='6px 16px'
+                                            icon={<CheckIcon />}
+                                            sx={{
+                                                alignItems: 'center',
+                                                '& .chakra-checkbox__control': {
+                                                    border: '2px solid #d7ff94',
+                                                    bg: 'transparent',
+                                                },
+                                            }}
+                                        >
+                                            {a}
+                                        </Checkbox>
+                                    ))}
+
+                                    <HStack
+                                        boxShadow='none'
+                                        w='100%'
+                                        bg='#fff'
+                                        py={2}
+                                        pl={6}
+                                        pr={2}
+                                        gap={2}
                                     >
-                                        {a}
-                                    </MenuItemOption>
-                                ))}
-                                <HStack boxShadow='none'>
-                                    <Input
-                                        ref={inputRef}
-                                        onKeyDown={handleKeyDown}
-                                        h={8}
-                                        px={3}
-                                        py={1.5}
-                                        placeholder='Другой аллерген'
-                                        _placeholder={{ color: '#134b00' }}
-                                        _focusVisible={{
-                                            outline: 'none',
-                                            _placeholder: { opacity: 0 },
-                                        }}
-                                        _hover={{ boxShadow: 'none' }}
-                                        border='1px solid rgba(0, 0, 0, 0.08)'
-                                        borderRadius={4}
-                                        fontWeight={400}
-                                        fontSize={14}
-                                        lineHeight='143%'
-                                        color='#134b00'
-                                    />
-                                    <IconButton
-                                        onClick={addAllergen}
-                                        icon={<CirclePlusIcon fill='#2DB100' />}
-                                        aria-label='add allergen'
-                                        h={6}
-                                        w={6}
-                                        minW={6}
-                                        bg='transparent'
-                                        _hover={{ bg: 'transparent' }}
-                                    />
-                                </HStack>
-                            </MenuOptionGroup>
+                                        <Input
+                                            data-test-id={isOpen ? 'add-other-allergen' : ''}
+                                            ref={inputRef}
+                                            onKeyDown={handleKeyDown}
+                                            h={8}
+                                            px={3}
+                                            py={1.5}
+                                            placeholder='Другой аллерген'
+                                            _placeholder={{ color: '#134b00' }}
+                                            _focusVisible={{
+                                                outline: 'none',
+                                                _placeholder: { opacity: 0 },
+                                            }}
+                                            _hover={{ boxShadow: 'none' }}
+                                            border='1px solid rgba(0, 0, 0, 0.08)'
+                                            borderRadius={4}
+                                            fontWeight={400}
+                                            fontSize={14}
+                                            lineHeight='143%'
+                                            color='#134b00'
+                                        />
+                                        <IconButton
+                                            data-test-id={isOpen ? 'add-allergen-button' : ''}
+                                            onClick={addAllergen}
+                                            icon={<CirclePlusIcon fill='#2DB100' />}
+                                            aria-label='add allergen'
+                                            h={6}
+                                            w={6}
+                                            minW={6}
+                                            bg='transparent'
+                                            _hover={{ bg: 'transparent' }}
+                                        />
+                                    </HStack>
+                                </Stack>
+                            </CheckboxGroup>
                         </MenuList>
                     </>
                 )}

@@ -1,10 +1,12 @@
-import { VStack } from '@chakra-ui/react';
+import { useMediaQuery, VStack } from '@chakra-ui/react';
 
 import { SidebarFooter } from '~/shared/ui/sidebarFooter';
 import { Accordion } from '~/widgets/accordion';
 
 export function Sidebar() {
-    return (
+    const [isLargerThan1200] = useMediaQuery('(min-width: 1200px)');
+
+    return isLargerThan1200 ? (
         <VStack
             display={{ base: 'none', lg: 'flex' }}
             as='aside'
@@ -20,5 +22,7 @@ export function Sidebar() {
             <Accordion />
             <SidebarFooter />
         </VStack>
+    ) : (
+        <></>
     );
 }

@@ -55,18 +55,18 @@ export function ListOfIngredients({ ingredients, portions }: TProps) {
                             >
                                 <NumberInputField />
                                 <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
+                                    <NumberIncrementStepper data-test-id='increment-stepper' />
+                                    <NumberDecrementStepper data-test-id='decrement-stepper' />
                                 </NumberInputStepper>
                             </NumberInput>
                         </Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {ingredients.map(({ title, count, measureUnit }) => (
-                        <Tr key={title}>
-                            <Td>{title}</Td>
-                            <Td isNumeric>
+                    {ingredients.map(({ title, count, measureUnit }, i) => (
+                        <Tr data-test-id={`ingredient-quantity-${i}`} key={`ingredient${i}`}>
+                            <Td key={`ingredient-name-${i}`}>{title}</Td>
+                            <Td key={`ingredient-quantity-${i}`} isNumeric>
                                 {+count
                                     ? `${(+count / portions) * portion} ${measureUnit}`
                                     : measureUnit}

@@ -1,57 +1,60 @@
-import { HStack, IconButton, Image, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { IconButton, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SearchIcon } from '~/shared/assets/icons';
 
-export function Search() {
+import { setSearchQuery } from '../model/searchSlice';
+import { selectSearchQuery } from '../model/selectors';
+
+type TProps = {
+    onclick: (value: string) => void;
+};
+
+export function Search({ onclick }: TProps) {
+    const dispatch = useDispatch();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const searchQuery = useSelector(selectSearchQuery);
+    const [inputValue, setInputValue] = useState(searchQuery);
+    const [isButtonDisabled, setButtonDisabled] = useState(searchQuery.trim().length < 3);
+
+    function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log(e.currentTarget.value.trim().length < 3);
+        setInputValue(e.currentTarget.value);
+        setButtonDisabled(e.currentTarget.value.trim().length < 3);
+        if (e.currentTarget.value.length === 0) dispatch(setSearchQuery(''));
+    }
+
     return (
-        <HStack
-            maxW={{ base: 480, lg: 550 }}
-            w='100%'
-            h={{ base: 8, lg: 12 }}
-            gap={3}
-            px={4}
-            justifySelf='center'
-        >
-            <IconButton
-                minW={{ base: 8, lg: 12 }}
-                minH={{ base: 8, lg: 12 }}
-                w={{ base: 8, lg: 12 }}
+        <InputGroup _hover={{ border: 'none', boxShadow: 'none' }}>
+            <Input
+                value={inputValue}
+                ref={inputRef}
+                onChange={handleOnChange}
+                data-test-id='search-input'
+                variant='colorful'
+                placeholder='Название или ингредиент...'
+                py={{ base: 7.5, lg: 3.25 }}
+                pl={{ base: 3, lg: 4 }}
+                pr={{ base: 8, lg: 12 }}
                 h={{ base: 8, lg: 12 }}
-                aria-label='button near search'
-                icon={
-                    <Image
-                        w={{ base: 3.5, lg: 6 }}
-                        h={{ base: 3.5, lg: 6 }}
-                        src='/src/shared/assets/buttonNearSearch.svg'
-                        alt='near search icon'
-                    />
-                }
-                bg='none'
-                border='1px solid rgba(0, 0, 0, 0.48)'
-                borderRadius={6}
-                p={0}
+                w='100%'
             />
-            <InputGroup _hover={{ border: 'none', boxShadow: 'none' }}>
-                <Input
-                    variant='colorful'
-                    placeholder='Название или ингредиент...'
-                    py={{ base: 7.5, lg: 3.25 }}
-                    pl={{ base: 3, lg: 4 }}
-                    pr={{ base: 8, lg: 12 }}
+            <InputRightElement h={{ base: 8, lg: 12 }} w={{ base: 8, lg: 12 }}>
+                <IconButton
+                    onClick={() => onclick(inputRef.current!.value)}
+                    pointerEvents={{ base: 'auto', md: isButtonDisabled ? 'none' : 'auto' }}
+                    isDisabled={false}
+                    data-test-id='search-button'
+                    icon={<SearchIcon h={{ base: 3.5, lg: 18 }} w={{ base: 3.5, lg: 18 }} />}
+                    aria-label='search button'
                     h={{ base: 8, lg: 12 }}
-                    w='100%'
+                    w={{ base: 8, lg: 12 }}
+                    background='transparent'
+                    _hover={{ background: 'transparent' }}
+                    zIndex={2}
                 />
-                <InputRightElement h={{ base: 8, lg: 12 }} w={{ base: 8, lg: 12 }}>
-                    <IconButton
-                        icon={<SearchIcon h={{ base: 3.5, lg: 18 }} w={{ base: 3.5, lg: 18 }} />}
-                        aria-label='search button'
-                        h={{ base: 8, lg: 12 }}
-                        w={{ base: 8, lg: 12 }}
-                        background='transparent'
-                        _hover={{ background: 'transparent' }}
-                    />
-                </InputRightElement>
-            </InputGroup>
-        </HStack>
+            </InputRightElement>
+        </InputGroup>
     );
 }

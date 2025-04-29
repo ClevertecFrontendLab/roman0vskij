@@ -8,13 +8,13 @@ import {
     Show,
     Text,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
 
+import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 import { TMock } from '~/shared/types';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
 
 export function RecipeCard(props: TMock) {
-    const navigate = useNavigate();
+    const navigate = useCustomNavigate();
 
     function handleOnclick() {
         navigate(`/${props.category[0]}/${props.subcategory[0]}/${props.id}`);

@@ -3,6 +3,9 @@ import {
     Grid,
     GridItem,
     HStack,
+    IconButton,
+    Image,
+    Show,
     SimpleGrid,
     Stack,
     Text,
@@ -13,33 +16,74 @@ import {
 import { CookCard } from '~/entities/cookCard';
 import { MainCard } from '~/entities/mainCard';
 import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
+import { Filter } from '~/features/filter';
+import { useFilterByAllergens } from '~/features/filter/model/filterByAllergens';
+import { useSearch } from '~/features/search';
 import { mockData } from '~/shared/mock/mockData';
 import { GreenButton } from '~/shared/ui/greenButton';
+import { PageTitle } from '~/shared/ui/pageTitle';
+import { PageWrapper } from '~/shared/ui/pageWrapper';
+import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
 import { Title } from '~/shared/ui/title';
-import { SearchAndFilter } from '~/widgets/searchAndFilter';
 
 export function JuiciestPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
+    const { SearchInput, filterBySearchQuery } = useSearch();
+    const filterByAllergens = useFilterByAllergens();
+
+    const filtredData = filterBySearchQuery(filterByAllergens(mockData));
 
     return (
-        <Box
-            as='main'
-            maxW='1920px'
-            w='100%'
-            m='0 auto'
-            pt={{ base: '64px', lg: '80px' }}
-            px={{ base: 4, md: 5, lg: '280px' }}
-        >
-            <SearchAndFilter title='Самое сочное' />
+        <PageWrapper>
+            <SearchAndFilter>
+                <PageTitle title='Самое сочное' />
+                <VStack spacing={4} w='100%'>
+                    <HStack
+                        maxW={{ base: 480, lg: 550 }}
+                        w='100%'
+                        h={{ base: 8, lg: 12 }}
+                        gap={3}
+                        px={4}
+                        justifySelf='center'
+                    >
+                        <IconButton
+                            minW={{ base: 8, lg: 12 }}
+                            minH={{ base: 8, lg: 12 }}
+                            w={{ base: 8, lg: 12 }}
+                            h={{ base: 8, lg: 12 }}
+                            aria-label='button near search'
+                            icon={
+                                <Image
+                                    w={{ base: 3.5, lg: 6 }}
+                                    h={{ base: 3.5, lg: 6 }}
+                                    src='/src/shared/assets/buttonNearSearch.svg'
+                                    alt='near search icon'
+                                />
+                            }
+                            bg='none'
+                            border='1px solid rgba(0, 0, 0, 0.48)'
+                            borderRadius={6}
+                            p={0}
+                        />
 
+                        <SearchInput />
+                    </HStack>
+                    <Show above='lg'>
+                        <Filter />
+                    </Show>
+                </VStack>
+            </SearchAndFilter>
             <SimpleGrid
                 mt={{ base: 3, lg: 4, xl: 6 }}
                 columns={{ base: 1, md: 2, lg: 1, xl: 2 }}
                 gap={{ base: 3, md: 4, xl: 6 }}
             >
-                {mockData.map((recipe, i) => (
-                    <MainCard key={`main${i}`} {...recipe} />
-                ))}
+                {filtredData
+                    .slice()
+                    .sort((a, b) => b.likes - a.likes)
+                    .map((recipe, i) => (
+                        <MainCard key={`main${i}`} {...recipe} index={i} />
+                    ))}
             </SimpleGrid>
             <HStack justify='center' mt={4}>
                 <GreenButton text='Загрузить еще' />
@@ -93,6 +137,6 @@ export function JuiciestPage() {
                 </Grid>
             </Stack>
             {isLargerThan1000 ? <></> : <Box height={100} />}
-        </Box>
+        </PageWrapper>
     );
 }

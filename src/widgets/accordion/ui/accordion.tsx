@@ -8,9 +8,10 @@ import {
     Link,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 
 import { CloseArrowIcon, OpenArrowIcon } from '~/shared/assets/icons';
+import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 import { mockCategories } from '~/shared/mock/mockCategories';
 
 type TProps = {
@@ -19,7 +20,7 @@ type TProps = {
 
 export function Accordion({ isMobile = false }: TProps) {
     const location = useLocation();
-    const navigate = useNavigate();
+    const navigate = useCustomNavigate();
 
     const [_, selectedCategory, selectedSubCategory] = location.pathname.split('/');
 
@@ -52,7 +53,7 @@ export function Accordion({ isMobile = false }: TProps) {
             {mockCategories.map((category) => (
                 <AccordionItem
                     key={category.id}
-                    data-test-id={category.id === 'vegan' ? 'vegan-cuisine' : ''}
+                    data-test-id={category.id === 'vegan' ? 'vegan-cuisine' : category.id}
                 >
                     {({ isExpanded }) => (
                         <>
@@ -71,13 +72,19 @@ export function Accordion({ isMobile = false }: TProps) {
                                 </AccordionButton>
                             </h2>
                             <AccordionPanel display='flex' flexDirection='column'>
-                                {category.subCategories.map((subCategory) => (
+                                {category.subCategories.map((subcategory) => (
                                     <Link
-                                        onClick={() => onClickHandler(category.id, subCategory.id)}
+                                        data-test-id={
+                                            selectedCategory === category.id &&
+                                            selectedSubCategory === subcategory.id
+                                                ? `${subcategory.id}-active`
+                                                : ''
+                                        }
+                                        onClick={() => onClickHandler(category.id, subcategory.id)}
                                         pos='relative'
                                         display='flex'
                                         alignItems='center'
-                                        key={subCategory.id}
+                                        key={subcategory.id}
                                         fontSize={16}
                                         lineHeight='150%'
                                         fontWeight={500}
@@ -92,7 +99,7 @@ export function Accordion({ isMobile = false }: TProps) {
                                         pl='52px'
                                         _before={
                                             selectedCategory === category.id &&
-                                            selectedSubCategory === subCategory.id
+                                            selectedSubCategory === subcategory.id
                                                 ? {
                                                       content: '""',
                                                       pos: 'absolute',
@@ -111,7 +118,7 @@ export function Accordion({ isMobile = false }: TProps) {
                                                   }
                                         }
                                     >
-                                        {subCategory.name}
+                                        {subcategory.name}
                                     </Link>
                                 ))}
                             </AccordionPanel>

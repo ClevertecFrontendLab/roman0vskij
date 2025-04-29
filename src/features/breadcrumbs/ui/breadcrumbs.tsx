@@ -1,23 +1,17 @@
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbSeparator,
-    Image,
-} from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Image } from '@chakra-ui/react';
+
+import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 
 import { useBreadcrumbs } from '../model/useBreadcrumbs';
 
 type TProps = {
-    isMobile?: boolean;
     onClose?: () => void;
 };
 
-export function Breadcrumbs({ isMobile = false, onClose = () => {} }: TProps) {
+export function Breadcrumbs({ onClose = () => {} }: TProps) {
     const { category, categoryName, subcategory, subCategoryName, firstSubcategory, recipe } =
         useBreadcrumbs();
-    const navigate = useNavigate();
+    const navigate = useCustomNavigate();
 
     function handleOnclick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, url: string) {
         e.preventDefault();
@@ -27,6 +21,7 @@ export function Breadcrumbs({ isMobile = false, onClose = () => {} }: TProps) {
 
     return (
         <Breadcrumb
+            data-test-id='breadcrumbs'
             spacing={0}
             separator={<Image src='/src/shared/assets/breadcrumbArrow.svg' />}
             flexGrow={1}
@@ -47,13 +42,13 @@ export function Breadcrumbs({ isMobile = false, onClose = () => {} }: TProps) {
                         onClick={(e) =>
                             handleOnclick(
                                 e,
-                                category === 'juiciest'
+                                category === 'the-juiciest'
                                     ? `/${category}`
                                     : `/${category}/${firstSubcategory}`,
                             )
                         }
                         href={
-                            category === 'juiciest'
+                            category === 'the-juiciest'
                                 ? `/${category}`
                                 : `/${category}/${firstSubcategory}`
                         }
@@ -65,7 +60,6 @@ export function Breadcrumbs({ isMobile = false, onClose = () => {} }: TProps) {
             )}
             {subCategoryName && (
                 <BreadcrumbItem>
-                    {isMobile && <BreadcrumbSeparator />}
                     <BreadcrumbLink
                         onClick={(e) => handleOnclick(e, `/${category}/${subcategory}`)}
                         href={`/${category}/${subcategory}`}

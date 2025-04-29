@@ -16,16 +16,28 @@ import {
 } from '@chakra-ui/react';
 
 import { BookmarkIcon } from '~/shared/assets/icons';
+import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
+import { useHighlightText } from '~/shared/hooks/useHighlightText';
 import { TMock } from '~/shared/types';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
 import { RecomendationTag } from '~/shared/ui/recomendationTag';
 import { Tag } from '~/shared/ui/tag';
 
-export function MainCard(props: TMock) {
+type TProps = TMock & { index: number };
+
+export function MainCard(props: TProps) {
     const userName = 'Alex Cook';
     const userImg = '/src/shared/assets/mockData/alex.jpg';
+    const highlightText = useHighlightText();
+    const navigate = useCustomNavigate();
+
+    function handleOnclick() {
+        navigate(`/${props.category[0]}/${props.subcategory[0]}/${props.id}`);
+    }
+
     return (
         <Card
+            data-test-id={`food-card-${props.index}`}
             w='100%'
             h={{ base: 128, lg: 244 }}
             borderRadius={8}
@@ -85,7 +97,7 @@ export function MainCard(props: TMock) {
                             WebkitLineClamp: { base: 2, lg: 1 },
                         }}
                     >
-                        {props.title}
+                        {highlightText(props.title)}
                     </Heading>
                 </CardHeader>
                 <Show above='lg'>
@@ -144,6 +156,8 @@ export function MainCard(props: TMock) {
                         />
                     </Hide>
                     <Button
+                        data-test-id={`card-link-${props.index}`}
+                        onClick={handleOnclick}
                         variant='none'
                         bgColor='rgba(0, 0, 0, 0.92)'
                         border='1px solid rgba(0, 0, 0, 0.08)'

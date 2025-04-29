@@ -7,7 +7,7 @@ export function useBreadcrumbs() {
     const location = useLocation();
     const [_, category, subcategory, recipeId] = location.pathname.split('/');
     const categoryName =
-        category === 'juiciest'
+        category === 'the-juiciest'
             ? 'Самое сочное'
             : mockCategories.find((categ) => categ.id === category)?.name;
     const firstSubcategory = mockCategories.find((categ) => categ.id === category)?.subCategories[0]

@@ -25,4 +25,6 @@ export type TMock = {
     nutritionValue: { calories: number; proteins: number; fats: number; carbohydrates: number };
     ingredients: TIngredient[];
     steps: TStep[];
+    meat?: string;
+    side?: string;
 };
