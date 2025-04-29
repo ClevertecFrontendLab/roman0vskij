@@ -4,6 +4,7 @@ import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
 const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(
     accordionAnatomy.keys,
 );
+
 const colorfulVariant = definePartsStyle(() => ({
     root: {
         paddingLeft: '10px',
@@ -29,9 +30,9 @@ const colorfulVariant = definePartsStyle(() => ({
         p: 0,
     },
 }));
+
 const variants = {
     colorful: colorfulVariant,
 };
-const accordionTheme = defineMultiStyleConfig({ variants });
 
-export default accordionTheme;
+export const accordionTheme = defineMultiStyleConfig({ variants });

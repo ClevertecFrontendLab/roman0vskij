@@ -1,7 +1,12 @@
 import { extendTheme } from '@chakra-ui/react';
 
-import accordionTheme from './accordionTheme';
-import tabsTheme from './tabsTheme';
+import { accordionTheme } from './accordionTheme';
+import { checkboxTheme } from './checkboxTheme';
+import { inputTheme } from './inputTheme';
+import { menuTheme } from './menuTheme';
+import { switchTheme } from './switchTheme';
+import { tableTheme } from './tableTheme';
+import { tabsTheme } from './tabsTheme';
 
 const breakpoints = {
     base: '0px',
@@ -16,12 +21,17 @@ const fonts = {
     heading: 'Inter, sans-serif',
 };
 
-const theme = extendTheme({
+export const theme = extendTheme({
     breakpoints,
     fonts,
     components: {
         Tabs: tabsTheme,
         Accordion: accordionTheme,
+        Table: tableTheme,
+        Switch: switchTheme,
+        Input: inputTheme,
+        Menu: menuTheme,
+        Checkbox: checkboxTheme,
     },
     styles: {
         global: {
@@ -38,15 +48,20 @@ const theme = extendTheme({
                 borderRadius: '4px',
             },
             '::-webkit-scrollbar-track': {
-                background: 'transparent',
+                background: 'rgba(0, 0, 0, 0.04)',
             },
             '::-webkit-scrollbar-button': {
                 display: 'none',
                 width: 0,
                 height: 0,
             },
+            body: {
+                scrollbarWidth: 0,
+                '::-webkit-scrollbar': {
+                    width: 0,
+                    height: 0,
+                },
+            },
         },
     },
 });
-
-export default theme;
