@@ -9,7 +9,9 @@ export function useBreadcrumbs() {
     const categoryName =
         category === 'the-juiciest'
             ? 'Самое сочное'
-            : mockCategories.find((categ) => categ.id === category)?.name;
+            : category === 'filters'
+              ? 'Фильтры'
+              : mockCategories.find((categ) => categ.id === category)?.name;
     const firstSubcategory = mockCategories.find((categ) => categ.id === category)?.subCategories[0]
         .id;
     const subCategoryName = mockCategories

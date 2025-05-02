@@ -42,13 +42,13 @@ export function Breadcrumbs({ onClose = () => {} }: TProps) {
                         onClick={(e) =>
                             handleOnclick(
                                 e,
-                                category === 'the-juiciest'
+                                category === 'the-juiciest' || category === 'filters'
                                     ? `/${category}`
                                     : `/${category}/${firstSubcategory}`,
                             )
                         }
                         href={
-                            category === 'the-juiciest'
+                            category === 'the-juiciest' || category === 'filters'
                                 ? `/${category}`
                                 : `/${category}/${firstSubcategory}`
                         }

@@ -41,19 +41,26 @@ export function BurgerMenu({ open, close }: TProps) {
                                 zIndex={15}
                                 maxW={344}
                                 w='100%'
-                                maxH='80vh'
+                                h='100%'
                                 pt={4}
                                 pb={0}
                                 overflow='hidden'
                                 bgColor='#fff'
                                 right={0}
+                                border='none'
+                                borderRadius='0 0 12px 12px'
                             >
                                 <Box flexShrink={0} px={5} mb={5} w='100%'>
                                     <Breadcrumbs onClose={onClose} />
                                 </Box>
 
                                 {(!isLargerThan1025 || isOpen) && (
-                                    <Box flexShrink={1} overflowY='auto' h='calc(80vh - 240px)'>
+                                    <Box
+                                        flexShrink={1}
+                                        overflowY='auto'
+                                        h='calc(85vh - 240px)'
+                                        maxH='fit-content'
+                                    >
                                         <Accordion isMobile />
                                     </Box>
                                 )}
