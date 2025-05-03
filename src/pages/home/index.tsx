@@ -11,7 +11,6 @@ import {
     useMediaQuery,
     VStack,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 
 import { BlogCard } from '~/entities/blogCard';
 import { CookCard } from '~/entities/cookCard';
@@ -28,6 +27,7 @@ import { PageTitle } from '~/shared/ui/pageTitle';
 import { PageWrapper } from '~/shared/ui/pageWrapper';
 import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
 import { Title } from '~/shared/ui/title';
+import { useAppSelector } from '~/store/hooks';
 import { Drawer } from '~/widgets/drawer';
 import { Slider } from '~/widgets/slider';
 
@@ -37,7 +37,7 @@ export function HomePage() {
     const { SearchInput, filterBySearchQuery } = useSearch();
     const filterByAllergens = useFilterByAllergens();
     const filtredData = filterBySearchQuery(filterByAllergens(mockData));
-    const searchQuery = useSelector(selectSearchQuery);
+    const searchQuery = useAppSelector(selectSearchQuery);
 
     function onClickHandler() {
         navigate('/the-juiciest');

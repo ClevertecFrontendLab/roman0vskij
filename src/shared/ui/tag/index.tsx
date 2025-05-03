@@ -23,7 +23,7 @@ export function Tag(props: TProps) {
         return !props.type || props.type === 'base';
     }
 
-    const categor = isBaseProps(props)
+    const category = isBaseProps(props)
         ? mockCategories.find((e) => e.id === props.category[0])
         : props;
 
@@ -37,7 +37,7 @@ export function Tag(props: TProps) {
             h={6}
         >
             <HStack spacing={props.isRelevant ? 2 : { base: 0.5, lg: 2 }}>
-                <Image h={4} w={4} src={categor?.img} />
+                <Image h={4} w={4} src={category?.img} />
                 <Text
                     fontSize={14}
                     fontWeight={400}
@@ -46,9 +46,41 @@ export function Tag(props: TProps) {
                     wordBreak='break-all'
                     noOfLines={1}
                 >
-                    {categor?.name}
+                    {category?.name}
                 </Text>
             </HStack>
         </Box>
     );
+    // const categories = isBaseProps(props)
+    //     ? props.category.map((category) => mockCategories.find((e) => e.id === category))
+    //     : [props];
+
+    // return (
+    //     <VStack align='flex-start'>
+    //         {categories.map((category) => (
+    //             <Box
+    //                 bgColor={props.bgClr}
+    //                 w='fit-content'
+    //                 px={props.isRelevant ? 2 : { base: 1, lg: 2 }}
+    //                 py={0.5}
+    //                 borderRadius={4}
+    //                 h={6}
+    //             >
+    //                 <HStack spacing={props.isRelevant ? 2 : { base: 0.5, lg: 2 }}>
+    //                     <Image h={4} w={4} src={category?.img} />
+    //                     <Text
+    //                         fontSize={14}
+    //                         fontWeight={400}
+    //                         lineHeight='143%'
+    //                         color='#000'
+    //                         wordBreak='break-all'
+    //                         noOfLines={1}
+    //                     >
+    //                         {category?.name}
+    //                     </Text>
+    //                 </HStack>
+    //             </Box>
+    //         ))}
+    //     </VStack>
+    // );
 }

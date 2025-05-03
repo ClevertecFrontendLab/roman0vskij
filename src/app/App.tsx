@@ -1,6 +1,8 @@
 import { Box } from '@chakra-ui/react';
 
-import { useGetPostsQuery } from '~/query/services/posts.ts';
+import { Loader } from '~/shared/ui/loader';
+import { userLoadingSelector } from '~/store/app-slice';
+import { useAppSelector } from '~/store/hooks';
 import { Footer } from '~/widgets/footer';
 import { Header } from '~/widgets/header';
 import { Sidebar } from '~/widgets/sidebar';
@@ -10,40 +12,57 @@ import { withProviders } from './providers';
 import { Routing } from './routing';
 
 export function AppLayout() {
-    const { data: _data, isLoading: _isLoading } = useGetPostsQuery();
-    //TODO! мок данные в один файл
-    //TODO! удалить все типы и заменить на один общий (кроме блога)
-    //TODO! теги поменять (есть mockCategories, сделать по нему поиск и получение инфы в зависимости от категории карточки)
-    //TODO теги в столбик, если несколько
-    //TODO! при переходе на страницу с подкатегорией нужно сделать отбор по категории и подкатегории для всех карточек
-    //TODO! хлебные крошки тоже подфиксить (нет subCategories, должно быть subcategory)
-    //TODO! хлебные крошки и футер в бургере не прокручиваются
-    //TODO! при нажатии на хлебные крошки в бургее сворачивать меню
-    //TODO! поиск по НАЗВАНИЯМ карточек
-    //TODO! при поиске или выборе аллергенов на главной странице прятать слайдер и самое сочное
-    //TODO! фильтр аллергенов по ингредиентам
-    //TODO! фильтр по типу мяса - по полю meat
-    //TODO! фильтр по типу гарнира - по полю side
-    //TODO внизу Drawer все выбранные фильтры (тип мяса, аллергены(ЕСЛИ ВКЛ SWITCH) и тд)
-    //TODO! выключенный SWITCH очищает все аллергены
-    //TODO! фильтровать по Drawer после нажтия на кнопку
-    //TODO! фильтровать по аллергенам на Гл. странице СРАЗУ
+    //TODO! GET /category → получение списка категорий. Использовать для боковой панели (динамически).
+    //TODO Сохранять в стор для резервного отображения при ошибке.
+    //TODO GET /recipe?sortBy=createdAt&sortOrder=desc&limit=10 Для слайдера на главной (новые рецепты).
+    //TODO GET /recipe с рандомной категорией Для блока "relevant kitchen" (внизу страницы).
+    //TODO внутри CategoryPage проверить: существуют ли такие category и subcategory в данных, полученных с сервера. Если нет — редирект на /not-found.
 
-    //* Я думала что когда мы находимся в категориях,
-    //* то фильтруем только по алергенам и поисковому запросу.
-    //* А через  drawer вызывается отдельная страница с результатами фильтрации через drawer
+    //TODO 3. "Самое сочное" блок
+    //TODO 3.1 Главная страница
+    //TODO Отобразить топ-рецепты по лайкам.
+    //TODO 3.2 Страница /the-juiciest
+    //TODO GET /recipe?sortBy=likes&sortOrder=desc
+    //TODO Пагинация: кнопка "Загрузить ещё"
+    //TODO Добавляет рецепты, а не перерисовывает весь список.
+    //TODO Прячется, если достигнут конец.
 
-    //* Да, логика верная. По категории - поиск и аллергены, фильтры - можно отдельную страницу
-    //* или там же, где находимся, отображать отфильтрованные карточки. Зависит от вашей реализации.
+    //TODO 4. Страница ошибки
+    //TODO 4.1 /not-found
+    //TODO Неизвестная категория/подкатегория → редирект на /not-found.
+    //TODO Примеры: vegansss/snack, vegan/meatballs (если meatballs нет).
+    //TODO Обязательно:
 
-    //TODO! подправить архитектуру
-    //TODO! onClick по карточке в слайдере делает переход на страницу рецепта по первой категории и первой ЕЁ подкатегории (нужно сделать какой-то отбор по подкатегориям)
-    //TODO! бургер-меню + хлебные крошки в бургере
-    //TODO! фильтр по аллергенам
-    //TODO! Drawer
-    //TODO! Search
-    //TODO! внедрить store
-    //TODO! data-test-id
+    //TODO 5. Страница рецепта
+    //TODO 5.1 Данные
+    //TODO GET /recipe/{id} до рендера страницы.
+    //TODO Отображать Alert при ошибке → возврат на предыдущую страницу.
+    //TODO 5.2 Поведение
+    //TODO Кол-во порций — можно менять.
+    //TODO При перезагрузке → сброс на дефолтное значение.
+    //TODO Breadcrumbs и кнопки работают как в спринте 2.
+
+    //TODO 6. Поиск и фильтрация
+    //TODO 6.1 Поиск
+    //TODO Кнопка поиска активна, если:
+    //TODO ≥ 3 символов, или
+    //TODO выбраны аллергены.
+    //TODO По нажатию:
+    //TODO Запрос с query-параметрами (см. ниже).
+    //TODO 6.2 Query-параметры
+    //TODO page, limit, allergens, searchString, meat, garnish, subcategoriesIds, sortBy, sortOrder
+    //TODO Учитывать текущий контекст:
+    //TODO Главная → фильтр из панели.
+    //TODO Категория → все её подкатегории.
+    //TODO 6.3 Отображение
+    //TODO! Лоадер при запросе
+    //TODO Ошибка (data-test-id="error-notification").
+    //TODO Пустой результат → показываем сообщение.
+    //TODO Кнопка "Загрузить ещё" → data-test-id="load-more-button".
+
+    //TODO 7. data-test-id
+
+    const isLoading = useAppSelector(userLoadingSelector);
 
     return (
         <Box minH='100%'>
@@ -52,6 +71,7 @@ export function AppLayout() {
             <Statbar />
             <Routing />
             <Footer />
+            {isLoading && <Loader />}
         </Box>
     );
 }

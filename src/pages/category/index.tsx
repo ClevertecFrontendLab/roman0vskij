@@ -10,7 +10,6 @@ import {
     useMediaQuery,
     VStack,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 
 import { CookCard } from '~/entities/cookCard';
@@ -25,16 +24,17 @@ import { PageTitle } from '~/shared/ui/pageTitle';
 import { PageWrapper } from '~/shared/ui/pageWrapper';
 import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
 import { Title } from '~/shared/ui/title';
+import { useAppSelector } from '~/store/hooks';
 import { Drawer } from '~/widgets/drawer';
 import { Tabs } from '~/widgets/tabs';
 
-export function VeganPage() {
+export function CategoryPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
     const location = useLocation();
     const [_, category, subcategory] = location.pathname.split('/');
     const { SearchInput, filterBySearchQuery } = useSearch();
     const filterByAllergens = useFilterByAllergens();
-    const searchQuery = useSelector(selectSearchQuery);
+    const searchQuery = useAppSelector(selectSearchQuery);
 
     const data = mockData.filter(
         (e) =>

@@ -1,10 +1,11 @@
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
+import { CategoryPage } from '~/pages/category';
 import { FiltersPage } from '~/pages/filters';
 import { HomePage } from '~/pages/home';
 import { JuiciestPage } from '~/pages/juiciest';
+import { NotFoundPage } from '~/pages/notFound';
 import { RecipePage } from '~/pages/recipe';
-import { VeganPage } from '~/pages/vegan';
 
 export function Routing() {
     return (
@@ -13,7 +14,9 @@ export function Routing() {
             <Route path='the-juiciest' element={<JuiciestPage />} />
             <Route path='filters' element={<FiltersPage />} />
             <Route path=':category/:subcategory/:recipeId' element={<RecipePage />} />
-            <Route path=':category/:subcategory' element={<VeganPage />} />
+            <Route path=':category/:subcategory' element={<CategoryPage />} />
+            <Route path='not-found' element={<NotFoundPage />} />
+            <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
     );
 }

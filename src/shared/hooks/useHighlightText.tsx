@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
-
 import { selectSearchQuery } from '~/features/search';
+import { useAppSelector } from '~/store/hooks';
 
 export function useHighlightText() {
-    const searchQuery = useSelector(selectSearchQuery);
+    const searchQuery = useAppSelector(selectSearchQuery);
 
     return function highlight(text: string) {
         if (searchQuery == '') return text;

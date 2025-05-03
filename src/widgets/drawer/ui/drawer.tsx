@@ -17,11 +17,11 @@ import {
     useDisclosure,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 import { mockData } from '~/shared/mock/mockData';
 import { TMock } from '~/shared/types';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 import {
     setData,
@@ -47,8 +47,8 @@ export function Drawer() {
     const navigate = useCustomNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const selectedCategories = useSelector(selectSelectedCategories);
-    const dispatch = useDispatch();
+    const selectedCategories = useAppSelector(selectSelectedCategories);
+    const dispatch = useAppDispatch();
     const [isActiveCategories, setIsActiveCategories] = useState(selectedCategories.length > 0);
 
     const categories = [
@@ -73,7 +73,7 @@ export function Drawer() {
         dispatch(setSelectedCategories(values as string[]));
     }
 
-    const selectedAuthors = useSelector(selectSelectedAuthors);
+    const selectedAuthors = useAppSelector(selectSelectedAuthors);
     const [isActiveAuthors, setIsActiveAuthors] = useState(selectedAuthors.length > 0);
 
     const authors = [
@@ -99,7 +99,7 @@ export function Drawer() {
         dispatch(setSelectedAuthors(values as string[]));
     }
 
-    const selectedMeat = useSelector(selectSelectedMeat);
+    const selectedMeat = useAppSelector(selectSelectedMeat);
 
     const meat = ['Курица', 'Свинина', 'Говядина', 'Индейка', 'Утка'];
 
@@ -107,7 +107,7 @@ export function Drawer() {
         dispatch(setSelectedMeat(values as string[]));
     }
 
-    const selectedSide = useSelector(selectSelectedSide);
+    const selectedSide = useAppSelector(selectSelectedSide);
 
     const side = [
         'Картошка',
@@ -124,7 +124,7 @@ export function Drawer() {
         dispatch(setSelectedSide(values as string[]));
     }
 
-    const selectedAllergens = useSelector(selectSelectedAllergens);
+    const selectedAllergens = useAppSelector(selectSelectedAllergens);
     const [isActive, setIsActive] = useState(selectedAllergens.length > 0);
     const inputRef = useRef<HTMLInputElement>(null);
 

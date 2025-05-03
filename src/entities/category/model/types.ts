@@ -1,11 +1,15 @@
 export type TSubCategory = {
-    id: string;
-    name: string;
+    _id: string;
+    title: string;
+    category: string;
+    rootCategoryId: string;
 };
 
 export type TCategory = {
-    id: string;
-    name: string;
-    img: string;
+    _id: string;
+    title: string;
+    description: string;
+    category: string;
+    icon: string;
     subCategories: TSubCategory[];
 };

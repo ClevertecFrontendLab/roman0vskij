@@ -1,5 +1,4 @@
 import { Box, HStack, Show, SimpleGrid, useMediaQuery, VStack } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 
 import { MainCard } from '~/entities/mainCard';
 import { Filter } from '~/features/filter';
@@ -7,6 +6,7 @@ import { useSearch } from '~/features/search';
 import { PageTitle } from '~/shared/ui/pageTitle';
 import { PageWrapper } from '~/shared/ui/pageWrapper';
 import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
+import { useAppSelector } from '~/store/hooks';
 import { Drawer, selectData } from '~/widgets/drawer';
 
 export function FiltersPage() {
@@ -14,7 +14,7 @@ export function FiltersPage() {
 
     const { SearchInput, filterBySearchQuery } = useSearch();
 
-    const data = useSelector(selectData);
+    const data = useAppSelector(selectData);
 
     const filtredData = filterBySearchQuery(data);
 

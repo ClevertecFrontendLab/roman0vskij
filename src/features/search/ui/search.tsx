@@ -1,8 +1,8 @@
 import { IconButton, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { SearchIcon } from '~/shared/assets/icons';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 import { setSearchQuery } from '../model/searchSlice';
 import { selectSearchQuery } from '../model/selectors';
@@ -12,9 +12,9 @@ type TProps = {
 };
 
 export function Search({ onclick }: TProps) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
-    const searchQuery = useSelector(selectSearchQuery);
+    const searchQuery = useAppSelector(selectSearchQuery);
     const [inputValue, setInputValue] = useState(searchQuery);
     const [isButtonDisabled, setButtonDisabled] = useState(searchQuery.trim().length < 3);
 
