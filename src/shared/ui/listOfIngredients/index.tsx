@@ -14,11 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { useLayoutEffect, useState } from 'react';
 
-type TIngredient = {
-    title: string;
-    count: string;
-    measureUnit: string;
-};
+import { TIngredient } from '~/entities/recipe';
 
 type TProps = { ingredients: TIngredient[]; portions: number };
 

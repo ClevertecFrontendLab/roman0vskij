@@ -22,7 +22,17 @@ export const categoriesApiSlice = apiSlice
                     response.filter((elem): elem is TCategory => 'subCategories' in elem),
                 providesTags: [Tags.CATEGORIES],
             }),
+            getCategory: builder.query<TCategory, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.CATEGORIES + '/' + id,
+                    method: 'GET',
+                    apiGroupName: ApiGroupNames.CATEGORIES,
+                    name: EndpointNames.GET_CATEGORIES,
+                }),
+                providesTags: [Tags.CATEGORIES],
+            }),
         }),
     });
 
-export const { useGetCategoriesQuery } = categoriesApiSlice;
+export const { useGetCategoriesQuery, useLazyGetCategoriesQuery, useGetCategoryQuery } =
+    categoriesApiSlice;

@@ -31,4 +31,6 @@ export type TRecipe = {
         carbohydrates: number;
     };
     ingredients: TIngredient[];
+    meat?: string;
+    garnish?: string;
 };

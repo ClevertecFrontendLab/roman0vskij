@@ -14,16 +14,22 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
+import { selectCategories } from '~/entities/category';
+import { setCurrentRecipe, TRecipe } from '~/entities/recipe';
+import { ApiBaseURL } from '~/query/constants/base';
+import { useLazyGetRecipeQuery } from '~/query/services/recipes';
 import { BookmarkIcon } from '~/shared/assets/icons';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 import { useHighlightText } from '~/shared/hooks/useHighlightText';
-import { TMock } from '~/shared/types';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
 import { RecomendationTag } from '~/shared/ui/recomendationTag';
 import { Tag } from '~/shared/ui/tag';
+import { setAppError, setAppLoader } from '~/store/app-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
-type TProps = TMock & { index: number };
+type TProps = TRecipe & { index: number };
 
 export function MainCard(props: TProps) {
     const userName = 'Alex Cook';
@@ -31,8 +37,41 @@ export function MainCard(props: TProps) {
     const highlightText = useHighlightText();
     const navigate = useCustomNavigate();
 
+    const categories = useAppSelector(selectCategories);
+
+    const category = categories.find((category) =>
+        category.subCategories.find((sub) => sub._id === props.categoriesIds[0]),
+    );
+
+    const subCategory = category?.subCategories.find((sub) => sub._id === props.categoriesIds[0]);
+
+    const dispatch = useAppDispatch();
+    const [
+        getRecipeQuery,
+        {
+            data: recipe,
+            error: errorRecipe,
+            isError: isErrorRecipe,
+            isFetching: isFetchingRecipe,
+            isSuccess: isSuccessRecipe,
+        },
+    ] = useLazyGetRecipeQuery();
+
+    useEffect(() => {
+        dispatch(setAppLoader(isFetchingRecipe));
+        if (isErrorRecipe && errorRecipe) {
+            dispatch(setAppError(`Recipe error: ${errorRecipe.toString()}`));
+        } else {
+            dispatch(setAppError(null));
+        }
+        if (!isFetchingRecipe && isSuccessRecipe && recipe) {
+            dispatch(setCurrentRecipe(recipe));
+            navigate(`/${category?.category}/${subCategory?.category}/${props._id}`);
+        }
+    }, [isErrorRecipe, errorRecipe, isFetchingRecipe]);
+
     function handleOnclick() {
-        navigate(`/${props.category[0]}/${props.subcategory[0]}/${props.id}`);
+        getRecipeQuery(props._id);
     }
 
     return (
@@ -54,7 +93,7 @@ export function MainCard(props: TProps) {
                 position='relative'
                 minW={{ base: 158, lg: 346 }}
                 objectFit='cover'
-                src={props.image}
+                src={ApiBaseURL.IMG_URL + props.image}
                 alt='recipe'
                 borderLeftRadius={8}
             />
@@ -75,11 +114,23 @@ export function MainCard(props: TProps) {
             >
                 <Flex mb={{ base: 0, lg: 6 }} justify='space-between' w='100%'>
                     <Show above='lg'>
-                        <Tag bgClr='#ffffd3' {...props} />
+                        {category && (
+                            <Tag
+                                bgClr='#ffffd3'
+                                title={category.title}
+                                img={ApiBaseURL.IMG_URL + category.icon}
+                            />
+                        )}
                     </Show>
                     <Hide above='lg'>
                         <Box position='absolute' top={2} left={2} w='100%'>
-                            <Tag bgClr='#ffffd3' {...props} />
+                            {category && (
+                                <Tag
+                                    bgClr='#ffffd3'
+                                    title={category.title}
+                                    img={ApiBaseURL.IMG_URL + category.icon}
+                                />
+                            )}
                         </Box>
                     </Hide>
                     <CardStatistic bookmarks={props.bookmarks} likes={props.likes} />

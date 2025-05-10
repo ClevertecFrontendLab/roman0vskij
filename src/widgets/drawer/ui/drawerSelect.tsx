@@ -32,7 +32,9 @@ export function DrawerSelect({
             {({ isOpen }) => (
                 <>
                     <MenuButton
-                        data-test-id='filter-menu-button-категория'
+                        data-test-id={
+                            placeholder === 'Категория' ? 'filter-menu-button-категория' : ''
+                        }
                         _disabled={{
                             opacity: 1,
                             cursor: 'not-allowed',

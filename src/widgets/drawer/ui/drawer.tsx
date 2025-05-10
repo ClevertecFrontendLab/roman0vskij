@@ -16,21 +16,14 @@ import {
     Stack,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
-import { mockData } from '~/shared/mock/mockData';
-import { TMock } from '~/shared/types';
+import { selectCategories } from '~/entities/category';
+import { setRecipes } from '~/entities/recipe';
+import { useLazyGetRecipesQuery } from '~/query/services/recipes';
+import { setAppError, setAppLoader } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
-import {
-    setData,
-    setSelectedAllergens,
-    setSelectedAuthors,
-    setSelectedCategories,
-    setSelectedMeat,
-    setSelectedSide,
-} from '../model/drawerSlice';
 import {
     selectSelectedAllergens,
     selectSelectedAuthors,
@@ -38,31 +31,26 @@ import {
     selectSelectedMeat,
     selectSelectedSide,
 } from '../model/selectors';
+import {
+    setSelectedAllergens,
+    setSelectedAuthors,
+    setSelectedCategories,
+    setSelectedMeat,
+    setSelectedSide,
+} from '../model/slice';
 import { DrawerAllergens } from './drawerAllergens';
 import { DrawerButton } from './drawerButton';
 import { DrawerSelect } from './drawerSelect';
 import { DrawerTag } from './drawerTag';
 
 export function Drawer() {
-    const navigate = useCustomNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const selectedCategories = useAppSelector(selectSelectedCategories);
     const dispatch = useAppDispatch();
     const [isActiveCategories, setIsActiveCategories] = useState(selectedCategories.length > 0);
 
-    const categories = [
-        'Первые блюда',
-        'Вторые блюда',
-        'Веганская кухня',
-        'Закуски',
-        'Детские блюда',
-        'Десерты, выпечка',
-        'Лечебное питание',
-        'Соусы',
-        'Напитки',
-        'Заготовки',
-    ];
+    const categories = useAppSelector(selectCategories);
 
     function handleOnchangeCategories(values: Array<string | number>) {
         if (values.length === 0) {
@@ -178,55 +166,57 @@ export function Drawer() {
         dispatch(setSelectedSide([]));
     }
 
+    const [
+        getRecipesQuery,
+        {
+            data: dataRecipes,
+            error: errorRecipes,
+            isSuccess: isSuccessRecipes,
+            isError: isErrorRecipes,
+            isFetching: isFetchingRecipes,
+        },
+    ] = useLazyGetRecipesQuery();
+
+    useEffect(() => {
+        dispatch(setAppLoader(isFetchingRecipes));
+
+        if (!isFetchingRecipes && isSuccessRecipes && dataRecipes) {
+            dispatch(setRecipes(dataRecipes.data));
+            handleClear();
+            return;
+        }
+        if (isErrorRecipes && errorRecipes) {
+            dispatch(setAppError(`Search error: ${errorRecipes.toString()}`));
+        } else {
+            dispatch(setAppError(null));
+        }
+    }, [dataRecipes, isSuccessRecipes, isErrorRecipes, errorRecipes, isFetchingRecipes]);
+
     function useHandleFindRecipe() {
+        // console.log({
+        //     allergens: selectedAllergens.length ? selectedAllergens.join(',') : undefined,
+        //     garnish: selectedSide.length ? selectedSide.join(',') : undefined,
+        //     meat: selectedMeat.length ? selectedMeat.join(',') : undefined,
+        //     subcategoriesIds: selectedCategories.length
+        //         ? categories
+        //               .filter((c) => selectedCategories.find((s) => s === c.title))
+        //               .map((c) => c.subCategories.map((sub) => sub._id).join(','))
+        //               .join(',')
+        //         : undefined,
+        // });
+
+        getRecipesQuery({
+            subcategoriesIds: selectedCategories.length
+                ? categories
+                      .filter((c) => selectedCategories.find((s) => s === c.title))
+                      .map((c) => c._id)
+                      .join(',')
+                : undefined,
+            allergens: selectedAllergens.length ? selectedAllergens.join(',') : undefined,
+            garnish: selectedSide.length ? selectedSide.join(',') : undefined,
+            meat: selectedMeat.length ? selectedMeat.join(',') : undefined,
+        });
         onClose();
-        const filtredData = filterByAllergens(
-            filterBySide(filterByMeat(filterByCategories(mockData))),
-        );
-        dispatch(setData(filtredData));
-        handleClear();
-        navigate('/filters');
-    }
-
-    function filterByCategories(data: TMock[]) {
-        return selectedCategories.length > 0
-            ? data.filter((recipe) =>
-                  recipe.category.find((ingred) =>
-                      selectedCategories.find(() =>
-                          ingred.toLowerCase().includes('vegan'.toLowerCase()),
-                      ),
-                  ),
-              )
-            : data;
-    }
-
-    function filterByMeat(data: TMock[]) {
-        return selectedMeat.length > 0
-            ? data.filter((recipe) =>
-                  selectedMeat.find((s) => s.toLowerCase() == recipe.meat?.toLowerCase()),
-              )
-            : data;
-    }
-
-    function filterBySide(data: TMock[]) {
-        return selectedSide.length > 0
-            ? data.filter((recipe) =>
-                  selectedSide.find((s) => s.toLowerCase() == recipe.side?.toLowerCase()),
-              )
-            : data;
-    }
-
-    function filterByAllergens(data: TMock[]) {
-        return selectedAllergens.length > 0
-            ? data.filter(
-                  (recipe) =>
-                      !recipe.ingredients.find((ingred) =>
-                          selectedAllergens.find((a) =>
-                              ingred.title.toLowerCase().includes(a.toLowerCase()),
-                          ),
-                      ),
-              )
-            : data;
     }
 
     enum GROUP {
@@ -251,8 +241,6 @@ export function Drawer() {
     ];
 
     function deleteTag(tag: FilterTag) {
-        console.log(tag);
-
         switch (tag.group) {
             case GROUP.CATEGORIES:
                 dispatch(
@@ -316,7 +304,7 @@ export function Drawer() {
                                 handleOnchange={handleOnchangeCategories}
                                 isActive={isActiveCategories}
                                 selectedValues={selectedCategories}
-                                values={categories}
+                                values={categories.map((c) => c.title)}
                                 placeholder='Категория'
                             />
                             <DrawerSelect

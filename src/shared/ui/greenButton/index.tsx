@@ -7,6 +7,8 @@ type TProps = {
     onclick?: () => void;
     showOnLg?: boolean;
     hideOnLg?: boolean;
+    showOnMd?: boolean;
+    hideOnMd?: boolean;
 };
 
 export function GreenButton({
@@ -14,17 +16,26 @@ export function GreenButton({
     text,
     hasArrow = false,
     bgColor = '',
-    showOnLg = false,
-    hideOnLg = false,
+    //showOnLg = false,
+    //hideOnLg = false,
+    showOnMd = false,
+    hideOnMd = false,
     ...rest
 }: TProps) {
     return (
         <Button
+            // display={
+            //     showOnLg
+            //         ? { base: 'none', lg: 'flex' }
+            //         : hideOnLg
+            //           ? { base: 'flex', lg: 'none' }
+            //           : { base: 'flex' }
+            // }
             display={
-                showOnLg
-                    ? { base: 'none', lg: 'flex' }
-                    : hideOnLg
-                      ? { base: 'flex', lg: 'none' }
+                showOnMd
+                    ? { base: 'none', md: 'flex' }
+                    : hideOnMd
+                      ? { base: 'flex', md: 'none' }
                       : { base: 'flex' }
             }
             onClick={onclick}

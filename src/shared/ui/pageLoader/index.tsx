@@ -1,16 +1,11 @@
 import { Box, Spinner } from '@chakra-ui/react';
 
-export function Loader() {
+export default function PageLoader() {
     return (
         <Box
             data-test-id='app-loader'
-            top={0}
-            left={0}
-            position='fixed'
-            background='rgba(0, 0, 0, 0.16)'
-            backdropFilter='blur(2px)'
             w='100%'
-            height='100%'
+            minH='100%'
             zIndex={20}
             display='flex'
             justifyContent='center'

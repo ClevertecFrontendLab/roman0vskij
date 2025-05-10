@@ -7,3 +7,4 @@ export const selectSelectedAuthors = (state: ApplicationState) => state.drawer.s
 export const selectSelectedMeat = (state: ApplicationState) => state.drawer.selectedMeat;
 export const selectSelectedSide = (state: ApplicationState) => state.drawer.selectedSide;
 export const selectSelectedAllergens = (state: ApplicationState) => state.drawer.selectedAllergens;
+export const selectSearchQuery = (state: ApplicationState) => state.drawer.searchQuery;

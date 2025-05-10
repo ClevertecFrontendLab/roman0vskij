@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import { setSelectedAllergens } from '~/features/filter';
-import { setSearchQuery } from '~/features/search/model/searchSlice';
+import { setSearchQuery } from '~/features/search/model/slice';
 import { useAppDispatch } from '~/store/hooks';
 
 export function useCustomNavigate() {
