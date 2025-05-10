@@ -1,10 +1,15 @@
-import { Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react';
+import { Box, Card, CardBody, CardFooter, CardHeader, Heading, Text } from '@chakra-ui/react';
 
-import { TMock } from '~/shared/types';
+import { selectRandomCategory } from '~/entities/category';
+import { TRecipe } from '~/entities/recipe';
+import { ApiBaseURL } from '~/query/constants/base';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
 import { Tag } from '~/shared/ui/tag';
+import { useAppSelector } from '~/store/hooks';
 
-export function RelevantRecipeCard(props: TMock) {
+export function RelevantRecipeCard(props: TRecipe) {
+    const randomCategory = useAppSelector(selectRandomCategory);
+
     return (
         <Card
             w='100%'
@@ -51,7 +56,16 @@ export function RelevantRecipeCard(props: TMock) {
                 </Text>
             </CardBody>
             <CardFooter p={0} justify='space-between'>
-                <Tag bgClr='#ffffd3' isRelevant {...props} />
+                {randomCategory ? (
+                    <Tag
+                        bgClr='#ffffd3'
+                        isRelevant
+                        img={ApiBaseURL.IMG_URL + randomCategory.icon}
+                        title={randomCategory.title}
+                    />
+                ) : (
+                    <Box />
+                )}
                 <CardStatistic bookmarks={props.bookmarks} likes={props.likes} />
             </CardFooter>
         </Card>

@@ -1,26 +1,30 @@
 import { useLocation } from 'react-router';
 
-import { mockCategories } from '~/shared/mock/mockCategories';
-import { mockData } from '~/shared/mock/mockData';
+import { selectCategories } from '~/entities/category';
+import { selectCurrentRecipe } from '~/entities/recipe';
+import { useAppSelector } from '~/store/hooks';
 
 export function useBreadcrumbs() {
+    const categories = useAppSelector(selectCategories);
+    const currentRecipe = useAppSelector(selectCurrentRecipe);
     const location = useLocation();
     const [_, category, subcategory, recipeId] = location.pathname.split('/');
     const categoryName =
         category === 'the-juiciest'
             ? 'Самое сочное'
-            : mockCategories.find((categ) => categ.id === category)?.name;
-    const firstSubcategory = mockCategories.find((categ) => categ.id === category)?.subCategories[0]
-        .id;
-    const subCategoryName = mockCategories
-        .find((categ) => categ.id === category)
-        ?.subCategories.find((subCateg) => subCateg.id === subcategory)?.name;
-    const recipe = mockData.find((r) => r.id === recipeId);
+            : category === 'filters'
+              ? 'Фильтры'
+              : categories.find((categ) => categ.category === category)?.title;
+    const firstSubcategory = categories.find((categ) => categ.category === category)
+        ?.subCategories[0].category;
+    const subCategoryName = categories
+        .find((categ) => categ.category === category)
+        ?.subCategories.find((subCateg) => subCateg.category === subcategory)?.title;
 
     return {
         categoryName,
         subCategoryName,
-        recipe,
+        recipe: recipeId ? currentRecipe : null,
         category,
         subcategory,
         firstSubcategory,

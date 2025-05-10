@@ -2,18 +2,21 @@ import { Box, HStack, Tab, TabIndicator, TabList, Tabs as TabsWrapper } from '@c
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { TCategory } from '~/entities/category';
+import { selectCategories, TCategory } from '~/entities/category';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
-import { mockCategories } from '~/shared/mock/mockCategories';
+import { useAppSelector } from '~/store/hooks';
 
 export function Tabs() {
     const location = useLocation();
     const navigate = useCustomNavigate();
+    const categories = useAppSelector(selectCategories);
 
     const [_, selectedCategory, selectedSubcategory] = location.pathname.split('/');
-    let category = mockCategories.find((tab) => tab.id === selectedCategory) as TCategory;
+    let category = categories.find((tab) => tab.category === selectedCategory) as TCategory;
     const [subcategoryIndex, setSubcategoryIndex] = useState(
-        category.subCategories.findIndex((subCategory) => subCategory.id === selectedSubcategory),
+        category.subCategories.findIndex(
+            (subCategory) => subCategory.category === selectedSubcategory,
+        ),
     );
 
     function onClickHandler(category: string, subCategory: string) {
@@ -22,17 +25,22 @@ export function Tabs() {
 
     useEffect(() => {
         const [_, selectedCategory, selectedSubcategory] = location.pathname.split('/');
-        category = mockCategories.find((tab) => tab.id === selectedCategory) as TCategory;
+        category = categories.find((tab) => tab.category === selectedCategory) as TCategory;
         setSubcategoryIndex(
             category.subCategories.findIndex(
-                (subCategory) => subCategory.id === selectedSubcategory,
+                (subCategory) => subCategory.category === selectedSubcategory,
             ),
         );
     }, [location]);
 
     return (
         <HStack pos='relative' justify='center' overflow='hidden' gap={0}>
-            <TabsWrapper key={category.id} variant='colorful' index={subcategoryIndex} w='100%'>
+            <TabsWrapper
+                key={category.category}
+                variant='colorful'
+                index={subcategoryIndex}
+                w='100%'
+            >
                 <Box
                     overflowX={{ base: 'auto', lg: 'visible' }}
                     whiteSpace={{ base: 'nowrap', lg: 'normal' }}
@@ -53,11 +61,13 @@ export function Tabs() {
                         {category.subCategories.map((subcategory, i) => (
                             <Tab
                                 aria-selected={subcategoryIndex === i ? true : false}
-                                data-test-id={`tab-${subcategory.id}-${i}`}
-                                key={subcategory.id}
-                                onClick={() => onClickHandler(category.id, subcategory.id)}
+                                data-test-id={`tab-${subcategory.category}-${i}`}
+                                key={subcategory.category}
+                                onClick={() =>
+                                    onClickHandler(category.category, subcategory.category)
+                                }
                             >
-                                {subcategory.name}
+                                {subcategory.title}
                             </Tab>
                         ))}
                     </TabList>

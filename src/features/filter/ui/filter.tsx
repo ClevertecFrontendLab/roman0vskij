@@ -16,17 +16,16 @@ import {
     Switch,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { CheckIcon, CirclePlusIcon } from '~/shared/assets/icons';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { selectSelectedAllergens, setSelectedAllergens } from '~/widgets/drawer';
 
-import { setSelectedAllergens } from '../model/filterSlice';
-import { selectSelectedAllergens } from '../model/selectors';
 import { Allergen } from './allergen';
 
 export function Filter() {
-    const selectedAllergens = useSelector(selectSelectedAllergens);
-    const dispatch = useDispatch();
+    const selectedAllergens = useAppSelector(selectSelectedAllergens);
+    const dispatch = useAppDispatch();
     const [isActive, setIsActive] = useState(selectedAllergens.length > 0);
     const inputRef = useRef<HTMLInputElement>(null);
 

@@ -1,6 +1,8 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Image } from '@chakra-ui/react';
 
+import { setSearchQuery } from '~/features/search';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
+import { useAppDispatch } from '~/store/hooks';
 
 import { useBreadcrumbs } from '../model/useBreadcrumbs';
 
@@ -12,9 +14,11 @@ export function Breadcrumbs({ onClose = () => {} }: TProps) {
     const { category, categoryName, subcategory, subCategoryName, firstSubcategory, recipe } =
         useBreadcrumbs();
     const navigate = useCustomNavigate();
+    const dispatch = useAppDispatch();
 
     function handleOnclick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, url: string) {
         e.preventDefault();
+        dispatch(setSearchQuery(''));
         navigate(url);
         onClose();
     }
@@ -42,13 +46,13 @@ export function Breadcrumbs({ onClose = () => {} }: TProps) {
                         onClick={(e) =>
                             handleOnclick(
                                 e,
-                                category === 'the-juiciest'
+                                category === 'the-juiciest' || category === 'filters'
                                     ? `/${category}`
                                     : `/${category}/${firstSubcategory}`,
                             )
                         }
                         href={
-                            category === 'the-juiciest'
+                            category === 'the-juiciest' || category === 'filters'
                                 ? `/${category}`
                                 : `/${category}/${firstSubcategory}`
                         }
@@ -73,9 +77,9 @@ export function Breadcrumbs({ onClose = () => {} }: TProps) {
                 <BreadcrumbItem>
                     <BreadcrumbLink
                         onClick={(e) =>
-                            handleOnclick(e, `/${category}/${subcategory}/${recipe.id}`)
+                            handleOnclick(e, `/${category}/${subcategory}/${recipe.title}`)
                         }
-                        href={`/${category}/${subcategory}/${recipe.id}`}
+                        href={`/${category}/${subcategory}/${recipe.title}`}
                         color='#000'
                     >
                         {recipe.title}

@@ -1,5 +1,4 @@
 import { Box, HStack, Show, SimpleGrid, useMediaQuery, VStack } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 
 import { MainCard } from '~/entities/mainCard';
 import { Filter } from '~/features/filter';
@@ -7,16 +6,15 @@ import { useSearch } from '~/features/search';
 import { PageTitle } from '~/shared/ui/pageTitle';
 import { PageWrapper } from '~/shared/ui/pageWrapper';
 import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
+import { useAppSelector } from '~/store/hooks';
 import { Drawer, selectData } from '~/widgets/drawer';
 
 export function FiltersPage() {
     const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)');
 
-    const { SearchInput, filterBySearchQuery } = useSearch();
+    const SearchInput = useSearch();
 
-    const data = useSelector(selectData);
-
-    const filtredData = filterBySearchQuery(data);
+    const data = useAppSelector(selectData);
 
     return (
         <PageWrapper>
@@ -45,12 +43,9 @@ export function FiltersPage() {
                 columns={{ base: 1, md: 2, lg: 1, xl: 2 }}
                 gap={{ base: 3, md: 4, xl: 6 }}
             >
-                {filtredData
-                    .slice()
-                    .sort((a, b) => b.likes - a.likes)
-                    .map((recipe, i) => (
-                        <MainCard key={`main${i}`} {...recipe} index={i} />
-                    ))}
+                {data.map((recipe, i) => (
+                    <MainCard key={`main${i}`} {...recipe} index={i} />
+                ))}
             </SimpleGrid>
             {isLargerThan1000 ? <></> : <Box height={100} />}
         </PageWrapper>

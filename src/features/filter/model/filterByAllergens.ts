@@ -1,13 +1,12 @@
-import { useSelector } from 'react-redux';
-
-import { TMock } from '~/shared/types';
+import { TRecipe } from '~/entities/recipe';
+import { useAppSelector } from '~/store/hooks';
 
 import { selectSelectedAllergens } from './selectors';
 
 export function useFilterByAllergens() {
-    const allergens = useSelector(selectSelectedAllergens);
+    const allergens = useAppSelector(selectSelectedAllergens);
 
-    return function filterByAllergens(data: TMock[]) {
+    return function filterByAllergens(data: TRecipe[]) {
         return data.filter(
             (recipe) =>
                 !recipe.ingredients.find((ingred) =>

@@ -1,23 +1,66 @@
 import {
+    Box,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
     Heading,
+    Hide,
     Image,
     Show,
     Text,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
+import { selectCategories } from '~/entities/category';
+import { setCurrentRecipe } from '~/entities/recipe/model/slice';
+import { TRecipe } from '~/entities/recipe/model/types';
+import { ApiBaseURL } from '~/query/constants/base';
+import { useLazyGetRecipeQuery } from '~/query/services/recipes';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
-import { TMock } from '~/shared/types';
 import { CardStatistic } from '~/shared/ui/cardStatistic';
+import { Tag } from '~/shared/ui/tag';
+import { setAppError, setAppLoader } from '~/store/app-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
-export function RecipeCard(props: TMock) {
+export function RecipeCard(props: TRecipe) {
     const navigate = useCustomNavigate();
 
+    const categories = useAppSelector(selectCategories);
+
+    const category = categories.find((category) =>
+        category.subCategories.find((sub) => sub._id === props.categoriesIds[0]),
+    );
+
+    const subCategory = category?.subCategories.find((sub) => sub._id === props.categoriesIds[0]);
+
+    const dispatch = useAppDispatch();
+    const [
+        getRecipeQuery,
+        {
+            data: recipe,
+            error: errorRecipe,
+            isError: isErrorRecipe,
+            isFetching: isFetchingRecipe,
+            isSuccess: isSuccessRecipe,
+        },
+    ] = useLazyGetRecipeQuery();
+
+    useEffect(() => {
+        dispatch(setAppLoader(isFetchingRecipe));
+        if (isErrorRecipe && errorRecipe) {
+            dispatch(setAppError(`Recipe error: ${errorRecipe.toString()}`));
+        } else {
+            dispatch(setAppError(null));
+        }
+        if (!isFetchingRecipe && isSuccessRecipe && recipe) {
+            dispatch(setCurrentRecipe(recipe));
+            navigate(`/${category?.category}/${subCategory?.category}/${props._id}`);
+        }
+    }, [isErrorRecipe, errorRecipe, isFetchingRecipe]);
+
     function handleOnclick() {
-        navigate(`/${props.category[0]}/${props.subcategory[0]}/${props.id}`);
+        getRecipeQuery(props._id);
     }
 
     return (
@@ -38,7 +81,7 @@ export function RecipeCard(props: TMock) {
                 position='relative'
                 h={{ base: 128, lg: 230 }}
                 objectFit='cover'
-                src={props.image}
+                src={ApiBaseURL.IMG_URL + props.image}
                 alt='recipe'
                 borderTopRadius={8}
             />
@@ -83,22 +126,26 @@ export function RecipeCard(props: TMock) {
                 pb={[1, null, null, 3, 5]}
                 justify='space-between'
             >
-                {/* <Show above='lg'>
-                    {props?.hasTag ? (
-                        <Tag bgClr='#d7ff94' tagName={props?.tag} img={props?.tagImg} />
-                    ) : (
-                        <Box />
+                <Show above='lg'>
+                    {category && (
+                        <Tag
+                            bgClr='#d7ff94'
+                            title={category.title}
+                            img={ApiBaseURL.IMG_URL + category.icon}
+                        />
                     )}
                 </Show>
                 <Hide above='lg'>
                     <Box position='absolute' top={2} left={2} w='100%'>
-                        {props?.hasTag ? (
-                            <Tag bgClr='#d7ff94' tagName={props?.tag} img={props?.tagImg} />
-                        ) : (
-                            <Box />
+                        {category && (
+                            <Tag
+                                bgClr='#d7ff94'
+                                title={category.title}
+                                img={ApiBaseURL.IMG_URL + category.icon}
+                            />
                         )}
                     </Box>
-                </Hide> */}
+                </Hide>
                 <CardStatistic bookmarks={props.bookmarks} likes={props.likes} />
             </CardFooter>
         </Card>

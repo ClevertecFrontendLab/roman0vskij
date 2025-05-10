@@ -1,9 +1,13 @@
 import { Button, Flex, HStack, Image, Text } from '@chakra-ui/react';
 
-import { mockCategories } from '~/shared/mock/mockCategories';
-import { TMock } from '~/shared/types';
+import { selectCategories } from '~/entities/category';
+import { TRecipe } from '~/entities/recipe';
+import { ApiBaseURL } from '~/query/constants/base';
+import { useAppSelector } from '~/store/hooks';
 
-export function CookCard({ title, category }: TMock) {
+export function CookCard({ title, categoriesIds }: TRecipe) {
+    const categories = useAppSelector(selectCategories);
+
     return (
         <HStack
             border='1px solid rgba(0, 0, 0, 0.08)'
@@ -21,7 +25,15 @@ export function CookCard({ title, category }: TMock) {
             }}
         >
             <Flex gap={{ base: 2, xl: 3 }} wrap='nowrap'>
-                <Image src={mockCategories.find((e) => e.id === category[0])?.img} alt='img' />
+                <Image
+                    src={
+                        ApiBaseURL.IMG_URL +
+                        categories.find((category) =>
+                            category.subCategories.find((e) => e._id === categoriesIds[0]),
+                        )?.icon
+                    }
+                    alt='category icon'
+                />
                 <Text
                     wordBreak='break-all'
                     noOfLines={1}

@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { TMock } from '~/shared/types';
+import { TRecipe } from '~/entities/recipe';
 
 type initialState = {
-    data: TMock[];
+    data: TRecipe[];
     selectedCategories: string[];
     selectedAuthors: string[];
     selectedMeat: string[];
     selectedSide: string[];
     selectedAllergens: string[];
+    searchQuery: string;
 };
 
 const initialState: initialState = {
@@ -18,13 +19,14 @@ const initialState: initialState = {
     selectedMeat: [],
     selectedSide: [],
     selectedAllergens: [],
+    searchQuery: '',
 };
 
 export const drawerSlice = createSlice({
     name: 'drawer',
     initialState,
     reducers: {
-        setData: (state, action: PayloadAction<TMock[]>) => {
+        setData: (state, action: PayloadAction<TRecipe[]>) => {
             state.data = action.payload;
         },
         setSelectedCategories: (state, action: PayloadAction<string[]>) => {
@@ -42,6 +44,9 @@ export const drawerSlice = createSlice({
         setSelectedAllergens: (state, action: PayloadAction<string[]>) => {
             state.selectedAllergens = action.payload;
         },
+        setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.searchQuery = action.payload;
+        },
     },
 });
 
@@ -52,5 +57,6 @@ export const {
     setSelectedMeat,
     setSelectedSide,
     setSelectedAllergens,
+    setSearchQuery,
 } = drawerSlice.actions;
 export default drawerSlice.reducer;

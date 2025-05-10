@@ -1,32 +1,13 @@
 import { Box, HStack, Image, Text } from '@chakra-ui/react';
 
-import { mockCategories } from '~/shared/mock/mockCategories';
-
-type TBaseProps = {
+type TProps = {
     isRelevant?: boolean;
     bgClr: string;
-    category: string[];
-};
-
-type TCustomProps = {
-    type: 'custom';
-    isRelevant?: boolean;
-    bgClr: string;
-    name: string;
+    title: string;
     img: string;
 };
 
-type TProps = (TBaseProps & { type?: 'base' }) | TCustomProps;
-
 export function Tag(props: TProps) {
-    function isBaseProps(props: TProps): props is TBaseProps {
-        return !props.type || props.type === 'base';
-    }
-
-    const categor = isBaseProps(props)
-        ? mockCategories.find((e) => e.id === props.category[0])
-        : props;
-
     return (
         <Box
             bgColor={props.bgClr}
@@ -37,7 +18,7 @@ export function Tag(props: TProps) {
             h={6}
         >
             <HStack spacing={props.isRelevant ? 2 : { base: 0.5, lg: 2 }}>
-                <Image h={4} w={4} src={categor?.img} />
+                <Image h={4} w={4} src={props?.img} />
                 <Text
                     fontSize={14}
                     fontWeight={400}
@@ -46,7 +27,7 @@ export function Tag(props: TProps) {
                     wordBreak='break-all'
                     noOfLines={1}
                 >
-                    {categor?.name}
+                    {props?.title}
                 </Text>
             </HStack>
         </Box>
