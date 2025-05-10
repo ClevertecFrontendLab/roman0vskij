@@ -3,6 +3,7 @@ export {
     default as drawerReducer,
     drawerSlice,
     setData,
+    setSearchQuery,
     setSelectedAllergens,
     setSelectedAuthors,
     setSelectedCategories,

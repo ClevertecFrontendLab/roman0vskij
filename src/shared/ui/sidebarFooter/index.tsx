@@ -4,7 +4,16 @@ import { SignOutIcon } from '~/shared/assets/icons';
 
 export function SidebarFooter() {
     return (
-        <VStack data-test-id='footer' as='footer' px={6} pb={8} gap={4} w='100%' align='flex-start'>
+        <VStack
+            data-test-id='footer'
+            as='footer'
+            px={6}
+            pb={8}
+            gap={4}
+            w='100%'
+            align='flex-start'
+            bottom={0}
+        >
             <Text
                 fontWeight={500}
                 fontSize={12}

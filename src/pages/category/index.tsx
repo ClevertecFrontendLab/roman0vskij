@@ -21,7 +21,7 @@ import { selectRandomRecipes, selectRecipes, setRecipes } from '~/entities/recip
 import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
 import { Filter } from '~/features/filter';
 import { useFilterByAllergens } from '~/features/filter/model/filterByAllergens';
-import { Search, selectSearchQuery, setSearchQuery } from '~/features/search';
+import { Search, setSearchQuery } from '~/features/search';
 import SearchLoader from '~/features/search/ui/searchLoader';
 import { useGetCategoryQuery } from '~/query/services/categories';
 import {
@@ -36,7 +36,13 @@ import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
 import { Title } from '~/shared/ui/title';
 import { pageLoadingSelector, setAppError, setPageLoader } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { Drawer, selectSelectedCategories } from '~/widgets/drawer';
+import {
+    Drawer,
+    selectSelectedAllergens,
+    selectSelectedCategories,
+    selectSelectedMeat,
+    selectSelectedSide,
+} from '~/widgets/drawer';
 import { Tabs } from '~/widgets/tabs';
 
 export function CategoryPage() {
@@ -49,7 +55,6 @@ export function CategoryPage() {
     const randomRecipes = useAppSelector(selectRandomRecipes);
     const [_, category, subcategory] = location.pathname.split('/');
     const filterByAllergens = useFilterByAllergens();
-    const searchQuery = useAppSelector(selectSearchQuery);
 
     const categories = useAppSelector(selectCategories);
     const currentCategory = categories.find((c) => c.category === category);
@@ -144,6 +149,10 @@ export function CategoryPage() {
         isFetchingSearchRecipes,
     ]);
 
+    const selectedAllergens = useAppSelector(selectSelectedAllergens);
+    const selectedSide = useAppSelector(selectSelectedSide);
+    const selectedMeat = useAppSelector(selectSelectedMeat);
+
     function handleSearch(value: string) {
         dispatch(setSearchQuery(value));
 
@@ -153,6 +162,9 @@ export function CategoryPage() {
                 (currentCategory?.subCategories.map((s) => s._id).join(',') ??
                     selectedCategories.join(',')) ||
                 undefined,
+            allergens: selectedAllergens.length ? selectedAllergens.join(',') : undefined,
+            garnish: selectedSide.length ? selectedSide.join(',') : undefined,
+            meat: selectedMeat.length ? selectedMeat.join(',') : undefined,
         });
     }
 
@@ -207,7 +219,7 @@ export function CategoryPage() {
 
             {isPageLoading ? (
                 <PageLoader />
-            ) : recipes.length === 0 || searchQuery === '' ? (
+            ) : recipes.length === 0 ? (
                 <>
                     <Tabs />
 

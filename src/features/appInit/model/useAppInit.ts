@@ -31,13 +31,9 @@ export const useAppInit = () => {
     useEffect(() => {
         if (isSuccessCategories && dataCategories) {
             dispatch(setCategories(dataCategories));
+            return;
         }
-        if (isErrorCategories && errorCategories) {
-            dispatch(setAppError(`Init error: ${errorCategories.toString()}`));
-        } else {
-            dispatch(setAppError(null));
-        }
-    }, [dataCategories, isSuccessCategories, isErrorCategories, errorCategories]);
+    }, [dataCategories, isSuccessCategories]);
 
     const {
         data: juiciestRecipes,
@@ -52,14 +48,9 @@ export const useAppInit = () => {
     useEffect(() => {
         if (isSuccessJuiciest && juiciestRecipes) {
             dispatch(setJuiciestRecipes(juiciestRecipes.data));
+            return;
         }
-
-        if (isErrorJuiciest && errorJuiciest) {
-            dispatch(setAppError(`Init error: ${errorJuiciest.toString()}`));
-        } else {
-            dispatch(setAppError(null));
-        }
-    }, [isErrorJuiciest, errorJuiciest, isSuccessJuiciest, juiciestRecipes]);
+    }, [isSuccessJuiciest, juiciestRecipes]);
 
     useEffect(() => {
         refetchCategories();
@@ -123,13 +114,9 @@ export const useAppInit = () => {
     useEffect(() => {
         if (randomRecipesData?.data && isSuccessRandomRecipes) {
             dispatch(setRandomRecipes(randomRecipesData.data));
+            return;
         }
-        if (isErrorRandomRecipes && errorRandomRecipes) {
-            dispatch(setAppError(`Init error: ${errorRandomRecipes.toString()}`));
-        } else {
-            dispatch(setAppError(null));
-        }
-    }, [randomRecipesData, isSuccessRandomRecipes, isErrorRandomRecipes, errorRandomRecipes]);
+    }, [randomRecipesData, isSuccessRandomRecipes]);
 
     useEffect(() => {
         if (isLoadingCategories || isLoadingJuiciest) {
@@ -139,6 +126,24 @@ export const useAppInit = () => {
             dispatch(setAppLoader(false));
         }
     }, [isLoadingCategories, isLoadingJuiciest]);
+
+    useEffect(() => {
+        if (isErrorRandomRecipes) {
+            dispatch(setAppError(`Init error: ${errorRandomRecipes.toString()}`));
+            return;
+        }
+        if (isErrorJuiciest) {
+            dispatch(setAppError(`Init error: ${errorJuiciest.toString()}`));
+            return;
+        }
+        if (isErrorCategories) {
+            dispatch(setAppError(`Init error: ${errorCategories.toString()}`));
+            return;
+        }
+        if (!isErrorRandomRecipes && !isErrorJuiciest && !isErrorCategories) {
+            dispatch(setAppError(null));
+        }
+    }, [isErrorRandomRecipes, isErrorJuiciest, isErrorCategories]);
 
     useEffect(() => {
         if (!isLoadingCategories && !isLoadingJuiciest) {

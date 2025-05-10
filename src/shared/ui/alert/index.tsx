@@ -13,7 +13,7 @@ import { useAppSelector } from '~/store/hooks';
 
 export default function Alert() {
     const error = useAppSelector(userErrorSelector);
-    const [isActive, setActive] = useState(!!error);
+    const [isActive, setActive] = useState(false);
 
     useEffect(() => {
         if (error) {
@@ -28,6 +28,7 @@ export default function Alert() {
     return (
         isActive && (
             <AlertWrapper
+                //display={isActive ? 'block' : 'none'}
                 data-test-id='error-notification'
                 status='error'
                 pos='fixed'

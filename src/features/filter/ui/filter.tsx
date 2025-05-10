@@ -19,9 +19,8 @@ import { useRef, useState } from 'react';
 
 import { CheckIcon, CirclePlusIcon } from '~/shared/assets/icons';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { selectSelectedAllergens, setSelectedAllergens } from '~/widgets/drawer';
 
-import { selectSelectedAllergens } from '../model/selectors';
-import { setSelectedAllergens } from '../model/slice';
 import { Allergen } from './allergen';
 
 export function Filter() {

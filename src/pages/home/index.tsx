@@ -13,7 +13,6 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router';
 
 import { BlogCard } from '~/entities/blogCard';
 import { selectCategories, selectRandomCategory, TCategory } from '~/entities/category';
@@ -29,7 +28,6 @@ import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
 import { useAppInit } from '~/features/appInit/model/useAppInit';
 import { Filter } from '~/features/filter';
 import { Search } from '~/features/search';
-import { setSearchQuery } from '~/features/search/model/slice';
 import SearchLoader from '~/features/search/ui/searchLoader';
 import { useLazyGetRecipesQuery } from '~/query/services/recipes';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
@@ -42,7 +40,14 @@ import { SearchAndFilter } from '~/shared/ui/searchAndFilter';
 import { Title } from '~/shared/ui/title';
 import { pageLoadingSelector, setAppError } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { Drawer, selectSelectedCategories } from '~/widgets/drawer';
+import {
+    Drawer,
+    selectSelectedAllergens,
+    selectSelectedCategories,
+    selectSelectedMeat,
+    selectSelectedSide,
+    setSearchQuery,
+} from '~/widgets/drawer';
 import { Slider } from '~/widgets/slider';
 
 export function HomePage() {
@@ -63,10 +68,7 @@ export function HomePage() {
     }
 
     const dispatch = useAppDispatch();
-    const location = useLocation();
-    const [_, category] = location.pathname.split('/');
     const categories = useAppSelector(selectCategories);
-    const currentCategory = categories.find((c) => c.category === category);
     const selectedCategories = useAppSelector(selectSelectedCategories);
     const [
         getRecipesQuery,
@@ -85,8 +87,6 @@ export function HomePage() {
         }
         if (isErrorSearchRecipes && errorSearchRecipes) {
             dispatch(setAppError(`Search error: ${errorSearchRecipes.toString()}`));
-        } else {
-            dispatch(setAppError(null));
         }
     }, [
         dataSearchRecipes,
@@ -96,17 +96,38 @@ export function HomePage() {
         isFetchingSearchRecipes,
     ]);
 
+    const selectedAllergens = useAppSelector(selectSelectedAllergens);
+    const selectedSide = useAppSelector(selectSelectedSide);
+    const selectedMeat = useAppSelector(selectSelectedMeat);
+
     function handleSearch(value: string) {
         dispatch(setSearchQuery(value));
 
         getRecipesQuery({
             searchString: value,
-            subcategoriesIds:
-                (currentCategory?.subCategories.map((s) => s._id).join(',') ??
-                    selectedCategories.join(',')) ||
-                undefined,
+            subcategoriesIds: selectedCategories.length
+                ? categories
+                      .filter((c) => selectedCategories.find((s) => s === c.title))
+                      .map((c) => c._id)
+                      .join(',')
+                : undefined,
+            allergens: selectedAllergens.length ? selectedAllergens.join(',') : undefined,
+            garnish: selectedSide.length ? selectedSide.join(',') : undefined,
+            meat: selectedMeat.length ? selectedMeat.join(',') : undefined,
         });
     }
+    // function handleSearch(value: string) {
+    //     dispatch(setSearchQuery(value));
+
+    //     getRecipesQuery({
+    //         searchString: value,
+    //         subcategoriesIds:
+    //             (currentCategory?.subCategories.map((s) => s._id).join(',') ??
+    //                 selectedCategories.join(',')) ||
+    //             undefined,
+
+    //     });
+    // }
 
     return (
         <PageWrapper>

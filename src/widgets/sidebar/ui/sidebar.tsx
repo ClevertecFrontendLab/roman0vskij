@@ -12,7 +12,7 @@ export function Sidebar() {
             as='aside'
             pos='fixed'
             w={256}
-            h='100%'
+            minH='100%'
             pt={114}
             boxShadow='0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)'
             justify='space-between'
