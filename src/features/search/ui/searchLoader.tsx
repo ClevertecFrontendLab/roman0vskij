@@ -1,6 +1,6 @@
 import { Box, Spinner } from '@chakra-ui/react';
 
-export default function SearchLoader() {
+export function SearchLoader() {
     return (
         <Box
             w={134}

@@ -5,7 +5,7 @@ type TProps = {
     subTitle?: string;
 };
 
-export function PageTitle({ title, subTitle = '' }: TProps) {
+export function PageTitle({ title, subTitle }: TProps) {
     return (
         <VStack justify='center' my={{ base: 4, lg: 8 }} gap={{ base: 4, lg: 3 }}>
             <Heading

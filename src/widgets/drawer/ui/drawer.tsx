@@ -16,28 +16,13 @@ import {
     Stack,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { selectCategories } from '~/entities/category';
-import { setRecipes } from '~/entities/recipe';
-import { useLazyGetRecipesQuery } from '~/query/services/recipes';
-import { setAppError, setAppLoader } from '~/store/app-slice';
-import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { useAppSelector } from '~/store/hooks';
 
-import {
-    selectSelectedAllergens,
-    selectSelectedAuthors,
-    selectSelectedCategories,
-    selectSelectedMeat,
-    selectSelectedSide,
-} from '../model/selectors';
-import {
-    setSelectedAllergens,
-    setSelectedAuthors,
-    setSelectedCategories,
-    setSelectedMeat,
-    setSelectedSide,
-} from '../model/slice';
+import { DrawerLogic } from '../model/logic';
+import { allergensMock, authorsMock, meatMock, sideMock } from '../model/mock';
 import { DrawerAllergens } from './drawerAllergens';
 import { DrawerButton } from './drawerButton';
 import { DrawerSelect } from './drawerSelect';
@@ -46,225 +31,23 @@ import { DrawerTag } from './drawerTag';
 export function Drawer() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const selectedCategories = useAppSelector(selectSelectedCategories);
-    const dispatch = useAppDispatch();
-    const [isActiveCategories, setIsActiveCategories] = useState(selectedCategories.length > 0);
-
-    const categories = useAppSelector(selectCategories);
-
-    function handleOnchangeCategories(values: Array<string | number>) {
-        if (values.length === 0) {
-            setIsActiveCategories(false);
-        } else {
-            setIsActiveCategories(true);
-        }
-        dispatch(setSelectedCategories(values as string[]));
-    }
-
-    const selectedAuthors = useAppSelector(selectSelectedAuthors);
-    const [isActiveAuthors, setIsActiveAuthors] = useState(selectedAuthors.length > 0);
-
-    const authors = [
-        'Елена Мин',
-        'Мирием Чонишвили',
-        'Елена Прекрасная',
-        'Alex Cook',
-        'Екатерина Константинопольская',
-        'Инна Высоцкая',
-        'Сергей Разумов',
-        'Анна Рогачева',
-        'Иван Орлов',
-        'Повар Ши',
-        'Только новые авторы',
-    ];
-
-    function handleOnchangeAuthors(values: Array<string | number>) {
-        if (values.length === 0) {
-            setIsActiveAuthors(false);
-        } else {
-            setIsActiveAuthors(true);
-        }
-        dispatch(setSelectedAuthors(values as string[]));
-    }
-
-    const selectedMeat = useAppSelector(selectSelectedMeat);
-
-    const meat = ['Курица', 'Свинина', 'Говядина', 'Индейка', 'Утка'];
-
-    function handleOnchangeMeat(values: Array<string | number>) {
-        dispatch(setSelectedMeat(values as string[]));
-    }
-
-    const selectedSide = useAppSelector(selectSelectedSide);
-
-    const side = [
-        'Картошка',
-        'Гречка',
-        'Паста',
-        'Спагетти',
-        'Рис',
-        'Капуста',
-        'Фасоль',
-        'Другие овощи',
-    ];
-
-    function handleOnchangeSide(values: Array<string | number>) {
-        dispatch(setSelectedSide(values as string[]));
-    }
-
-    const selectedAllergens = useAppSelector(selectSelectedAllergens);
-    const [isActive, setIsActive] = useState(selectedAllergens.length > 0);
+    const allCategories = useAppSelector(selectCategories);
     const inputRef = useRef<HTMLInputElement>(null);
-
-    const allergens = [
-        'Молочные',
-        'Яйцо',
-        'Рыба',
-        'Моллюски',
-        'Орехи',
-        'Томат',
-        'Цитрусовые',
-        'Клубника (ягоды)',
-        'Шоколад',
-    ];
-
-    function handleOnchange(values: Array<string | number>) {
-        if (values.length === 0) {
-            setIsActive(false);
-        } else {
-            setIsActive(true);
-        }
-        dispatch(setSelectedAllergens(values as string[]));
-    }
-
-    function toggleIsActive() {
-        setIsActive((prev) => !prev);
-        dispatch(setSelectedAllergens([]));
-    }
-
-    function addAllergen() {
-        if (inputRef.current && inputRef.current.value.length > 0) {
-            dispatch(
-                setSelectedAllergens([...selectedAllergens, inputRef.current?.value as string]),
-            );
-            inputRef.current.value = '';
-            setIsActive(true);
-        }
-    }
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            addAllergen();
-        }
-    };
-
-    function handleClear() {
-        dispatch(setSelectedCategories([]));
-        dispatch(setSelectedAuthors([]));
-        dispatch(setSelectedAllergens([]));
-        dispatch(setSelectedMeat([]));
-        dispatch(setSelectedSide([]));
-    }
-
-    const [
-        getRecipesQuery,
-        {
-            data: dataRecipes,
-            error: errorRecipes,
-            isSuccess: isSuccessRecipes,
-            isError: isErrorRecipes,
-            isFetching: isFetchingRecipes,
-        },
-    ] = useLazyGetRecipesQuery();
-
-    useEffect(() => {
-        dispatch(setAppLoader(isFetchingRecipes));
-
-        if (!isFetchingRecipes && isSuccessRecipes && dataRecipes) {
-            dispatch(setRecipes(dataRecipes.data));
-            handleClear();
-            return;
-        }
-        if (isErrorRecipes && errorRecipes) {
-            dispatch(setAppError(`Search error: ${errorRecipes.toString()}`));
-        } else {
-            dispatch(setAppError(null));
-        }
-    }, [dataRecipes, isSuccessRecipes, isErrorRecipes, errorRecipes, isFetchingRecipes]);
-
-    function useHandleFindRecipe() {
-        // console.log({
-        //     allergens: selectedAllergens.length ? selectedAllergens.join(',') : undefined,
-        //     garnish: selectedSide.length ? selectedSide.join(',') : undefined,
-        //     meat: selectedMeat.length ? selectedMeat.join(',') : undefined,
-        //     subcategoriesIds: selectedCategories.length
-        //         ? categories
-        //               .filter((c) => selectedCategories.find((s) => s === c.title))
-        //               .map((c) => c.subCategories.map((sub) => sub._id).join(','))
-        //               .join(',')
-        //         : undefined,
-        // });
-
-        getRecipesQuery({
-            subcategoriesIds: selectedCategories.length
-                ? categories
-                      .filter((c) => selectedCategories.find((s) => s === c.title))
-                      .map((c) => c._id)
-                      .join(',')
-                : undefined,
-            allergens: selectedAllergens.length ? selectedAllergens.join(',') : undefined,
-            garnish: selectedSide.length ? selectedSide.join(',') : undefined,
-            meat: selectedMeat.length ? selectedMeat.join(',') : undefined,
-        });
-        onClose();
-    }
-
-    enum GROUP {
-        CATEGORIES = 'categories',
-        AUTHORS = 'authors',
-        MEAT = 'meat',
-        SIDE = 'side',
-        ALLERGENS = 'allergens',
-    }
-
-    type FilterTag = {
-        label: string;
-        group: GROUP;
-    };
-
-    const allSelectedFilters: FilterTag[] = [
-        ...selectedCategories.map((label) => ({ label, group: GROUP.CATEGORIES })),
-        ...selectedAuthors.map((label) => ({ label, group: GROUP.AUTHORS })),
-        ...selectedMeat.map((label) => ({ label, group: GROUP.MEAT })),
-        ...selectedSide.map((label) => ({ label, group: GROUP.SIDE })),
-        ...selectedAllergens.map((label) => ({ label, group: GROUP.ALLERGENS })),
-    ];
-
-    function deleteTag(tag: FilterTag) {
-        switch (tag.group) {
-            case GROUP.CATEGORIES:
-                dispatch(
-                    setSelectedCategories(selectedCategories.filter((item) => item !== tag.label)),
-                );
-                break;
-            case GROUP.AUTHORS:
-                dispatch(setSelectedAuthors(selectedAuthors.filter((item) => item !== tag.label)));
-                break;
-            case GROUP.MEAT:
-                dispatch(setSelectedMeat(selectedMeat.filter((item) => item !== tag.label)));
-                break;
-            case GROUP.SIDE:
-                dispatch(setSelectedSide(selectedSide.filter((item) => item !== tag.label)));
-                break;
-            case GROUP.ALLERGENS:
-                dispatch(
-                    setSelectedAllergens(selectedAllergens.filter((item) => item !== tag.label)),
-                );
-                break;
-            default:
-                break;
-        }
-    }
+    const {
+        deleteTag,
+        handleClear,
+        toggleIsActive,
+        handleFindRecipe,
+        allSelectedFilters,
+        allergens,
+        categories,
+        authors,
+        side,
+        meat,
+    } = DrawerLogic({
+        inputRef,
+        onClose,
+    });
 
     return (
         <>
@@ -301,22 +84,21 @@ export function Drawer() {
                         <Stack spacing='24px' mt={10}>
                             <DrawerSelect
                                 key='categoriesMenu'
-                                handleOnchange={handleOnchangeCategories}
-                                isActive={isActiveCategories}
-                                selectedValues={selectedCategories}
-                                values={categories.map((c) => c.title)}
+                                {...categories}
+                                values={allCategories.map((c) => c.title)}
                                 placeholder='Категория'
                             />
                             <DrawerSelect
                                 key='authorsMenu'
-                                handleOnchange={handleOnchangeAuthors}
-                                isActive={isActiveAuthors}
-                                selectedValues={selectedAuthors}
-                                values={authors}
+                                {...authors}
+                                values={authorsMock}
                                 placeholder='Поиск по автору'
                             />
 
-                            <CheckboxGroup value={selectedMeat} onChange={handleOnchangeMeat}>
+                            <CheckboxGroup
+                                value={meat.selectedValues}
+                                onChange={meat.handleOnchange}
+                            >
                                 <Heading
                                     fontWeight={500}
                                     fontSize={16}
@@ -326,9 +108,8 @@ export function Drawer() {
                                     Тип мяса:
                                 </Heading>
                                 <Stack spacing={0}>
-                                    {meat.map((a, i) => (
+                                    {meatMock.map((a, i) => (
                                         <Checkbox
-                                            //data-test-id={`allergen-${i}`}
                                             key={`option${i}`}
                                             value={a}
                                             p='6px 16px'
@@ -346,7 +127,10 @@ export function Drawer() {
                                     ))}
                                 </Stack>
                             </CheckboxGroup>
-                            <CheckboxGroup value={selectedSide} onChange={handleOnchangeSide}>
+                            <CheckboxGroup
+                                value={side.selectedValues}
+                                onChange={side.handleOnchange}
+                            >
                                 <Heading
                                     fontWeight={500}
                                     fontSize={16}
@@ -356,7 +140,7 @@ export function Drawer() {
                                     Тип гарнира:
                                 </Heading>
                                 <Stack spacing={0}>
-                                    {side.map((a, i) => (
+                                    {sideMock.map((a, i) => (
                                         <Checkbox
                                             data-test-id={
                                                 a === 'Картошка' ? 'checkbox-картошка' : ''
@@ -380,13 +164,9 @@ export function Drawer() {
                             </CheckboxGroup>
 
                             <DrawerAllergens
-                                isActive={isActive}
-                                addAllergen={addAllergen}
-                                handleKeyDown={handleKeyDown}
-                                handleOnchange={handleOnchange}
+                                {...allergens}
                                 inputRef={inputRef}
-                                selectedValues={selectedAllergens}
-                                values={allergens}
+                                values={allergensMock}
                                 toggleIsActive={toggleIsActive}
                             />
                         </Stack>
@@ -402,11 +182,12 @@ export function Drawer() {
                         >
                             {allSelectedFilters.map((tag, i) => (
                                 <Box
+                                    key={`filter-tag-${i}`}
                                     data-test-id='filter-tag'
                                     onClick={() => deleteTag(tag)}
                                     cursor='pointer'
                                 >
-                                    <DrawerTag key={`filter-tag-${i}`} text={tag.label} />
+                                    <DrawerTag text={tag.label} />
                                 </Box>
                             ))}
                         </Stack>
@@ -440,7 +221,7 @@ export function Drawer() {
                                 lineHeight={{ base: '143%', lg: '156%' }}
                                 px={{ base: 3, lg: 6 }}
                                 h={{ base: 8, lg: 12 }}
-                                onClick={useHandleFindRecipe}
+                                onClick={handleFindRecipe}
                                 isDisabled={allSelectedFilters.length == 0}
                                 _disabled={{
                                     color: 'rgba(255, 255, 255, 0.64)',

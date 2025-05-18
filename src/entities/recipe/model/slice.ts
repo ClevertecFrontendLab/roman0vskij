@@ -20,17 +20,17 @@ export const recipesSlice = createSlice({
     name: 'recipes',
     initialState,
     reducers: {
-        setRecipes: (state, action: PayloadAction<TRecipe[]>) => {
-            state.recipes = action.payload;
+        setRecipes: (state, { payload }: PayloadAction<TRecipe[]>) => {
+            state.recipes = payload;
         },
-        setRandomRecipes: (state, action: PayloadAction<TRecipe[]>) => {
-            state.randomRecipes = action.payload;
+        setRandomRecipes: (state, { payload }: PayloadAction<TRecipe[]>) => {
+            state.randomRecipes = payload;
         },
-        setJuiciestRecipes: (state, action: PayloadAction<TRecipe[]>) => {
-            state.juiciestRecipes = action.payload;
+        setJuiciestRecipes: (state, { payload }: PayloadAction<TRecipe[]>) => {
+            state.juiciestRecipes = payload;
         },
-        setCurrentRecipe: (state, action: PayloadAction<TRecipe | null>) => {
-            state.currentRecipe = action.payload;
+        setCurrentRecipe: (state, { payload }: PayloadAction<TRecipe | null>) => {
+            state.currentRecipe = payload;
         },
     },
 });

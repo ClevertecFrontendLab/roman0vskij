@@ -35,8 +35,8 @@ export function Header() {
                     <HStack display={isLargerThan1025 ? 'none' : 'flex'} spacing={0}>
                         <Statistic />
                         <BurgerMenu
-                            open={() => setMenuOpen(true)}
-                            close={() => setMenuOpen(false)}
+                            onOpen={() => setMenuOpen(true)}
+                            onClose={() => setMenuOpen(false)}
                         />
                     </HStack>
                 </HStack>
