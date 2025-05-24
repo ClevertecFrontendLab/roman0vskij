@@ -14,7 +14,7 @@ import { useGetRecipesQuery, useLazyGetRecipesBySubcategoryQuery } from '~/query
 import { setAppError, setAppLoader } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
-export const useAppInit = (handleInitialLaunch: () => void) => {
+export const useAppInit = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
 
@@ -142,7 +142,6 @@ export const useAppInit = (handleInitialLaunch: () => void) => {
 
     useEffect(() => {
         if (isSuccessCategories && isSuccessJuiciest && isSuccessRandomRecipes) {
-            handleInitialLaunch();
             dispatch(setAppLoader(false));
         }
     }, [isSuccessCategories, isSuccessJuiciest, isSuccessRandomRecipes]);

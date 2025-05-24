@@ -14,16 +14,16 @@ export function Search({ onclick }: TProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState('');
     const [isButtonActive, setButtonActive] = useState(
-        inputValue.trim().length > 2 || selectedAllergens.length > 0,
+        inputValue.trim().length > 2 || selectedAllergens?.length > 0,
     );
 
     function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
         setInputValue(e.currentTarget.value);
-        setButtonActive(e.currentTarget.value.trim().length > 2 || selectedAllergens.length > 0);
+        setButtonActive(e.currentTarget.value.trim().length > 2 || selectedAllergens?.length > 0);
     }
 
     useEffect(() => {
-        setButtonActive(selectedAllergens.length > 0);
+        setButtonActive(selectedAllergens?.length > 0);
     }, [selectedAllergens]);
 
     return (

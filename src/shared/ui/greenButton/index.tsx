@@ -16,28 +16,28 @@ export function GreenButton({
     text,
     hasArrow = false,
     bgColor = '',
-    //showOnLg = false,
-    //hideOnLg = false,
-    showOnMd = false,
-    hideOnMd = false,
+    showOnLg = false,
+    hideOnLg = false,
+    // showOnMd = false,
+    // hideOnMd = false,
     ...rest
 }: TProps) {
     return (
         <Button
-            // display={
-            //     showOnLg
-            //         ? { base: 'none', lg: 'flex' }
-            //         : hideOnLg
-            //           ? { base: 'flex', lg: 'none' }
-            //           : { base: 'flex' }
-            // }
             display={
-                showOnMd
-                    ? { base: 'none', md: 'flex' }
-                    : hideOnMd
-                      ? { base: 'flex', md: 'none' }
+                showOnLg
+                    ? { base: 'none', lg: 'flex' }
+                    : hideOnLg
+                      ? { base: 'flex', lg: 'none' }
                       : { base: 'flex' }
             }
+            // display={
+            //     showOnMd
+            //         ? { base: 'none', md: 'flex' }
+            //         : hideOnMd
+            //           ? { base: 'flex', md: 'none' }
+            //           : { base: 'flex' }
+            // }
             onClick={onclick}
             rightIcon={hasArrow ? <Image src='/src/shared/assets/arrowRight.svg' /> : undefined}
             bgColor={bgColor ? bgColor : '#b1ff2e'}

@@ -209,7 +209,7 @@ export function Drawer() {
                                 Очистить фильтр
                             </Button>
                             <Button
-                                pointerEvents={allSelectedFilters.length == 0 ? 'none' : 'auto'}
+                                pointerEvents={allSelectedFilters?.length == 0 ? 'none' : 'auto'}
                                 data-test-id='find-recipe-button'
                                 variant='none'
                                 bg='#000'
@@ -222,7 +222,7 @@ export function Drawer() {
                                 px={{ base: 3, lg: 6 }}
                                 h={{ base: 8, lg: 12 }}
                                 onClick={handleFindRecipe}
-                                isDisabled={allSelectedFilters.length == 0}
+                                isDisabled={allSelectedFilters?.length == 0}
                                 _disabled={{
                                     color: 'rgba(255, 255, 255, 0.64)',
                                     bg: 'rgba(0, 0, 0, 0.24)',

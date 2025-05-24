@@ -25,7 +25,7 @@ export function Header() {
         >
             <Container maxW='100%' pr={{ base: 0, lg: 14 }} pl={[4, null, 5, 4]}>
                 <HStack justify='space-between' gap={0}>
-                    <Logo />
+                    <Logo variant='header' />
                     {isLargerThan1025 && (
                         <>
                             <Breadcrumbs />

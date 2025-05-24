@@ -1,8 +1,11 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
-import { MainLayout } from '../layouts/mainLayout';
-import { ProtectedRoute } from './protectedRoute';
+import { Verification } from '~/pages/verification';
+import { Loader } from '~/shared/ui/loader';
+
+import { MainLayout, RequireAuth } from '../layouts';
+//import { ProtectedRoute } from './protectedRoute';
 
 const HomePage = lazy(() =>
     import('~/pages/home').then((module) => ({ default: module.HomePage })),
@@ -22,40 +25,65 @@ const CategoryPage = lazy(() =>
 const NotFoundPage = lazy(() =>
     import('~/pages/notFound').then((module) => ({ default: module.NotFoundPage })),
 );
+const SignIn = lazy(() =>
+    import('~/pages/signIn/index').then((module) => ({ default: module.SignIn })),
+);
+const SignUp = lazy(() =>
+    import('~/pages/signUp/index').then((module) => ({ default: module.SignUp })),
+);
 
 export function Routing() {
     return (
         <Routes>
-            <Route element={<MainLayout />}>
-                <Route
-                    index
-                    element={
-                        <Suspense>
-                            <HomePage />
-                        </Suspense>
-                    }
-                />
-                <Route
-                    path='the-juiciest'
-                    element={
-                        <Suspense>
-                            <JuiciestPage />
-                        </Suspense>
-                    }
-                />
-                <Route
-                    path='filters'
-                    element={
-                        <Suspense>
-                            <FiltersPage />
-                        </Suspense>
-                    }
-                />
-                <Route element={<ProtectedRoute />}>
+            //http://localhost:3000/verification?emailVerified=false
+            <Route path='verification' element={<Verification />} />
+            <Route
+                path='sign-in'
+                element={
+                    <Suspense fallback={<Loader />}>
+                        <SignIn />
+                    </Suspense>
+                }
+            />
+            <Route
+                path='sign-up'
+                element={
+                    <Suspense fallback={<Loader />}>
+                        <SignUp />
+                    </Suspense>
+                }
+            />
+            <Route element={<RequireAuth />}>
+                <Route element={<MainLayout />}>
+                    <Route
+                        index
+                        element={
+                            <Suspense fallback={<Loader />}>
+                                <HomePage />
+                            </Suspense>
+                        }
+                    />
+                    <Route
+                        path='the-juiciest'
+                        element={
+                            <Suspense fallback={<Loader />}>
+                                <JuiciestPage />
+                            </Suspense>
+                        }
+                    />
+                    <Route
+                        path='filters'
+                        element={
+                            <Suspense fallback={<Loader />}>
+                                <FiltersPage />
+                            </Suspense>
+                        }
+                    />
+                    {/* <Route element={<ProtectedRoute />}> */}
                     <Route
                         path=':category/:subcategory/:recipe'
                         element={
-                            <Suspense>
+                            <Suspense fallback={<Loader />}>
                                 <RecipePage />
                             </Suspense>
                         }
@@ -63,22 +91,23 @@ export function Routing() {
                     <Route
                         path=':category/:subcategory'
                         element={
-                            <Suspense>
+                            <Suspense fallback={<Loader />}>
                                 <CategoryPage />
                             </Suspense>
                         }
                     />
+                    {/* </Route> */}
                 </Route>
             </Route>
             <Route
                 path='not-found'
                 element={
-                    <Suspense>
+                    <Suspense fallback={<Loader />}>
                         <NotFoundPage />
                     </Suspense>
                 }
             />
-            {/* <Route path='*' element={<Navigate to='/not-found' replace />} /> */}
+            <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
     );
 }

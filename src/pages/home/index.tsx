@@ -44,7 +44,7 @@ export function HomePage() {
         <PageWrapper>
             <SearchAndFilter pageTitle='Приятного аппетита!' />
 
-            {recipes.length === 0 ? (
+            {recipes?.length === 0 ? (
                 <>
                     <Title title='Новые рецепты' />
 
@@ -59,7 +59,7 @@ export function HomePage() {
                                     data-test-id='juiciest-link'
                                     text='Вся подборка'
                                     hasArrow
-                                    showOnMd
+                                    showOnLg
                                 />
                             </HStack>
 
@@ -79,7 +79,7 @@ export function HomePage() {
                                     data-test-id='juiciest-link-mobile'
                                     text='Вся подборка'
                                     hasArrow
-                                    hideOnMd
+                                    hideOnLg
                                 />
                             </HStack>
                         </>
@@ -175,7 +175,7 @@ export function HomePage() {
                         columns={{ base: 1, md: 2, lg: 1, xl: 2 }}
                         gap={{ base: 3, md: 4, xl: 6 }}
                     >
-                        {recipes.map((recipe, i) => (
+                        {recipes?.map((recipe, i) => (
                             <MainCard key={`main${i}`} {...recipe} index={i} />
                         ))}
                     </SimpleGrid>

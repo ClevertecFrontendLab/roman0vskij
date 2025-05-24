@@ -169,7 +169,7 @@ export function DrawerLogic({ inputRef, onClose }: TProps) {
             subcategoriesIds: selectedCategories.length
                 ? categories
                       .filter((c) => selectedCategories.find((s) => s === c.title))
-                      .map((c) => c._id)
+                      .map((c) => c.subCategories.join(','))
                       .join(',')
                 : undefined,
             allergens: selectedAllergens.length ? selectedAllergens.join(',') : undefined,

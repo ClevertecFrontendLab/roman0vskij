@@ -19,9 +19,7 @@ export function FiltersPage() {
                 columns={{ base: 1, md: 2, lg: 1, xl: 2 }}
                 gap={{ base: 3, md: 4, xl: 6 }}
             >
-                {data.map((recipe, i) => (
-                    <MainCard key={`main${i}`} {...recipe} index={i} />
-                ))}
+                {data?.map((recipe, i) => <MainCard key={`main${i}`} {...recipe} index={i} />)}
             </SimpleGrid>
             {isLargerThan1000 ? <></> : <Box height={100} />}
         </PageWrapper>

@@ -1,5 +1,4 @@
 import { Box } from '@chakra-ui/react';
-import { useState } from 'react';
 import { Outlet } from 'react-router';
 
 import { useAppInit } from '~/features/appInit/model/useAppInit';
@@ -14,15 +13,14 @@ import { Statbar } from '~/widgets/statbar';
 
 export function MainLayout() {
     const isLoading = useAppSelector(userLoadingSelector);
-    const [initialLoading, setInitialLoading] = useState(false);
-    useAppInit(() => setInitialLoading(true));
+    useAppInit();
 
     return (
         <Box>
             <Header />
             <Sidebar />
             <Statbar />
-            {initialLoading && <Outlet />}
+            <Outlet />
             <Footer />
             {isLoading && <Loader />}
             <Alert />

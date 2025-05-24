@@ -26,6 +26,7 @@ import {
 import { CardStatistic } from '~/shared/ui/cardStatistic';
 import { ListOfIngredients } from '~/shared/ui/listOfIngredients';
 import { Macronutrient } from '~/shared/ui/macronutrient';
+import { PageWrapper } from '~/shared/ui/pageWrapper';
 import { StepCard } from '~/shared/ui/stepCard';
 import { Tag } from '~/shared/ui/tag';
 import { Title } from '~/shared/ui/title';
@@ -45,14 +46,7 @@ export function RecipePage() {
     if (!currentRecipe || !currentCategory) return <Box />;
 
     return (
-        <Box
-            as='main'
-            maxW='1920px'
-            w='100%'
-            m='0 auto'
-            pt={{ base: '64px', lg: '80px' }}
-            px={{ base: 4, md: 5, lg: '280px' }}
-        >
+        <PageWrapper>
             <Grid
                 templateRows={{ base: '224px 1fr', md: '224px', lg: '410px' }}
                 templateColumns={{
@@ -347,6 +341,6 @@ export function RecipePage() {
                 <Slider />
             </Box>
             {isLargerThan1000 ? <></> : <Box height={100} />}
-        </Box>
+        </PageWrapper>
     );
 }

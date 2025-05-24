@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { categoriesReducer, categoriesSlice } from '~/entities/category';
 import { recipesReducer, recipesSlice } from '~/entities/recipe';
+import { authReducer, authSlice } from '~/features/auth';
 import { apiSlice } from '~/query/create-api';
 import { drawerReducer, drawerSlice } from '~/widgets/drawer';
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     [drawerSlice.name]: drawerReducer,
     [categoriesSlice.name]: categoriesReducer,
     [recipesSlice.name]: recipesReducer,
+    [authSlice.name]: authReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

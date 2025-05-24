@@ -1,8 +1,11 @@
 import { Box, IconButton, Menu, MenuButton, MenuList, useMediaQuery } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
+import { signOut } from '~/features/auth';
 import { Breadcrumbs } from '~/features/breadcrumbs';
 import { CrossIcon, HamburgerIcon } from '~/shared/assets/icons';
 import { SidebarFooter } from '~/shared/ui/sidebarFooter';
+import { useAppDispatch } from '~/store/hooks';
 import { Accordion } from '~/widgets/accordion';
 
 type TProps = {
@@ -12,6 +15,13 @@ type TProps = {
 
 export function BurgerMenu({ onOpen, onClose }: TProps) {
     const [isLargerThan1025] = useMediaQuery('(min-width: 1025px)');
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    async function handleClick() {
+        await dispatch(signOut());
+        navigate('/sign-in');
+    }
 
     return (
         <Menu onOpen={onOpen} onClose={onClose}>
@@ -64,7 +74,7 @@ export function BurgerMenu({ onOpen, onClose }: TProps) {
                             )}
 
                             <Box flexShrink={0} mt={7}>
-                                <SidebarFooter />
+                                <SidebarFooter handleClick={handleClick} />
                             </Box>
                         </MenuList>
                     )}

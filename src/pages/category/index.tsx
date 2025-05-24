@@ -9,7 +9,7 @@ import {
     useMediaQuery,
     VStack,
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router';
 
 import { selectCategories, selectRandomCategory } from '~/entities/category';
@@ -17,7 +17,7 @@ import { CookCard } from '~/entities/cookCard';
 import { MainCard } from '~/entities/mainCard';
 import { selectRandomRecipes, selectRecipes } from '~/entities/recipe';
 import { RelevantRecipeCard } from '~/entities/relevantRecipeCard';
-import { useGetCategoryQuery } from '~/query/services/categories';
+import { useLazyGetCategoryQuery } from '~/query/services/categories';
 import { useLazyGetRecipesBySubcategoryQuery } from '~/query/services/recipes';
 import { GreenButton } from '~/shared/ui/greenButton';
 import { PageWrapper } from '~/shared/ui/pageWrapper';
@@ -37,18 +37,40 @@ export function CategoryPage() {
     const [_, category, subcategory] = location.pathname.split('/');
 
     const categories = useAppSelector(selectCategories);
-    const currentCategory = categories.find((c) => c.category === category);
+    const currentCategory = useMemo(
+        () => categories?.find((c) => c.category === category),
+        [categories, category],
+    );
 
-    const {
-        data: dataCategory,
-        error: errorCategory,
-        isSuccess: isSuccessCategory,
-        isError: isErrorCategory,
-        isFetching: isFetchingCategory,
-    } = useGetCategoryQuery(currentCategory?._id ?? '');
+    // const {
+    //     data: dataCategory,
+    //     error: errorCategory,
+    //     isSuccess: isSuccessCategory,
+    //     isError: isErrorCategory,
+    //     isFetching: isFetchingCategory,
+    // } = useGetCategoryQuery(currentCategory?._id ?? '');
+
+    const [
+        getCategory,
+        {
+            data: dataCategory,
+            error: errorCategory,
+            isSuccess: isSuccessCategory,
+            isError: isErrorCategory,
+            isLoading: isFetchingCategory,
+        },
+    ] = useLazyGetCategoryQuery();
 
     useEffect(() => {
-        if (dataCategory) {
+        if (currentCategory && currentCategory._id) {
+            console.log('currentCategory', currentCategory);
+
+            getCategory(currentCategory._id);
+        }
+    }, [currentCategory]);
+
+    useEffect(() => {
+        if (isSuccessCategory && dataCategory && dataCategory.subCategories) {
             const subcategoryId = dataCategory.subCategories.find(
                 (sub) => sub.category === subcategory,
             )?._id;
@@ -61,11 +83,18 @@ export function CategoryPage() {
 
     useEffect(() => {
         dispatch(setAppLoader(isFetchingCategory));
-
-        if (!isFetchingCategory && isSuccessCategory && dataCategory) {
+        console.log('dataCategory', dataCategory);
+        if (
+            !isFetchingCategory &&
+            isSuccessCategory &&
+            dataCategory &&
+            dataCategory.subCategories
+        ) {
             const subcategoryId = dataCategory.subCategories.find(
                 (sub) => sub.category === subcategory,
             )?._id;
+            console.log('subcategoryId', subcategoryId);
+
             subcategoryId &&
                 getRecipesBySubcategory({
                     subcategoryId: subcategoryId,
@@ -80,6 +109,7 @@ export function CategoryPage() {
         getRecipesBySubcategory,
         {
             data: recipesData,
+            isSuccess: isRecipesSuccess,
             isFetching: isFetchingRecipes,
             isError: isErrorRecipes,
             error: errorRecipes,
@@ -94,25 +124,27 @@ export function CategoryPage() {
         }
     }, [isFetchingRecipes, isErrorRecipes, errorRecipes]);
 
+    console.log('recipesData', recipesData);
+
     return (
         <PageWrapper>
             <SearchAndFilter
-                pageTitle={currentCategory!.title}
-                pageSubtitle={currentCategory!.description}
+                pageTitle={currentCategory?.title ?? ''}
+                pageSubtitle={currentCategory?.description ?? ''}
             />
 
             {recipes.length === 0 ? (
                 <>
                     <Tabs />
 
-                    {!isFetchingRecipes && recipesData?.data && (
+                    {!isFetchingRecipes && isRecipesSuccess && recipesData?.data && (
                         <>
                             <SimpleGrid
                                 mt={{ base: 3, lg: 4, xl: 6 }}
                                 columns={{ base: 1, md: 2, lg: 1, xl: 2 }}
                                 gap={{ base: 3, md: 4, xl: 6 }}
                             >
-                                {recipesData.data.map((recipe, i) => (
+                                {recipesData.data?.map((recipe, i) => (
                                     <MainCard key={`main${i}`} {...recipe} index={i} />
                                 ))}
                             </SimpleGrid>
@@ -147,7 +179,7 @@ export function CategoryPage() {
                                         lineHeight={{ base: '143%', lg: '150%' }}
                                         color=' rgba(0, 0, 0, 0.64)'
                                     >
-                                        {randomCategory.description}
+                                        {randomCategory?.description}
                                     </Text>
                                 </GridItem>
                             </Grid>
@@ -161,7 +193,7 @@ export function CategoryPage() {
                                 mt={{ base: 4, lg: 6 }}
                                 gap={{ base: 3, lg: 4 }}
                             >
-                                {randomRecipes.slice(0, 2).map((recipe, i) => (
+                                {randomRecipes?.slice(0, 2).map((recipe, i) => (
                                     <GridItem key={`recipe${i}`} rowSpan={1} colSpan={1}>
                                         <RelevantRecipeCard {...recipe} />
                                     </GridItem>
@@ -169,9 +201,11 @@ export function CategoryPage() {
 
                                 <GridItem rowSpan={1} colSpan={{ base: 1, xl: 2 }}>
                                     <VStack gap={3}>
-                                        {randomRecipes.slice(2, 5).map((card, i) => (
-                                            <CookCard key={`cook${i}`} {...card} />
-                                        ))}
+                                        {randomRecipes
+                                            ?.slice(2, 5)
+                                            .map((card, i) => (
+                                                <CookCard key={`cook${i}`} {...card} />
+                                            ))}
                                     </VStack>
                                 </GridItem>
                             </Grid>

@@ -1,21 +1,10 @@
 import { Box, Spinner } from '@chakra-ui/react';
 
+import { BlurBg } from '../blurBg';
+
 export function Loader() {
     return (
-        <Box
-            data-test-id='app-loader'
-            top={0}
-            left={0}
-            position='fixed'
-            background='rgba(0, 0, 0, 0.16)'
-            backdropFilter='blur(2px)'
-            w='100%'
-            height='100%'
-            zIndex={20}
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-        >
+        <BlurBg data-test-id='app-loader' zIndex={99}>
             <Box
                 w={208}
                 h={208}
@@ -26,6 +15,6 @@ export function Loader() {
             >
                 <Spinner size='xl' />
             </Box>
-        </Box>
+        </BlurBg>
     );
 }
