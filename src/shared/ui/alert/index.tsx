@@ -5,30 +5,22 @@ import {
     AlertTitle,
     VStack,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 
 import { CrossIcon } from '~/shared/assets/icons';
-import { userErrorSelector } from '~/store/app-slice';
-import { useAppSelector } from '~/store/hooks';
+import { setAppError, userErrorSelector } from '~/store/app-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 export default function Alert() {
+    const dispatch = useAppDispatch();
     const error = useAppSelector(userErrorSelector);
-    const [isActive, setActive] = useState(false);
-
-    useEffect(() => {
-        if (error) {
-            setActive(true);
-        }
-    }, [error]);
 
     function handleOnclick() {
-        setActive(false);
+        dispatch(setAppError(null));
     }
 
     return (
-        isActive && (
+        error && (
             <AlertWrapper
-                //display={isActive ? 'block' : 'none'}
                 data-test-id='error-notification'
                 status='error'
                 pos='fixed'
@@ -52,10 +44,10 @@ export default function Alert() {
                 />
                 <VStack gap={0}>
                     <AlertTitle color='#fff' w='100%' m={0}>
-                        Ошибка сервера
+                        {error?.error}
                     </AlertTitle>
                     <AlertDescription color='#fff' w='100%' fontWeight={400}>
-                        Попробуйте поискать снова попозже
+                        {error?.message}
                     </AlertDescription>
                 </VStack>
             </AlertWrapper>

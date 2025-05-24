@@ -16,11 +16,11 @@ export const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
-        setCategories: (state, action: PayloadAction<TCategory[]>) => {
-            state.categories = action.payload;
+        setCategories: (state, { payload }: PayloadAction<TCategory[]>) => {
+            state.categories = payload;
         },
-        setRandomCategory: (state, action: PayloadAction<TCategory>) => {
-            state.randomCategory = action.payload;
+        setRandomCategory: (state, { payload }: PayloadAction<TCategory>) => {
+            state.randomCategory = payload;
         },
     },
 });

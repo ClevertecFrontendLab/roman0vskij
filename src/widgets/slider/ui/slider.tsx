@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { RecipeCard } from '~/entities/recipeCard';
 import { useGetRecipesQuery } from '~/query/services/recipes';
 import { LeftArrowIcon, RightArrowIcon } from '~/shared/assets/icons';
-import { setAppError, setPageLoader } from '~/store/app-slice';
+import { setAppError, setAppLoader } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
 
 export function Slider() {
@@ -22,15 +22,12 @@ export function Slider() {
     });
 
     useEffect(() => {
-        if (isFetching) {
-            dispatch(setPageLoader(true));
-        } else {
-            dispatch(setPageLoader(false));
-        }
+        dispatch(setAppLoader(isFetching));
+
         if (isError) {
-            dispatch(setAppError(error.toString()));
+            dispatch(setAppError(error));
         }
-    }, [isFetching, isError, error]);
+    }, [isFetching, isError]);
 
     return (
         isSuccess &&
@@ -51,21 +48,15 @@ export function Slider() {
                         paddingBottom: '12px',
                     }}
                 >
-                    {data.data
-                        .slice()
-                        .sort(
-                            (a, b) =>
-                                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-                        )
-                        .map((recipe, i) => (
-                            <SwiperSlide
-                                data-test-id={`carousel-card-${i}`}
-                                key={`recipe${i}`}
-                                style={{ width: 'max-content' }}
-                            >
-                                <RecipeCard {...recipe} />
-                            </SwiperSlide>
-                        ))}
+                    {data.data.map((recipe, i) => (
+                        <SwiperSlide
+                            data-test-id={`carousel-card-${i}`}
+                            key={`recipe${i}`}
+                            style={{ width: 'max-content' }}
+                        >
+                            <RecipeCard {...recipe} />
+                        </SwiperSlide>
+                    ))}
                 </Swiper>
                 <IconButton
                     data-test-id='carousel-back'

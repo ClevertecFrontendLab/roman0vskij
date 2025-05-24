@@ -26,26 +26,26 @@ export const drawerSlice = createSlice({
     name: 'drawer',
     initialState,
     reducers: {
-        setData: (state, action: PayloadAction<TRecipe[]>) => {
-            state.data = action.payload;
+        setData: (state, { payload }: PayloadAction<TRecipe[]>) => {
+            state.data = payload;
         },
-        setSelectedCategories: (state, action: PayloadAction<string[]>) => {
-            state.selectedCategories = action.payload;
+        setSelectedCategories: (state, { payload }: PayloadAction<string[]>) => {
+            state.selectedCategories = payload;
         },
-        setSelectedAuthors: (state, action: PayloadAction<string[]>) => {
-            state.selectedAuthors = action.payload;
+        setSelectedAuthors: (state, { payload }: PayloadAction<string[]>) => {
+            state.selectedAuthors = payload;
         },
-        setSelectedMeat: (state, action: PayloadAction<string[]>) => {
-            state.selectedMeat = action.payload;
+        setSelectedMeat: (state, { payload }: PayloadAction<string[]>) => {
+            state.selectedMeat = payload;
         },
-        setSelectedSide: (state, action: PayloadAction<string[]>) => {
-            state.selectedSide = action.payload;
+        setSelectedSide: (state, { payload }: PayloadAction<string[]>) => {
+            state.selectedSide = payload;
         },
-        setSelectedAllergens: (state, action: PayloadAction<string[]>) => {
-            state.selectedAllergens = action.payload;
+        setSelectedAllergens: (state, { payload }: PayloadAction<string[]>) => {
+            state.selectedAllergens = payload;
         },
-        setSearchQuery: (state, action: PayloadAction<string>) => {
-            state.searchQuery = action.payload;
+        setSearchQuery: (state, { payload }: PayloadAction<string>) => {
+            state.searchQuery = payload;
         },
     },
 });

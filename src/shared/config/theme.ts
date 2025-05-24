@@ -1,9 +1,11 @@
 import { extendTheme } from '@chakra-ui/react';
 
 import { accordionTheme } from './accordionTheme';
+import { buttonTheme } from './buttonTheme';
 import { checkboxTheme } from './checkboxTheme';
 import { inputTheme } from './inputTheme';
 import { menuTheme } from './menuTheme';
+import { progressTheme } from './progressTheme';
 import { switchTheme } from './switchTheme';
 import { tableTheme } from './tableTheme';
 import { tabsTheme } from './tabsTheme';
@@ -32,6 +34,8 @@ export const theme = extendTheme({
         Input: inputTheme,
         Menu: menuTheme,
         Checkbox: checkboxTheme,
+        Button: buttonTheme,
+        Progress: progressTheme,
     },
     styles: {
         global: {

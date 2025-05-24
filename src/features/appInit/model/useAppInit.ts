@@ -11,7 +11,7 @@ import {
 import { setJuiciestRecipes, setRandomRecipes } from '~/entities/recipe';
 import { useGetCategoriesQuery } from '~/query/services/categories';
 import { useGetRecipesQuery, useLazyGetRecipesBySubcategoryQuery } from '~/query/services/recipes';
-import { setAppError, setAppLoader, setPageLoader } from '~/store/app-slice';
+import { setAppError, setAppLoader } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 export const useAppInit = () => {
@@ -20,45 +20,39 @@ export const useAppInit = () => {
 
     const {
         data: dataCategories,
-        error: errorCategories,
         isSuccess: isSuccessCategories,
-        isError: isErrorCategories,
-        isFetching: isFetchingCategories,
         isLoading: isLoadingCategories,
-        refetch: refetchCategories,
-    } = useGetCategoriesQuery();
+        isError: isErrorCategories,
+        error: errorCategories,
+    } = useGetCategoriesQuery(undefined, {
+        pollingInterval: 60000,
+        refetchOnFocus: true,
+        refetchOnReconnect: true,
+    });
 
     useEffect(() => {
         if (isSuccessCategories && dataCategories) {
             dispatch(setCategories(dataCategories));
-            return;
         }
     }, [dataCategories, isSuccessCategories]);
 
     const {
         data: juiciestRecipes,
         isSuccess: isSuccessJuiciest,
-        isFetching: isFetchingJuiciest,
         isLoading: isLoadingJuiciest,
         isError: isErrorJuiciest,
         error: errorJuiciest,
-        refetch: refetchJuiciest,
-    } = useGetRecipesQuery({ limit: 8, sortOrder: 'DESC', page: 1, sortBy: 'likes' });
+    } = useGetRecipesQuery(
+        { limit: 8, sortOrder: 'DESC', page: 1, sortBy: 'likes' },
+        { pollingInterval: 60000, refetchOnFocus: true, refetchOnReconnect: true },
+    );
 
     useEffect(() => {
         if (isSuccessJuiciest && juiciestRecipes) {
             dispatch(setJuiciestRecipes(juiciestRecipes.data));
-            return;
         }
     }, [isSuccessJuiciest, juiciestRecipes]);
 
-    useEffect(() => {
-        refetchCategories();
-        refetchJuiciest();
-    }, [location.pathname]);
-
-    //*-------------------
-    //TODO всё, что ниже, сделать отдельным хуком или чем-то таким
     const randomCategory = useAppSelector(selectRandomCategory) as TCategory;
     const categories = useAppSelector(selectCategories);
     const [currentCategory, setCurrentCategory] = useState('/');
@@ -90,8 +84,9 @@ export const useAppInit = () => {
         getRecipesBySubcategory,
         {
             data: randomRecipesData,
-            isFetching: isFetchingRandomRecipes,
             isSuccess: isSuccessRandomRecipes,
+            isLoading: isLoadingRandomRecipes,
+            isFetching: isFetchingRandomRecipes,
             isError: isErrorRandomRecipes,
             error: errorRandomRecipes,
         },
@@ -114,45 +109,40 @@ export const useAppInit = () => {
     useEffect(() => {
         if (randomRecipesData?.data && isSuccessRandomRecipes) {
             dispatch(setRandomRecipes(randomRecipesData.data));
-            return;
         }
     }, [randomRecipesData, isSuccessRandomRecipes]);
 
     useEffect(() => {
-        if (isLoadingCategories || isLoadingJuiciest) {
+        if (
+            isLoadingCategories ||
+            isLoadingJuiciest ||
+            isLoadingRandomRecipes ||
+            isFetchingRandomRecipes
+        ) {
             dispatch(setAppLoader(true));
-            dispatch(setPageLoader(false));
-        } else {
+        } else if (isSuccessRandomRecipes && !isFetchingRandomRecipes) {
             dispatch(setAppLoader(false));
         }
-    }, [isLoadingCategories, isLoadingJuiciest]);
+    }, [isLoadingCategories, isLoadingJuiciest, isLoadingRandomRecipes, isFetchingRandomRecipes]);
 
     useEffect(() => {
         if (isErrorRandomRecipes) {
-            dispatch(setAppError(`Init error: ${errorRandomRecipes.toString()}`));
+            dispatch(setAppError(errorRandomRecipes));
             return;
         }
         if (isErrorJuiciest) {
-            dispatch(setAppError(`Init error: ${errorJuiciest.toString()}`));
+            dispatch(setAppError(errorJuiciest));
             return;
         }
         if (isErrorCategories) {
-            dispatch(setAppError(`Init error: ${errorCategories.toString()}`));
+            dispatch(setAppError(errorCategories));
             return;
-        }
-        if (!isErrorRandomRecipes && !isErrorJuiciest && !isErrorCategories) {
-            dispatch(setAppError(null));
         }
     }, [isErrorRandomRecipes, isErrorJuiciest, isErrorCategories]);
 
     useEffect(() => {
-        if (!isLoadingCategories && !isLoadingJuiciest) {
-            if (isFetchingCategories || isFetchingJuiciest || isFetchingRandomRecipes) {
-                dispatch(setPageLoader(true));
-            } else {
-                dispatch(setPageLoader(false));
-            }
+        if (isSuccessCategories && isSuccessJuiciest && isSuccessRandomRecipes) {
+            dispatch(setAppLoader(false));
         }
-    }, [isFetchingCategories, isFetchingJuiciest, isFetchingRandomRecipes]);
-    //*-------------------
+    }, [isSuccessCategories, isSuccessJuiciest, isSuccessRandomRecipes]);
 };

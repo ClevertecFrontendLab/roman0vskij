@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router';
 
-import { setSelectedAllergens } from '~/features/filter';
-import { setSearchQuery } from '~/features/search/model/slice';
+import { setRecipes } from '~/entities/recipe';
 import { useAppDispatch } from '~/store/hooks';
+import { setSearchQuery, setSelectedAllergens } from '~/widgets/drawer';
 
 export function useCustomNavigate() {
     const dispatch = useAppDispatch();
@@ -11,6 +11,7 @@ export function useCustomNavigate() {
     return function navigate(path: string) {
         dispatch(setSearchQuery(''));
         dispatch(setSelectedAllergens([]));
+        dispatch(setRecipes([]));
 
         navig(path);
     };

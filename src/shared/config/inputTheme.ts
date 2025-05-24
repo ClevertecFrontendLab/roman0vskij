@@ -17,8 +17,23 @@ const colorfulVariant = definePartsStyle({
     },
 });
 
+const defaultVariant = definePartsStyle({
+    field: {
+        color: '#134b00',
+        border: '1px solid #d7ff94',
+        borderRadius: 6,
+        fontSize: 18,
+        fontWeight: 400,
+        p: '0 16px',
+        bg: '#fff',
+        _placeholder: { color: '#134b00' },
+        _focus: { '::placeholder': { opacity: 0 } },
+    },
+});
+
 const variants = {
     colorful: colorfulVariant,
+    default: defaultVariant,
 };
 
 export const inputTheme = defineMultiStyleConfig({ variants });

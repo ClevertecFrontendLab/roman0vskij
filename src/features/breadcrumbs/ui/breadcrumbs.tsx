@@ -1,8 +1,8 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Image } from '@chakra-ui/react';
 
-import { setSearchQuery } from '~/features/search';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 import { useAppDispatch } from '~/store/hooks';
+import { setSearchQuery } from '~/widgets/drawer';
 
 import { useBreadcrumbs } from '../model/useBreadcrumbs';
 

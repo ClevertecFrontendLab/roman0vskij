@@ -49,9 +49,7 @@ export function RecipeCard(props: TRecipe) {
     useEffect(() => {
         dispatch(setAppLoader(isFetchingRecipe));
         if (isErrorRecipe && errorRecipe) {
-            dispatch(setAppError(`Recipe error: ${errorRecipe.toString()}`));
-        } else {
-            dispatch(setAppError(null));
+            dispatch(setAppError(errorRecipe));
         }
         if (!isFetchingRecipe && isSuccessRecipe && recipe) {
             dispatch(setCurrentRecipe(recipe));

@@ -24,4 +24,5 @@ const baseStyle = definePartsStyle({
         outline: 'none',
     },
 });
+
 export const checkboxTheme = defineMultiStyleConfig({ baseStyle });

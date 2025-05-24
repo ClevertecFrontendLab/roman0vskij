@@ -1,10 +1,20 @@
 import { useMediaQuery, VStack } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
+import { signOut } from '~/features/auth';
 import { SidebarFooter } from '~/shared/ui/sidebarFooter';
+import { useAppDispatch } from '~/store/hooks';
 import { Accordion } from '~/widgets/accordion';
 
 export function Sidebar() {
     const [isLargerThan1200] = useMediaQuery('(min-width: 1200px)');
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    async function handleClick() {
+        await dispatch(signOut());
+        navigate('/sign-in');
+    }
 
     return isLargerThan1200 ? (
         <VStack
@@ -13,6 +23,7 @@ export function Sidebar() {
             pos='fixed'
             w={256}
             minH='100%'
+            maxH='100%'
             pt={114}
             boxShadow='0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)'
             justify='space-between'
@@ -20,7 +31,7 @@ export function Sidebar() {
             gap={0}
         >
             <Accordion />
-            <SidebarFooter />
+            <SidebarFooter handleClick={handleClick} />
         </VStack>
     ) : (
         <></>

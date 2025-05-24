@@ -27,12 +27,16 @@ export const categoriesApiSlice = apiSlice
                     url: ApiEndpoints.CATEGORIES + '/' + id,
                     method: 'GET',
                     apiGroupName: ApiGroupNames.CATEGORIES,
-                    name: EndpointNames.GET_CATEGORIES,
+                    name: EndpointNames.GET_CATEGORY,
                 }),
                 providesTags: [Tags.CATEGORIES],
             }),
         }),
     });
 
-export const { useGetCategoriesQuery, useLazyGetCategoriesQuery, useGetCategoryQuery } =
-    categoriesApiSlice;
+export const {
+    useGetCategoriesQuery,
+    useLazyGetCategoriesQuery,
+    useGetCategoryQuery,
+    useLazyGetCategoryQuery,
+} = categoriesApiSlice;

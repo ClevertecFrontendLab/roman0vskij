@@ -1,5 +1,5 @@
-import { selectSearchQuery } from '~/features/search';
 import { useAppSelector } from '~/store/hooks';
+import { selectSearchQuery } from '~/widgets/drawer';
 
 export function useHighlightText() {
     const searchQuery = useAppSelector(selectSearchQuery);

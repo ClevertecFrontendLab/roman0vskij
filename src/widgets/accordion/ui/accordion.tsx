@@ -11,11 +11,11 @@ import { useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { selectCategories } from '~/entities/category';
-import { setSearchQuery } from '~/features/search';
 import { ApiBaseURL } from '~/query/constants/base';
 import { CloseArrowIcon, OpenArrowIcon } from '~/shared/assets/icons';
 import { useCustomNavigate } from '~/shared/hooks/useCustomNavigate';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { setSearchQuery } from '~/widgets/drawer';
 
 type TProps = {
     isMobile?: boolean;
