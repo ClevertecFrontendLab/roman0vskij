@@ -18,14 +18,15 @@ import {
 import { useRef, useState } from 'react';
 
 import { CheckIcon, CirclePlusIcon } from '~/shared/assets/icons';
-import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { selectSelectedAllergens, setSelectedAllergens } from '~/widgets/drawer';
 
 import { Allergen } from './allergen';
 
-export function Filter() {
-    const selectedAllergens = useAppSelector(selectSelectedAllergens);
-    const dispatch = useAppDispatch();
+type TProps = {
+    selectedAllergens: string[];
+    handleSetSelectedAllergens: (allergens: string[]) => void;
+};
+
+export function Filter({ selectedAllergens, handleSetSelectedAllergens }: TProps) {
     const [isActive, setIsActive] = useState(selectedAllergens.length > 0);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -47,19 +48,17 @@ export function Filter() {
         } else {
             setIsActive(true);
         }
-        dispatch(setSelectedAllergens(values as string[]));
+        handleSetSelectedAllergens(values as string[]);
     }
 
     function toggleIsActive() {
         setIsActive((prev) => !prev);
-        dispatch(setSelectedAllergens([]));
+        handleSetSelectedAllergens([]);
     }
 
     function addAllergen() {
         if (inputRef.current && inputRef.current.value.length > 0) {
-            dispatch(
-                setSelectedAllergens([...selectedAllergens, inputRef.current?.value as string]),
-            );
+            handleSetSelectedAllergens([...selectedAllergens, inputRef.current?.value as string]);
             inputRef.current.value = '';
             setIsActive(true);
         }

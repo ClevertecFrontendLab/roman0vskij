@@ -2,8 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { categoriesReducer, categoriesSlice } from '~/entities/category';
 import { recipesReducer, recipesSlice } from '~/entities/recipe';
-import { filterReducer, filterSlice } from '~/features/filter';
-import { searchReducer, searchSlice } from '~/features/search';
+import { authReducer, authSlice } from '~/features/auth';
 import { apiSlice } from '~/query/create-api';
 import { drawerReducer, drawerSlice } from '~/widgets/drawer';
 
@@ -12,11 +11,10 @@ const isProduction = false;
 const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
-    [filterSlice.name]: filterReducer,
-    [searchSlice.name]: searchReducer,
     [drawerSlice.name]: drawerReducer,
     [categoriesSlice.name]: categoriesReducer,
     [recipesSlice.name]: recipesReducer,
+    [authSlice.name]: authReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

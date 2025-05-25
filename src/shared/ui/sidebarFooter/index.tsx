@@ -2,7 +2,11 @@ import { Box, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 
 import { SignOutIcon } from '~/shared/assets/icons';
 
-export function SidebarFooter() {
+type TProps = {
+    handleClick: () => void;
+};
+
+export function SidebarFooter({ handleClick }: TProps) {
     return (
         <VStack
             data-test-id='footer'
@@ -52,6 +56,7 @@ export function SidebarFooter() {
                     color='#000'
                     ml='-22px'
                     cursor='pointer'
+                    onClick={handleClick}
                 >
                     Выйти
                 </Box>
